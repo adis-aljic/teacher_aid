@@ -5,6 +5,7 @@ import validatePassword from './passwordValidation';
 import Modal from '../UI/Modal';
 import Button from '../UI/Button';
 import AuthContex from '../../store/Auth-ctx';
+import 'cors';
 
 const Login = (props) => {
   const ctx = useContext(AuthContex);
@@ -113,7 +114,23 @@ const Login = (props) => {
       });
       return;
     }
-    ctx.onLogin(email, password);
+
+    fetch('http://localhost:4000/api/user/login', {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        email: `${email}`,
+        password: `${password}`,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((resolve) => resolve.json())
+      .then((data) => {
+        console.log(data);
+        ctx.onLogin(data);
+      });
 
     setEnteredEmail('');
     setEnteredPassword('');

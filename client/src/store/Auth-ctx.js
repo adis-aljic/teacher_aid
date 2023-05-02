@@ -15,18 +15,18 @@ export const AuthContexProvider = (props) => {
   const [isRegistred, setIsRegistred] = useState(null);
 
   const Auth = localStorage.getItem('Logged_in');
-
+  const user = JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
-    if (Auth === '1') {
+    if (Auth === user.token) {
       setIsLogged(true);
     }
-  }, [Auth]);
+  }, [Auth, user.token]);
 
-  const loginHandler = (email, password) => {
-    if (email === 'adis.qm@gmail.com' && password === 'Wireless123%') {
+  const loginHandler = (props) => {
+    if (props) {
       setIsLogged(true);
-      localStorage.setItem('Logged_in', '1');
-      console.log(email, password);
+      localStorage.setItem('Logged_in', props.token);
+      localStorage.setItem('user', JSON.stringify(props));
     } else {
       setIsError({
         title: 'Unauthorized access',
@@ -35,8 +35,8 @@ export const AuthContexProvider = (props) => {
       return;
     }
   };
-  const registredHandler = (obj) => {
-    setIsRegistred(obj);
+  const registredHandler = (props) => {
+    setIsRegistred(props);
     console.log(isRegistred);
   };
   const errorHandler = () => {
@@ -46,11 +46,12 @@ export const AuthContexProvider = (props) => {
   return (
     <AuthContex.Provider
       value={{
-        isLogged: isLogged,
+        isLogged,
         onLogin: loginHandler,
         onRegistred: registredHandler,
-        isError: isError,
-        errorHandler: errorHandler,
+        isError,
+        errorHandler,
+        user,
       }}>
       {props.children}
     </AuthContex.Provider>
