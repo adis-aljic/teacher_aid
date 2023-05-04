@@ -52,7 +52,9 @@ export class UserService {
             id: user.id,
             email: user.email,
             firstName: user.firstName,
-            lastName: user.lastName
+            lastName: user.lastName,
+            role: user.role,
+            subject: user.subject
         }, JWT)
     }
     userResponse(user: UserEntity): any {
@@ -64,15 +66,17 @@ export class UserService {
 
     async loginUser(loginUserDto: LoginUserDto): Promise<UserEntity> {
         const user = await this.userRepository.findOne({
-            select: ["id", "email", "firstName", "lastName", "password", "role"],
+            select: ["id", "email", "firstName", "lastName", "password", "role", "subject", "isAuth"],
             where: { email: loginUserDto.email }
         })
 
+        console.log(user);
 
 
         if (!user) {
             throw new HttpException("Username or password is incorrect", HttpStatus.UNPROCESSABLE_ENTITY)
         }
+
         if (!user.isAuth) {
             throw new HttpException("You must confirm your account. Please check your email for confirmation link", HttpStatus.UNAUTHORIZED)
         }

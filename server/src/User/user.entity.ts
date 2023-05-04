@@ -24,6 +24,9 @@ export class UserEntity extends BaseEntity {
     @Column({ default: false })
     isAuth: boolean
 
+    @Column()
+    subject: string;
+
     @BeforeInsert()
     async hashPassword() {
         this.password = await hash(this.password, 10)

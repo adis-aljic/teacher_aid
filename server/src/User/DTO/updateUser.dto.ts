@@ -22,4 +22,7 @@ export class UpdateUserDTO {
 
     @IsNotEmpty()
     isAuth: boolean
+
+    @IsNotEmpty()
+    readonly subject: string
 }

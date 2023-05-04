@@ -16,6 +16,7 @@ const Login = (props) => {
   const [enteredRegPassword, setEnteredRegPassword] = useState('');
   const [enteredFirstName, setEnteredFirstName] = useState('');
   const [enteredLastName, setEnteredLastName] = useState('');
+  const [enteredSubject, setEnteredSubject] = useState('');
   const [forgotPass, setForgotPass] = useState(false);
 
   const inputedEmail = useRef();
@@ -24,6 +25,7 @@ const Login = (props) => {
   const inputedRegPassword = useRef();
   const inputedFirstName = useRef();
   const inputedLastName = useRef();
+  const inputedSubject = useRef();
 
   const emailChangeHandler = () => {
     setEnteredEmail(inputedEmail.current.value);
@@ -42,6 +44,9 @@ const Login = (props) => {
   };
   const lastNameChangeHandler = () => {
     setEnteredLastName(inputedLastName.current.value);
+  };
+  const subjectChangeHandler = () => {
+    setEnteredSubject(inputedSubject.current.value);
   };
 
   const forgotPasswordHandler = () => {
@@ -62,6 +67,7 @@ const Login = (props) => {
     const password = inputedRegPassword.current.value;
     const first_name = inputedFirstName.current.value;
     const last_name = inputedLastName.current.value;
+    const subject = inputedSubject.current.value;
     if (!email.includes('@')) {
       setIsError({
         title: 'Email is not valid',
@@ -85,12 +91,35 @@ const Login = (props) => {
       });
       return;
     }
-    const data = { email, password, first_name, last_name };
-    ctx.onRegistred(data);
+    fetch('http://localhost:4000/api/newuser', {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        email: `${email}`,
+        password: `${password}`,
+        firstName: `${first_name}`,
+        lastName: `${last_name}`,
+        subject: `${subject}`,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((resolve) => resolve.json())
+      .then((data) => {
+        console.log(data);
+        ctx.onRegistred(data);
+      });
     setEnteredRegEmail('');
     setEnteredFirstName('');
     setEnteredLastName('');
     setEnteredRegPassword('');
+    setEnteredSubject('');
+    setIsError({
+      title: 'Account created',
+      message:
+        'You account is suscesfuly created. You will recieved email with confirmation email. After confirmination you will be able to log in.',
+    });
   };
 
   const onLoginSubmitHandler = (e) => {
@@ -186,6 +215,13 @@ const Login = (props) => {
               ref={inputedLastName}
               value={enteredLastName}
               onChange={lastNameChangeHandler}></input>
+            <input
+              type="text"
+              name="subject"
+              placeholder="Subject"
+              ref={inputedSubject}
+              value={enteredSubject}
+              onChange={subjectChangeHandler}></input>
             <input
               type="password"
               name="pswd"

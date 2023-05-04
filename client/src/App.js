@@ -5,7 +5,7 @@ import Login from './components/Login/Login';
 import { useContext } from 'react';
 import AuthContex from './store/Auth-ctx';
 import Modal from './components/UI/Modal';
-import User from './components/User/User';
+import HeaderInformation from './components/User/HeaderInformation';
 
 function App() {
   const ctx = useContext(AuthContex);
@@ -13,7 +13,9 @@ function App() {
   return (
     <>
       <Header>
-        <h1>Welcome</h1>
+        {ctx.isLogged && (
+          <HeaderInformation user={ctx.user}></HeaderInformation>
+        )}
       </Header>
       {ctx.isError && (
         <Modal
@@ -22,10 +24,7 @@ function App() {
           onConfirm={ctx.errorHandler}
         />
       )}
-      <main>
-        {!ctx.isLogged && <Login />}
-        {ctx.isLogged && <User user={ctx.user}></User>}
-      </main>
+      <main>{!ctx.isLogged && <Login />}</main>
       <Footer></Footer>
     </>
   );

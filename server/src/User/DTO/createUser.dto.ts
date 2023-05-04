@@ -20,4 +20,7 @@ export class CreateUserDTO {
 
     @IsNotEmpty()
     readonly lastName: string
+
+    @IsNotEmpty()
+    readonly subject: string
 }

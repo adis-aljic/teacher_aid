@@ -14,25 +14,26 @@ export const AuthContexProvider = (props) => {
   const [isLogged, setIsLogged] = useState(false);
   const [isRegistred, setIsRegistred] = useState(null);
 
-  const Auth = localStorage.getItem('Logged_in');
+  let Auth = localStorage.getItem('Logged_in');
   const user = JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
-    if (Auth === user.token) {
+    if (Auth) {
       setIsLogged(true);
     }
-  }, [Auth, user.token]);
+  }, [Auth]);
 
   const loginHandler = (props) => {
-    if (props) {
+    console.log(props);
+    if (!props.isAuth) {
+      setIsError({
+        title: 'Unauthorized access',
+        message: `${props.message}`,
+      });
+      return;
+    } else {
       setIsLogged(true);
       localStorage.setItem('Logged_in', props.token);
       localStorage.setItem('user', JSON.stringify(props));
-    } else {
-      setIsError({
-        title: 'Unauthorized access',
-        message: 'Wrong email or password',
-      });
-      return;
     }
   };
   const registredHandler = (props) => {
