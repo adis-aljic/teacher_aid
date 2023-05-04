@@ -6,7 +6,10 @@ import { useContext } from 'react';
 import AuthContex from './store/Auth-ctx';
 import Modal from './components/UI/Modal';
 import HeaderInformation from './components/User/HeaderInformation';
-
+import AddClass from './components/User/AdminPanel/AddClass';
+import Card from './components/UI/Card';
+import AddStudent from './components/User/AdminPanel/AddStudents';
+import classes from './App.module.css';
 function App() {
   const ctx = useContext(AuthContex);
   console.log(ctx);
@@ -24,7 +27,19 @@ function App() {
           onConfirm={ctx.errorHandler}
         />
       )}
-      <main>{!ctx.isLogged && <Login />}</main>
+      <main>
+        {!ctx.isLogged && <Login />}
+        {ctx.isLogged && ctx.navigation === 'add class' && (
+          <div className={classes.adminPanel}>
+            <AddClass></AddClass>
+            <AddStudent></AddStudent>
+          </div>
+        )}
+        {ctx.isLogged && ctx.navigation === 'home' && <Card>home</Card>}
+        {ctx.isLogged && ctx.navigation === 'curicculum' && (
+          <Card>curicculum</Card>
+        )}
+      </main>
       <Footer></Footer>
     </>
   );

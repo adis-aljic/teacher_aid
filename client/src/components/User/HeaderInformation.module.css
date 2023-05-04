@@ -13,3 +13,17 @@
     font-size: larger;
     font-weight: bold;
 }
+
+.navigation{
+display: flex;
+align-items: center;
+flex-direction: row;
+gap: 1rem;
+}
+
+.box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:0  1rem 0 1rem ;
+}

@@ -13,6 +13,7 @@ export const AuthContexProvider = (props) => {
   const [isError, setIsError] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
   const [isRegistred, setIsRegistred] = useState(null);
+  const [navigation, setNavigation] = useState('');
 
   let Auth = localStorage.getItem('Logged_in');
   const user = JSON.parse(localStorage.getItem('user'));
@@ -44,6 +45,20 @@ export const AuthContexProvider = (props) => {
     setIsError(null);
   };
 
+  const logoutHandler = (props) => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('Logged_in');
+    setIsLogged(false);
+  };
+  const navigationAddClassHandler = () => {
+    setNavigation('add class');
+  };
+  const navigationHomeHandler = () => {
+    setNavigation('home');
+  };
+  const navigationCuricculumHandler = () => {
+    setNavigation('curicculum');
+  };
   return (
     <AuthContex.Provider
       value={{
@@ -53,6 +68,11 @@ export const AuthContexProvider = (props) => {
         isError,
         errorHandler,
         user,
+        onLogout: logoutHandler,
+        navigationAddClassHandler,
+        navigationCuricculumHandler,
+        navigationHomeHandler,
+        navigation,
       }}>
       {props.children}
     </AuthContex.Provider>

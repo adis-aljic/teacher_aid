@@ -1,0 +1,10 @@
+.adminPanel{
+    display: flex;
+    align-items: center;
+    gap: 10rem;
+
+}
+
+.height{
+height: 50rem;
+}
