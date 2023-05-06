@@ -10,6 +10,7 @@ import AddClass from './components/User/AdminPanel/AddClass';
 import Card from './components/UI/Card';
 import AddStudent from './components/User/AdminPanel/AddStudents';
 import classes from './App.module.css';
+import ClassesList from './components/User/AdminPanel/ClassesList';
 function App() {
   const ctx = useContext(AuthContex);
   console.log(ctx);
@@ -33,6 +34,7 @@ function App() {
           <div className={classes.adminPanel}>
             <AddClass></AddClass>
             <AddStudent></AddStudent>
+            <ClassesList></ClassesList>
           </div>
         )}
         {ctx.isLogged && ctx.navigation === 'home' && <Card>home</Card>}

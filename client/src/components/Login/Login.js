@@ -18,6 +18,8 @@ const Login = (props) => {
   const [enteredLastName, setEnteredLastName] = useState('');
   const [enteredSubject, setEnteredSubject] = useState('');
   const [forgotPass, setForgotPass] = useState(false);
+  const [inputEmailForgetEmail, setInputEmailForgetEmail] = useState('');
+  const [recievedNewPass, setRecievedNewPass] = useState(false);
 
   const inputedEmail = useRef();
   const inputedPassword = useRef();
@@ -26,6 +28,7 @@ const Login = (props) => {
   const inputedFirstName = useRef();
   const inputedLastName = useRef();
   const inputedSubject = useRef();
+  const inputedForgetPassEmailRef = useRef();
 
   const emailChangeHandler = () => {
     setEnteredEmail(inputedEmail.current.value);
@@ -55,7 +58,9 @@ const Login = (props) => {
   const clearForgetenPasswordHandler = () => {
     setForgotPass(false);
   };
-
+  const forgetPassEmailHandler = (e) => {
+    setInputEmailForgetEmail(inputedForgetPassEmailRef.current.value);
+  };
   const errorHandler = () => {
     setIsError(null);
   };
@@ -165,17 +170,53 @@ const Login = (props) => {
     setEnteredPassword('');
   };
 
+  const forgottenPassworOnSubmitdHandler = (e) => {
+    e.preventDefault();
+    console.log(inputEmailForgetEmail);
+    fetch('http://localhost:4000/api/user/forgetenpassword', {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        email: `${inputEmailForgetEmail}`,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((resolve) => resolve.json())
+      .then((data) => {
+        console.log(data);
+        setRecievedNewPass(true);
+      });
+    setForgotPass(false);
+    setInputEmailForgetEmail('');
+  };
+  const clearRecievedNewPass = () => {
+    setRecievedNewPass(false);
+  };
   return (
     <>
+      {recievedNewPass && (
+        <Modal
+          title="Pasword Recovered"
+          message="Please check your new password in email!"
+          onConfirm={clearRecievedNewPass}></Modal>
+      )}
       {forgotPass && (
         <Modal
           title="Forgoten password"
-          message="After you eneter your new email and new password you will recieved email with password"
+          message="After you enter your new email and new password you will recieved email with password"
           onConfirm={clearForgetenPasswordHandler}
           className={styles.none}>
-          <input placeholder="email" type="email"></input>
-
-          <Button>Send</Button>
+          <input
+            placeholder="email"
+            type="email"
+            value={inputEmailForgetEmail}
+            ref={inputedForgetPassEmailRef}
+            onChange={forgetPassEmailHandler}></input>
+          <form onSubmit={forgottenPassworOnSubmitdHandler}>
+            <Button type="submit">Send</Button>
+          </form>
         </Modal>
       )}
       {isError && (

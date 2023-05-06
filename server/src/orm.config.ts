@@ -1,7 +1,9 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { join } from "path";
+import { env } from "process";
 
-const config: TypeOrmModuleOptions = {
+
+const configDB: TypeOrmModuleOptions = {
     type: "postgres",
     host: "localhost",
     port: 5432,
@@ -13,4 +15,4 @@ const config: TypeOrmModuleOptions = {
 
 }
 
-export default config;
+export default configDB;

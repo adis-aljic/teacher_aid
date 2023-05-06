@@ -3,7 +3,7 @@ import { UserEntity } from "./user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { HttpException, HttpStatus, Injectable, NotFoundException, UsePipes } from "@nestjs/common";
 import { CreateUserDTO } from "./DTO/createUser.dto";
-import { sign } from "jsonwebtoken"
+import { sign, verify } from "jsonwebtoken"
 import { JWT } from "src/config";
 import { LoginUserDto } from "./DTO/loginUser.dto";
 import { compare } from "bcrypt";
@@ -29,6 +29,38 @@ export class UserService {
             },
         });
     }
+
+
+    async recievedNewPass(email: string) {
+        const checkIfUserExist = await this.userRepository.findOne({
+            select: ["id", "email", "firstName", "lastName", "password"],
+            where: { email: email }
+        })
+
+        console.log(checkIfUserExist.password);
+
+        if (!checkIfUserExist) {
+
+            throw new HttpException("User doesent exist", HttpStatus.UNPROCESSABLE_ENTITY)
+        }
+        else {
+
+            const password = `${checkIfUserExist.firstName}_${checkIfUserExist.lastName}_${checkIfUserExist.id}`
+            console.log(password);
+
+            await this.mailerService.sendMail({
+                to: checkIfUserExist.email,
+                subject: "Recovered Password",
+                template: "/.confirmation",
+                context: {
+                    name: `${checkIfUserExist.firstName} ${checkIfUserExist.lastName}`,
+                    url: `Your new password is ${password}`
+                }
+            })
+        }
+        return ("New password is sent!")
+    }
+
     async createUser(createUserDTO: CreateUserDTO) {
 
         const checkIfUserExist = await this.userRepository.findOneBy({ email: createUserDTO.email })
@@ -104,6 +136,10 @@ export class UserService {
 
             return this.userRepository.save(found)
         }
+    }
+
+    async classesList() {
+        return ["class", "class2 "]
     }
 
 }

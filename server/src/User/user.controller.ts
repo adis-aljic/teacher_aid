@@ -36,6 +36,17 @@ export class UserController {
     async authUser(@Param("id", ParseIntPipe) id: number): Promise<any> {
         return this.userService.authUser(id)
     }
+
+    @Post("api/user/forgetenpassword")
+    async recievedNewPass(@Body("email") email: string): Promise<any> {
+        console.log(email, "bu d");
+
+        return this.userService.recievedNewPass(email)
+    }
+    @Get("api/classes/list")
+    async classesList(): Promise<any> {
+        return this.userService.classesList()
+    }
 }
 
 
