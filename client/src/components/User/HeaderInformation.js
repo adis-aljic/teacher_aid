@@ -1,7 +1,10 @@
+
+
 import {  useContext } from 'react';
 import Button from '../UI/Button';
 import classes from './HeaderInformation.module.css';
 import AuthContex from '../../store/Auth-ctx';
+import { Link } from 'react-router-dom';
 
 const HeaderInformation = (props) => {
   const ctx = useContext(AuthContex)
@@ -16,15 +19,31 @@ const HeaderInformation = (props) => {
         </div>
         <div className={classes.navigation}>
           {props.user.role === 'teacher' && (
+                        <Link to="/home">
+
             <Button onClick={ctx.navigationHomeHandler}>Home</Button>
+            </Link>
+
           )}
           {props.user.role === 'teacher' && (
+            <Link to="/admin">
             <Button onClick={ctx.navigationAddClassHandler}>Admin panel</Button>
+            </Link>
           )}
           {props.user.role === 'teacher' && (
+                        <Link to="/curriculum">
+
             <Button onClick={ctx.navigationCuricculumHandler}>Curicculum</Button>
+            </Link>
+
           )}
-          {props.user.role && <Button onClick={ctx.onLogout}>Logout</Button>}
+          {props.user.role && 
+                                  <Link to="/login">
+
+          <Button onClick={ctx.onLogout}>Logout</Button>
+          </Link>
+          }
+
         </div>
       </div>
     </>

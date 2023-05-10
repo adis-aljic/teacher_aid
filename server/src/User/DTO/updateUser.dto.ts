@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsStrongPassword, IsStrongPasswordOptions } from "class-validator"
+import { ClassesEntity } from "src/Classes/classes.entity"
 
 const options: IsStrongPasswordOptions = {
     minLength: 8,
@@ -22,6 +23,8 @@ export class UpdateUserDTO {
 
     @IsNotEmpty()
     isAuth: boolean
+
+    readonly classes: ClassesEntity[]
 
     @IsNotEmpty()
     readonly subject: string

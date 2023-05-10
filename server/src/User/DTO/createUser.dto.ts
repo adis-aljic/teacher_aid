@@ -23,4 +23,5 @@ export class CreateUserDTO {
 
     @IsNotEmpty()
     readonly subject: string
+
 }

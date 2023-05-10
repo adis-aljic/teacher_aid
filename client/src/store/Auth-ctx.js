@@ -13,7 +13,7 @@ export const AuthContexProvider = (props) => {
   const [isError, setIsError] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
   const [isRegistred, setIsRegistred] = useState(null);
-  const [navigation, setNavigation] = useState('');
+  const [navigation, setNavigation] = useState('home');
 
   let Auth = localStorage.getItem('Logged_in');
   const user = JSON.parse(localStorage.getItem('user'));

@@ -4,13 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthContexProvider } from './store/Auth-ctx';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthContexProvider>
-      <App />
-    </AuthContexProvider>
+    <BrowserRouter>
+      <AuthContexProvider>
+        <App />
+      </AuthContexProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

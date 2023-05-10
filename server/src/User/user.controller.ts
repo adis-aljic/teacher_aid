@@ -1,10 +1,13 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDTO } from "./DTO/createUser.dto";
 import { UserType } from "./type/user.type";
 import { LoginUserDto } from "./DTO/loginUser.dto";
 import { ExpressRequest } from "./globalType/expressRequest.interface";
 import { AuthGuard } from "src/guards/auth.guard";
+import { UpdateUserDTO } from "./DTO/updateUser.dto";
+
+import { RegisterClass } from "./DTO/registerClass.dto";
 
 @Controller()
 export class UserController {
@@ -43,10 +46,9 @@ export class UserController {
 
         return this.userService.recievedNewPass(email)
     }
-    @Get("api/classes/list")
-    async classesList(): Promise<any> {
-        return this.userService.classesList()
-    }
+
+
+
 }
 
 

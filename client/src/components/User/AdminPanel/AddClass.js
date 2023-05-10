@@ -9,12 +9,16 @@ const AddClass = props =>{
     const [enteredDepartmant , setEnteredDepartmant] = useState("")
     const [enteredAbrevation , setEnteredAbrevation] = useState("")
     const [enteredCity, setEnteredCity] = useState("")
+    const [enteredAbbCity, setEnteredAbbCity] = useState("")
 
     const inputSchoolRef = useRef()
     const inputClassRef = useRef()
     const inputDepartmantRef = useRef()
     const inputCityRef = useRef()
-    
+    const inputCityAbbRef = useRef()
+    const inputAbbRef = useRef()
+
+
     const schoolHandler = e =>{
         setEnteredSchool(inputSchoolRef.current.value)
     }
@@ -27,19 +31,52 @@ const AddClass = props =>{
     const cityHandler = e =>{
         setEnteredCity(inputCityRef.current.value)
     }
-    const schoolAbbr = (string) =>{
-        return string.split(" ").map((x)=>x[0]).join("")
+    const cityAbbHandler = e =>{
+        setEnteredAbbCity(inputCityAbbRef.current.value)
+    }
+    
+  
+    const changeAbbHandler = () =>{
+    setEnteredAbrevation(inputAbbRef.current.value)        
     }
     
     const addClassHandler = (e) =>{
         e.preventDefault()
-        setEnteredAbrevation(`${schoolAbbr(enteredSchool)}_${enteredCity}_${enteredClass}-${enteredDepartmant}`)
         const school = inputSchoolRef.current.value
         const city = inputCityRef.current.value
+        const cityAbb = inputCityAbbRef.current.value
         const schoolClass = inputClassRef.current.value
         const departmant = inputDepartmantRef.current.value
-        const abb = enteredAbrevation
-        console.log(school,city,schoolClass,departmant,abb);
+        const abb = inputAbbRef.current.value
+        fetch('http://localhost:4000/api/classes/createclass', {
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify({
+                school: `${school}`,
+                city: `${city}`,
+                cityAbb: `${cityAbb}`,
+                schoolClass: `${schoolClass}`,
+                departmant: `${departmant}`,
+                abbrevation: `${abb}`,
+
+            }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+            .then((resolve) => resolve.json())
+            .then((data) => {
+              console.log(data);
+              setEnteredSchool("");
+              setEnteredCity("");
+              setEnteredAbbCity("");
+              setEnteredClass("");
+              setEnteredDepartmant("");
+              setEnteredAbrevation("");
+            });
+    
+    
+    
 
     }
 
@@ -57,11 +94,19 @@ const AddClass = props =>{
               maxLength={22}></input>
             <input
               type="text"
-              name="ciy"
-              placeholder="City(2 Letters)"
+              name="city"
+              placeholder="City"
               ref={inputCityRef}
               value={enteredCity}
               onChange={cityHandler}
+              maxLength={20}></input>
+            <input
+              type="text"
+              name="city_abb"
+              placeholder="City(2 Letters)"
+              ref={inputCityAbbRef}
+              value={enteredAbbCity}
+              onChange={cityAbbHandler}
               maxLength={2}></input>
 
             <input
@@ -88,9 +133,10 @@ const AddClass = props =>{
               name="abrevation"
               placeholder="Abrevation ex. ETS_2A"
               value={enteredAbrevation}
-              disabled={true}
+              onChange={changeAbbHandler}
+              ref={inputAbbRef}
               ></input>
-            <Button type="submit">Add new class</Button>
+            <Button  className={classes.buttonAddClass}  type="submit">Add new class</Button>
 
             </form>
 

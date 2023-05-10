@@ -11,6 +11,8 @@ import Card from './components/UI/Card';
 import AddStudent from './components/User/AdminPanel/AddStudents';
 import classes from './App.module.css';
 import ClassesList from './components/User/AdminPanel/ClassesList';
+import RegistrerClass from './components/User/AdminPanel/RegistrerClass';
+import { Routes, Route } from 'react-router-dom';
 function App() {
   const ctx = useContext(AuthContex);
   console.log(ctx);
@@ -29,14 +31,26 @@ function App() {
         />
       )}
       <main>
-        {!ctx.isLogged && <Login />}
-        {ctx.isLogged && ctx.navigation === 'add class' && (
-          <div className={classes.adminPanel}>
-            <AddClass></AddClass>
-            <AddStudent></AddStudent>
-            <ClassesList></ClassesList>
-          </div>
-        )}
+        <Routes>
+          <Route path="/login" element={!ctx.isLogged && <Login />}></Route>
+          <Route path="/" element={!ctx.isLogged && <Login />}></Route>
+          <Route
+            path="/admin"
+            element={
+              ctx.isLogged &&
+              ctx.navigation === 'add class' && (
+                <>
+                  <ClassesList className={classes.classList}></ClassesList>
+                  <div className={classes.adminPanel}>
+                    <AddClass></AddClass>
+                    <RegistrerClass></RegistrerClass>
+                    <AddStudent></AddStudent>
+                  </div>
+                </>
+              )
+            }></Route>
+        </Routes>
+
         {ctx.isLogged && ctx.navigation === 'home' && <Card>home</Card>}
         {ctx.isLogged && ctx.navigation === 'curicculum' && (
           <Card>curicculum</Card>

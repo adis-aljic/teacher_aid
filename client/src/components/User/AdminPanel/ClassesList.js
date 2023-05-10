@@ -1,28 +1,44 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Card from '../../UI/Card';
 const ClassesList = (props) => {
-  const [classesList, setClassesList] = useState();
+  let classesList = JSON.parse(localStorage.getItem('classList'));
+  if (!classesList) {
+    fetch('http://localhost:4000/api/classes/list')
+      .then((resolve) => resolve.json())
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem('classList', JSON.stringify(data));
+        classesList = data;
+      });
+  }
   useEffect(() => {
-    // const fetch = fetch('http://localhost:4000/api/classes/list')
-    //   .then((resolve) => resolve.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     setClassesList(data);
-    //   });
-    const Fetchdata = async () => {
-      const response = await fetch('http://localhost:4000/api/classes/list');
-      const data = await response.json();
-      setClassesList(data);
-    };
-    Fetchdata();
+    fetch('http://localhost:4000/api/classes/list')
+      .then((resolve) => resolve.json())
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem('classList', JSON.stringify(data));
+        classesList = data;
+      });
   }, []);
-  console.log(classesList);
+
   return (
-    <Card>
-      {classesList.map((classItem) => (
-        <li>{classItem}</li>
-      ))}
-    </Card>
+    <>
+      <Card className={props.className}>
+        <h1>Classes:</h1>
+        {classesList.map((classItem) => (
+          <>
+            <li key={classItem.abbrevation}>
+              {classItem.school}
+              <br></br>
+              {classItem.schoolClass}-{classItem.departmant}
+              <br></br>
+              {classItem.abbrevation}
+            </li>
+            <br></br>
+          </>
+        ))}
+      </Card>
+    </>
   );
 };
 export default ClassesList;

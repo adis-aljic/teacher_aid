@@ -8,6 +8,9 @@ import { JWT } from "src/config";
 import { LoginUserDto } from "./DTO/loginUser.dto";
 import { compare } from "bcrypt";
 import { MailerService } from '@nestjs-modules/mailer';
+import { UpdateUserDTO } from "./DTO/updateUser.dto";
+import { RegisterClass } from "./DTO/registerClass.dto";
+import { ClassesEntity } from "src/Classes/classes.entity";
 
 
 @Injectable()
@@ -58,7 +61,7 @@ export class UserService {
                 }
             })
         }
-        return ("New password is sent!")
+        return ({ "status": "recovered password" })
     }
 
     async createUser(createUserDTO: CreateUserDTO) {
@@ -102,7 +105,6 @@ export class UserService {
             where: { email: loginUserDto.email }
         })
 
-        console.log(user);
 
 
         if (!user) {
@@ -138,9 +140,7 @@ export class UserService {
         }
     }
 
-    async classesList() {
-        return ["class", "class2 "]
-    }
+
 
 }
 

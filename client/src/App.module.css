@@ -1,10 +1,30 @@
 .adminPanel{
     display: flex;
-    align-items: center;
-    gap: 10rem;
-
+    justify-content: space-around;
+    gap: 4rem;
+    flex-wrap: wrap;
+    padding: 4rem;
+    /* flex-direction: column; */
 }
 
-.height{
-height: 50rem;
+/* .height{
+height: fit-content;
+} */
+
+.classList{
+    height: 100vh;
+    width: 15vw;
+    list-style-type:  none;
+    display: flex;
+    justify-content: flex-start;
+    align-items:flex-start;
+    padding: 1rem;
+    top: 0;
+    left: 0;
+    
+}
+.classList li {
+    border-bottom: 1px solid black;
+    padding-bottom: 2px;
+    text-align: left;
 }
