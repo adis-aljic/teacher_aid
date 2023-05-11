@@ -18,7 +18,10 @@ export class ClassesController {
 
     @Get("api/classes/list")
     async listClasses() {
-        return await this.classService.listClass()
+        const classes = await this.classService.listClass()
+        console.log(classes)
+        return classes;
+
     }
     @Post("api/user/addclass")
     async addClassToUser(@Req() req: ExpressRequest, @Body("id") id: number): Promise<any> {

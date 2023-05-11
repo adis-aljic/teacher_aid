@@ -27,6 +27,9 @@ export class ClassesEntity {
     @Column({ default: false })
     selected: boolean
 
+    @Column()
+    teacherId: number
+
     @ManyToOne(() => UserEntity, (teacher: UserEntity) => teacher.classes)
     teacher: UserEntity
 }
