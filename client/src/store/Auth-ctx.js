@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 const AuthContex = React.createContext({
   isLogged: false,
 
@@ -48,6 +49,7 @@ export const AuthContexProvider = (props) => {
   const logoutHandler = (props) => {
     localStorage.removeItem('user');
     localStorage.removeItem('Logged_in');
+    localStorage.removeItem('classList');
     setIsLogged(false);
   };
   const navigationAddClassHandler = () => {

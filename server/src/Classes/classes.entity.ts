@@ -1,5 +1,5 @@
 import { UserEntity } from "src/User/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "classes" })
 export class ClassesEntity {
@@ -27,9 +27,11 @@ export class ClassesEntity {
     @Column({ default: false })
     selected: boolean
 
-    @Column()
-    teacherId: number
+    @ManyToMany(() => UserEntity, (user) => user.classes)
+    @JoinTable()
+    user: UserEntity[]
 
-    @ManyToOne(() => UserEntity, (teacher: UserEntity) => teacher.classes)
-    teacher: UserEntity
+    // @ManyToOne(() => UserEntity, (user) => user.classes)
+    // user: UserEntity
+
 }

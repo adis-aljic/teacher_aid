@@ -23,6 +23,14 @@ export class ClassesController {
         return classes;
 
     }
+
+    @Post("api/classes/myclasses")
+    async listMyClasses(@Body("id") id: number) {
+
+
+        const classes = await this.classService.listMyClasses(id)
+        return classes
+    }
     @Post("api/user/addclass")
     async addClassToUser(@Req() req: ExpressRequest, @Body("id") id: number): Promise<any> {
         const token = req.headers.auth;

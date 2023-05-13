@@ -10,7 +10,7 @@ import AddClass from './components/User/AdminPanel/AddClass';
 import Card from './components/UI/Card';
 import AddStudent from './components/User/AdminPanel/AddStudents';
 import classes from './App.module.css';
-import ClassesList from './components/User/Home/ClassesList';
+import ClassesList from './components/User/AdminPanel/ClassesList';
 import RegistrerClass from './components/User/AdminPanel/RegistrerClass';
 import { Routes, Route } from 'react-router-dom';
 import MyClasses from './components/User/Home/MyClasses';
@@ -41,6 +41,7 @@ function App() {
               ctx.isLogged &&
               ctx.navigation === 'add class' && (
                 <>
+                  <ClassesList className={classes.classList}></ClassesList>
                   <div className={classes.adminPanel}>
                     <AddClass></AddClass>
                     <RegistrerClass></RegistrerClass>
@@ -56,7 +57,6 @@ function App() {
               ctx.navigation === 'home' && (
                 <>
                   <div className={classes.home}>
-                    <ClassesList className={classes.classList}></ClassesList>
                     <MyClasses className={classes.classList}></MyClasses>
                   </div>
                 </>

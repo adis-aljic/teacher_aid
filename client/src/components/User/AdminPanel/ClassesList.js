@@ -1,15 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Card from '../../UI/Card';
 import Button from '../../UI/Button';
 const ClassesList = (props) => {
-  let classesList = JSON.parse(localStorage.getItem('classList'));
+  const [classes, setClasses] = useState([]);
+
+  // let classesList = JSON.parse(localStorage.getItem('classList'));
   const refreshListHandler = () => {
     fetch('http://localhost:4000/api/classes/list')
       .then((resolve) => resolve.json())
       .then((data) => {
         console.log(data);
         localStorage.setItem('classList', JSON.stringify(data));
-        classesList = data;
+        setClasses(data);
         console.log('refreshovano');
       });
   };
@@ -19,7 +21,7 @@ const ClassesList = (props) => {
       .then((data) => {
         console.log(data);
         localStorage.setItem('classList', JSON.stringify(data));
-        classesList = data;
+        setClasses(data);
       });
   }, []);
 
@@ -27,18 +29,20 @@ const ClassesList = (props) => {
     <>
       <Card className={props.className}>
         <h1>Classes:</h1>
-        {classesList.map((classItem) => (
-          <>
-            <li key={classItem.id}>
-              {classItem.school}
-              <br></br>
-              {classItem.schoolClass}-{classItem.departmant}
-              <br></br>
-              {classItem.abbrevation}
-            </li>
-            <br></br>
-          </>
-        ))}
+        {classes
+          ? classes.map((classItem) => (
+              <>
+                <li key={classItem.id}>
+                  {classItem.school}
+                  <br></br>
+                  {classItem.schoolClass}-{classItem.departmant}
+                  <br></br>
+                  {classItem.abbrevation}
+                </li>
+                <br></br>
+              </>
+            ))
+          : ''}
         <Button onClick={refreshListHandler}>Refresh</Button>
       </Card>
     </>

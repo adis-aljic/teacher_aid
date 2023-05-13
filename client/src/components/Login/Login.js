@@ -6,8 +6,9 @@ import Modal from '../UI/Modal';
 import Button from '../UI/Button';
 import AuthContex from '../../store/Auth-ctx';
 import 'cors';
-
+import { useNavigate } from 'react-router-dom';
 const Login = (props) => {
+  const Navigate = useNavigate();
   const ctx = useContext(AuthContex);
   const [isError, setIsError] = useState(null);
   const [enteredEmail, setEnteredEmail] = useState('');
@@ -112,8 +113,9 @@ const Login = (props) => {
     })
       .then((resolve) => resolve.json())
       .then((data) => {
-        console.log(data);
         ctx.onRegistred(data);
+
+        console.log(data);
       });
     setEnteredRegEmail('');
     setEnteredFirstName('');
@@ -164,6 +166,9 @@ const Login = (props) => {
       .then((data) => {
         console.log(data);
         ctx.onLogin(data);
+        if (data.isAuth) {
+          Navigate('/home');
+        }
       });
 
     setEnteredEmail('');

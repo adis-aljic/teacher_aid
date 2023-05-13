@@ -27,12 +27,12 @@ export class UserController {
 
     }
 
-    @Get("api/user")
-    @UseGuards(AuthGuard)
-    async currentUser(@Req() request: ExpressRequest): Promise<UserType> {
-
-        return this.userService.userResponse(request.user)
-    }
+    // @Get("api/user")
+    // @UseGuards(AuthGuard)
+    // async currentUser(@Req() request: ExpressRequest): Promise<UserType> {
+    //     console.log(request.user)
+    //     return this.userService.userResponse(request.user)
+    // }
 
     @Get("api/user/auth/:id")
     // @UseGuards(AuthGuard)

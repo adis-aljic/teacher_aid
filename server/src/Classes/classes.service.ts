@@ -6,7 +6,7 @@ import { Repository } from "typeorm";
 import { RegisterClass } from "src/User/DTO/registerClass.dto";
 import { decode, verify } from "jsonwebtoken";
 import { JWT } from "src/config";
-
+import { UserEntity } from "src/User/user.entity";
 @Injectable()
 export class ClassService {
     constructor(@InjectRepository(ClassesEntity)
@@ -29,15 +29,16 @@ export class ClassService {
     async addClassToUser(token: string, id: number): Promise<ClassesEntity> {
         const decode = verify(token, JWT) as any
 
-        const classForUpdate = await this.classRepository.findOneBy({ id: id })
-        if (classForUpdate.selected) {
+        const classes = await this.classRepository.findOneBy({ id: id })
+        if (classes.selected) {
             throw new HttpException("Class is already assinged", HttpStatus.NOT_ACCEPTABLE)
         } // hendlat na frontendu
-        classForUpdate.selected = true
-        classForUpdate.teacher = decode
+        classes.selected = true
+        classes.user = [decode]
+        console.log(classes);
 
 
-        await this.classRepository.save(classForUpdate)
+        await this.classRepository.save(classes)
 
         return {
             "statusCode": 200,
@@ -45,4 +46,20 @@ export class ClassService {
         } as any
         // const user = decode(token, JWT)
     }
+
+    async listMyClasses(id: number) {
+        const myClasses = await this.classRepository.find({
+            relations: { user: true },
+            where: {
+                user: { id: id },
+            },
+        })
+        return myClasses
+    }
+    // const myClasses = await this.classRepository.findBy({ userId: id })
+    // console.log(myClasses);
+
+
+
+
 }

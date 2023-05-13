@@ -1,6 +1,6 @@
 import {
     BaseEntity, Entity, PrimaryGeneratedColumn, Column,
-    BeforeInsert, OneToMany
+    BeforeInsert, OneToMany, JoinTable, ManyToMany
 } from "typeorm";
 import { hash } from "bcrypt"
 import { ClassesEntity } from "src/Classes/classes.entity";
@@ -30,7 +30,6 @@ export class UserEntity extends BaseEntity {
 
     @Column()
     subject: string;
-    user: { classID: number; school: string; city: string; cityAbb: string; schoolClass: string; departmant: string; abbrevation: string; };
 
     @BeforeInsert()
     async hashPassword() {
@@ -38,6 +37,8 @@ export class UserEntity extends BaseEntity {
     }
 
 
-    @OneToMany(() => ClassesEntity, (schoolClass: ClassesEntity) => schoolClass.teacher)
+    @ManyToMany(() => ClassesEntity, (classes) => classes.user)
     classes: ClassesEntity[]
+    // @OneToMany(() => ClassesEntity, (classes) => classes.user)
+    // classes: ClassesEntity[]
 }
