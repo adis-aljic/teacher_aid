@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
-import Card from '../../UI/Card';
+
 import Button from '../../UI/Button';
+import Card from '../../UI/Card';
+import styles from './AdminPanel.module.css';
+
 const ClassesList = (props) => {
   const [classes, setClasses] = useState([]);
 
@@ -27,24 +30,28 @@ const ClassesList = (props) => {
 
   return (
     <>
-      <Card className={props.className}>
-        <h1>Classes:</h1>
-        {classes
-          ? classes.map((classItem) => (
-              <>
-                <li key={classItem.id}>
-                  {classItem.school}
+      <div className={styles.classList}>
+        <div>
+          <h1>Classes:</h1>
+          {classes
+            ? classes.map((classItem) => (
+                <>
+                  <li key={classItem.id}>
+                    {classItem.school}
+                    <br></br>
+                    {classItem.schoolClass}-{classItem.departmant}
+                    <br></br>
+                    {classItem.abbrevation}
+                  </li>
                   <br></br>
-                  {classItem.schoolClass}-{classItem.departmant}
-                  <br></br>
-                  {classItem.abbrevation}
-                </li>
-                <br></br>
-              </>
-            ))
-          : ''}
-        <Button onClick={refreshListHandler}>Refresh</Button>
-      </Card>
+                </>
+              ))
+            : ''}
+        </div>
+        <div>
+          <Button onClick={refreshListHandler}>Refresh</Button>
+        </div>
+      </div>
     </>
   );
 };

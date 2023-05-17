@@ -14,6 +14,9 @@ import ClassesList from './components/User/AdminPanel/ClassesList';
 import RegistrerClass from './components/User/AdminPanel/RegistrerClass';
 import { Routes, Route } from 'react-router-dom';
 import MyClasses from './components/User/Home/MyClasses';
+import Navigation from './components/User/AdminPanel/Navigation';
+import UploadFile from './components/User/FileUpload/UploadFile';
+import UnregisterClass from "./components/User/AdminPanel/UnregisterClass"
 function App() {
   const ctx = useContext(AuthContex);
   console.log(ctx);
@@ -40,14 +43,29 @@ function App() {
             element={
               ctx.isLogged &&
               ctx.navigation === 'add class' && (
-                <>
-                  <ClassesList className={classes.classList}></ClassesList>
-                  <div className={classes.adminPanel}>
-                    <AddClass></AddClass>
-                    <RegistrerClass></RegistrerClass>
-                    <AddStudent></AddStudent>
+                <div className="mainAdminPanel">
+                  <div>
+                    <Navigation></Navigation>
                   </div>
-                </>
+
+                  <div className={classes.container}>
+                    <div>
+                      <ClassesList></ClassesList>
+                    </div>
+                    <div className={classes.containerAdminPanel}>
+                      {ctx.adminPanelNav === 'addClass' && (
+                        <AddClass></AddClass>
+                      )}
+                      {ctx.adminPanelNav === 'regClass' && (
+                        <RegistrerClass></RegistrerClass>
+                      )}{' '}
+                      {ctx.adminPanelNav === "unRegClass" &&  <UnregisterClass></UnregisterClass>}
+                      {ctx.adminPanelNav === 'addStudent' && (
+                        <AddStudent></AddStudent>
+                      )}
+                    </div>
+                  </div>
+                </div>
               )
             }></Route>
           <Route
@@ -58,6 +76,7 @@ function App() {
                 <>
                   <div className={classes.home}>
                     <MyClasses className={classes.classList}></MyClasses>
+                    <UploadFile></UploadFile>
                   </div>
                 </>
               )

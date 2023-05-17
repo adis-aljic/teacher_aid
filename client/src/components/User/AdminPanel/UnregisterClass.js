@@ -14,35 +14,7 @@ const RegistrerClass = () => {
     setEneteredClassCode(classCodeRef.current.value);
   };
 
-  const onSubmitRegistrerClassHandler = (e) => {
-    e.preventDefault();
-    console.log(enteredClassCode);
-    if (!enteredClassCode) {
-      setText('Please enter school class code.');
-      return;
-    }
-    console.log('submitano');
-    const result = classesList.find(
-      (classItem) => classItem.abbrevation === enteredClassCode
-    );
-    console.log(result);
-    const user = JSON.parse(localStorage.getItem('user'));
-    fetch('http://localhost:4000/api/classes/addclass', {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify({
-        id: `${result.id}`,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        auth: `${user.token}`,
-      },
-    })
-      .then((resolve) => resolve.json())
-      .then((data) => {
-        console.log(data);
-      });
-  };
+
   const unregisterClassHandler = (e) => {
     e.preventDefault();
     if (!enteredClassCode) {
@@ -93,7 +65,7 @@ const RegistrerClass = () => {
   };
   return (
     <Card>
-      <h1>Registred class</h1>
+      <h1>Unregistred class</h1>
       <input
         type="search"
         value={searchSchool}
@@ -112,7 +84,8 @@ const RegistrerClass = () => {
       ) : (
         <p>{text} </p>
       )}
-      <form onSubmit={onSubmitRegistrerClassHandler}>
+     
+      <form onSubmit={unregisterClassHandler}>
         <input
           type="text"
           name="classCode"
@@ -120,9 +93,8 @@ const RegistrerClass = () => {
           ref={classCodeRef}
           value={enteredClassCode}
           onChange={classCodeHandler}></input>
-        <Button type="submit">Register Class</Button>
+        <Button type="submit">Unregister Class</Button>
       </form>
-  
     </Card>
   );
 };

@@ -24,8 +24,7 @@ export class ClassesEntity {
     @Column()
     abbrevation: string
 
-    @Column({ default: false })
-    selected: boolean
+
 
     @ManyToMany(() => UserEntity, (user) => user.classes)
     @JoinTable()

@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import Card from '../../UI/Card';
 import Button from '../../UI/Button';
-import classes from './AddClass.module.css';
+import classes from './AdminPanel.module.css';
 const AddStudent = (props) => {
   const [enteredFirstName, setEnteredFirstName] = useState('');
   const [enteredLastName, setEnteredLastName] = useState('');

@@ -8,6 +8,20 @@ const AuthContex = React.createContext({
   onRegistred: () => {},
   isError: null,
   setIsError: () => {},
+  navAddClass: false,
+  navAddStudent: false,
+  navAddNews: false,
+  navRegisterClass: false,
+  navUnregisterClass: false,
+  navigationAddClassHandler: () => {},
+  navigationCuricculumHandler: () => {},
+  navigationHomeHandler: () => {},
+  addStudentNavHandler: () => {},
+  addClassNavHandler: () => {},
+  RegisterClassNavHandler: () => {},
+  UnregisterClassNavHandler: () => {},
+  AddNewsNavHandler: () => {},
+  adminPanelNav: '',
 });
 
 export const AuthContexProvider = (props) => {
@@ -15,6 +29,12 @@ export const AuthContexProvider = (props) => {
   const [isLogged, setIsLogged] = useState(false);
   const [isRegistred, setIsRegistred] = useState(null);
   const [navigation, setNavigation] = useState('home');
+  // const [navAddClass, setNavAddClass] = useState(false);
+  // const [navAddStudent, setNavAddStudent] = useState(false);
+  // const [navRegisterClass, setNavRegisterClass] = useState(false);
+  // const [navUnregisterClass, setNavUnregisterClass] = useState(false);
+  // const [navAddNews, setNavAddNews] = useState(false);
+  const [adminPanelNav, setNav] = useState('');
 
   let Auth = localStorage.getItem('Logged_in');
   const user = JSON.parse(localStorage.getItem('user'));
@@ -61,6 +81,28 @@ export const AuthContexProvider = (props) => {
   const navigationCuricculumHandler = () => {
     setNavigation('curicculum');
   };
+
+  const addClassNavHandler = () => {
+    // setNavAddClass(true);
+    setNav('addClass');
+  };
+  const addStudentNavHandler = () => {
+    // setNavAddStudent(true);
+    setNav('addStudent');
+  };
+  const RegisterClassNavHandler = () => {
+    // setNavRegisterClass(true);
+    setNav('regClass');
+  };
+  const UnregisterClassNavHandler = () => {
+    // setNavUnregisterClass(true);
+    setNav('unRegClass');
+  };
+  const AddNewsNavHandler = () => {
+    // setNavAddNews(true);
+    setNav('addNews');
+  };
+
   return (
     <AuthContex.Provider
       value={{
@@ -75,6 +117,17 @@ export const AuthContexProvider = (props) => {
         navigationCuricculumHandler,
         navigationHomeHandler,
         navigation,
+        addClassNavHandler,
+        addStudentNavHandler,
+        AddNewsNavHandler,
+        RegisterClassNavHandler,
+        UnregisterClassNavHandler,
+        // navAddClass,
+        // navAddNews,
+        // navAddStudent,
+        // navRegisterClass,
+        // navUnregisterClass,
+        adminPanelNav,
       }}>
       {props.children}
     </AuthContex.Provider>

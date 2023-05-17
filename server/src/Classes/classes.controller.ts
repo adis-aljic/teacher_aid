@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, UseGuards } from "@nestjs/common";
 import { ClassService } from "./classes.service";
 import { AuthGuard } from "src/guards/auth.guard";
 import { CreateClassDTO } from "./DTO/createClass.dto";
@@ -19,7 +19,7 @@ export class ClassesController {
     @Get("api/classes/list")
     async listClasses() {
         const classes = await this.classService.listClass()
-        console.log(classes)
+        // console.log(classes)
         return classes;
 
     }
@@ -31,11 +31,19 @@ export class ClassesController {
         const classes = await this.classService.listMyClasses(id)
         return classes
     }
-    @Post("api/user/addclass")
+    @Post("api/classes/addclass")
     async addClassToUser(@Req() req: ExpressRequest, @Body("id") id: number): Promise<any> {
         const token = req.headers.auth;
 
         return await this.classService.addClassToUser(token as any, id)
+    }
+    @Post("api/classes/unregisterclass")
+    async unregisterClass(@Body() body: any) {
+        // console.log(body);
+
+        const { userId, classId } = body
+        return await this.classService.unregisterClass(userId, classId)
+
     }
 }
 
