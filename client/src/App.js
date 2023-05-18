@@ -15,8 +15,8 @@ import RegistrerClass from './components/User/AdminPanel/RegistrerClass';
 import { Routes, Route } from 'react-router-dom';
 import MyClasses from './components/User/Home/MyClasses';
 import Navigation from './components/User/AdminPanel/Navigation';
-import UploadFile from './components/User/FileUpload/UploadFile';
 import UnregisterClass from "./components/User/AdminPanel/UnregisterClass"
+import AddNews from './components/User/AdminPanel/AddNews';
 function App() {
   const ctx = useContext(AuthContex);
   console.log(ctx);
@@ -63,6 +63,7 @@ function App() {
                       {ctx.adminPanelNav === 'addStudent' && (
                         <AddStudent></AddStudent>
                       )}
+                      {ctx.adminPanelNav === "addNews" && <AddNews></AddNews>}
                     </div>
                   </div>
                 </div>
@@ -76,7 +77,6 @@ function App() {
                 <>
                   <div className={classes.home}>
                     <MyClasses className={classes.classList}></MyClasses>
-                    <UploadFile></UploadFile>
                   </div>
                 </>
               )

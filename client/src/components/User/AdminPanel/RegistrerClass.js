@@ -43,33 +43,6 @@ const RegistrerClass = () => {
         console.log(data);
       });
   };
-  const unregisterClassHandler = (e) => {
-    e.preventDefault();
-    if (!enteredClassCode) {
-      setText('Please enter school class code.');
-      return;
-    }
-    const result = classesList.find(
-      (classItem) => classItem.abbrevation === enteredClassCode
-    );
-    console.log('result');
-    const user = JSON.parse(localStorage.getItem('user'));
-    fetch('http://localhost:4000/api/classes/unregisterclass', {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify({
-        userId: `${user.id}`,
-        classId: `${result.id}`,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((resolve) => resolve.json())
-      .then((data) => {
-        console.log(data);
-      });
-  };
 
   const searchSchoolHandler = (e) => {
     e.preventDefault();
