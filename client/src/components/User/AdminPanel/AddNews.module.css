@@ -1,9 +1,38 @@
+.inputBtn{
+    padding: 1rem;
+}
 .input{
-    padding: 1.5rem;
+    width: 15rem;
+    height: 2rem;
 }
 
-.imgPreview{
-    height: 5rem;
-    width: 5rem;
+textarea{
+    resize: none;
+    padding: 1rem;
+    font-size: 1.8em;
+    font-family: 'Roboto', sans-serif;
+    width: inherit;
+
+
+}
+&:focus {
+    outline: none;
+}
+.picker{
+    padding: 1.3rem;
+}
+.suscesfull{
+    text-align: center;
+    font-size: 1.5em;
+    color: green;
 }
 
+.card{
+    height: max-content;
+    height: 90vh;
+    width: 50vw;
+    padding-bottom: 5rem;
+}
+& p{
+text-align: right;
+}

@@ -49,7 +49,7 @@ const ClassesList = (props) => {
             : ''}
         </div>
         <div>
-          <Button onClick={refreshListHandler}>Refresh</Button>
+          <Button className={styles.btn} onClick={refreshListHandler}>Refresh</Button>
         </div>
       </div>
     </>

@@ -7,11 +7,12 @@ import config from './orm.config';
 import { AuthMidleware } from './User/middleware/auth.middleware';
 import { ConfigModule } from '@nestjs/config';
 import { ClassModule } from './Classes/classes.module';
+import { NewsModule } from './News/news.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot(config), ConfigModule.forRoot({
     isGlobal: true,
-  }), UserModule, ClassModule],
+  }), UserModule, ClassModule, NewsModule],
   controllers: [AppController],
   providers: [AppService],
 })
