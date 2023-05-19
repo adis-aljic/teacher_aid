@@ -1,5 +1,6 @@
+import { NewsEntity } from "src/News/news.entity";
 import { UserEntity } from "src/User/user.entity";
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "classes" })
 export class ClassesEntity {
@@ -30,7 +31,7 @@ export class ClassesEntity {
     @JoinTable()
     user: UserEntity[]
 
-    // @ManyToOne(() => UserEntity, (user) => user.classes)
-    // user: UserEntity
+    @OneToMany(() => NewsEntity, (news: NewsEntity) => news.classes)
+    public news: NewsEntity[];
 
 }
