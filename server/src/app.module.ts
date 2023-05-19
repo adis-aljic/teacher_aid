@@ -3,15 +3,32 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './User/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import config from './orm.config';
 import { AuthMidleware } from './User/middleware/auth.middleware';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClassModule } from './Classes/classes.module';
 import { NewsModule } from './News/news.module';
+import { join } from 'path';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(config), ConfigModule.forRoot({
-    isGlobal: true,
+  imports:
+   [ConfigModule.forRoot({
+    isGlobal:true
+   }), TypeOrmModule.forRootAsync({
+    inject: [ConfigService],
+    useFactory: async (config: ConfigService) => ({
+      
+        type: "postgres" ,
+        host: config.get('HOST_DB'),
+        port: parseInt(config.get('PORT_DB')),
+        username: config.get('USERNAME_DB'),
+        password: config.get('PASSWORD_DB'),
+        database: config.get('DATABASE_NAME'),
+        autoLoadEntities: true,
+        synchronize: true,
+        entities: [join(__dirname, '**', '*.entity.{ts,js}')],
+  
+    }),
+
   }), UserModule, ClassModule, NewsModule],
   controllers: [AppController],
   providers: [AppService],

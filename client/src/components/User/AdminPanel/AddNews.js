@@ -3,11 +3,11 @@ import classes from './AddNews.module.css';
 import * as filestack from 'filestack-js';
 import Button from '../../UI/Button';
 import Card from '../../UI/Card';
-const client = filestack.init('ACZJipOIURtOeZs5TGJjJz');
 
 
 
 function UploadFile() {
+  const client = filestack.init(process.env.token);
   const [url, setUrl] = useState("");
   const [enteredTextarea, setEnteredTextarea] = useState("")
   const [eneteredClassCode, setClassCode] = useState("")
