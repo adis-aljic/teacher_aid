@@ -4,6 +4,7 @@ import {
 } from "typeorm";
 import { hash } from "bcrypt"
 import { ClassesEntity } from "src/Classes/classes.entity";
+import { NewsEntity } from "src/News/news.entity";
 
 @Entity("user")
 export class UserEntity extends BaseEntity {
@@ -36,6 +37,8 @@ export class UserEntity extends BaseEntity {
         this.password = await hash(this.password, 10)
     }
 
+    @ManyToMany(() => NewsEntity, (news) => news.user)
+    news: NewsEntity[]
 
     @ManyToMany(() => ClassesEntity, (classes) => classes.user)
     classes: ClassesEntity[]

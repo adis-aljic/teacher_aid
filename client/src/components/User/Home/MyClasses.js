@@ -30,7 +30,7 @@ const MyClasses = (props) => {
         //   localStorage.setItem('classList', JSON.stringify(data));
         setClasses(data);
       });
-  }, []);
+  }, [user.id]);
 
   return (
     <>

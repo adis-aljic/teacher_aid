@@ -50,6 +50,10 @@ const uploadFileHandler = (event) => {
         return
     }
     const classes = JSON.parse(localStorage.getItem("classList"))
+    const user = JSON.parse(localStorage.getItem("user"))
+    if(!classes) {
+      return console.log("ovo treba henldat los class code");
+    }
     const schoolClass = classes.filter(x => x.abbrevation === eneteredClassCode)
     console.log(schoolClass[0]);
     console.log(url, " - fd",enteredTextarea," - ta", enteredTitle, schoolClass[0].id); 
@@ -60,7 +64,8 @@ const uploadFileHandler = (event) => {
             url : `${url}`,
             text: `${enteredTextarea}`,
             title : `${enteredTitle}`,
-            classId : `${schoolClass[0].id}`
+            classes : schoolClass[0],
+            user : user
         }),        
       headers: {
         'Content-Type': 'application/json',

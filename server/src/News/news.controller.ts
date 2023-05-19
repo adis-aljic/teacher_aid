@@ -7,12 +7,15 @@ export class NewsController {
     constructor(private readonly newsService: NewsService) {}
 
     @Post("api/news")
-    async createNews (@Body() createNewsDTO : CreateNewsDTO) :Promise <CreateNewsDTO> {
-    console.log(createNewsDTO);
+    async createNews (@Body() createNewsDto : CreateNewsDTO) :Promise <any> {
+    console.log(createNewsDto);
+    // console.log(schoolClass);
             
-        return await this.newsService.createNews(createNewsDTO)   
+        return await this.newsService.createNews(createNewsDto)   
 
             
     }
     
+
+
 }
