@@ -1,32 +1,86 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { NewsEntity } from "./news.entity";
 import { CreateNewsDTO } from "./DTO/news.dto";
 import { ClassesEntity } from "src/Classes/classes.entity";
 import { UserEntity } from "src/User/user.entity";
+import { ClassService } from "src/Classes/classes.service";
 
 @Injectable()
 export class NewsService {
-    constructor(@InjectRepository(NewsEntity) private readonly newsRepository : Repository<NewsEntity>){}
+    constructor(@InjectRepository(NewsEntity) private readonly newsRepository : Repository<NewsEntity>,
+    @InjectRepository(ClassesEntity) private readonly classReposotory : Repository<ClassesEntity>){}
 
     async createNews(createNewsDto:CreateNewsDTO) : Promise<NewsEntity>{
+        const id = createNewsDto.classes["id"]
+        console.log(createNewsDto);
+        
+        const user = createNewsDto.classes["user"][0] as UserEntity;
+        console.log(user);
+        
+        const result = await this.classReposotory.findOne({
+            relations: {user: true},
+            where : {id:id}
+        })
+        
+        console.log(result);
+        const resultClass = await this.classReposotory.findOneBy({
+            id : id
+        })
+        console.log(resultClass, "result class");
+        
+        if(result.user.length === 0) {
+            throw new HttpException("User is not assinged to this class." , HttpStatus.UNAUTHORIZED)
+        }
         const bodyNews = {
             url : createNewsDto.url,
             text : createNewsDto.text,
             title : createNewsDto.title,
-            classes : createNewsDto.classes,
+            // classes : createNewsDto.classes,
+            // user : createNewsDto.user[0] 
+
         }
-        const user = createNewsDto.user as UserEntity;
         const news = new NewsEntity()
         Object.assign(news, bodyNews) 
         // console.log(news);
-        // console.log("news basic ");
+        // console.log("news basic " , user);
         news.user = [user]
+        news.classes = [resultClass]
         // news = schoolClass
         console.log(news);
-        // console.log("news after ");
+        console.log("news after ");
         
       return  await this.newsRepository.save(news)
+    }
+
+    async listNews (userId:number)  {
+        console.log(userId);
+        // console.log(classesId);
+        
+        const news =await this.newsRepository.createQueryBuilder("news")
+        .leftJoinAndSelect("news.user","user")
+        .leftJoinAndSelect("user.classes", "classes")
+        .setFindOptions({
+            where : {user : {
+                id : userId
+            },  
+            // classes : {
+            //     id:classesId
+            // }
+        }
+        }).getMany()
+        // const news = await this.newsRepository.find({
+        //     relations:["user","classes"],
+        //     where : {
+        //       user :  {
+
+        //             id : userId}
+        //         }
+            
+        // })
+        console.log(news, " news");
+        
+         return news
     }
 }

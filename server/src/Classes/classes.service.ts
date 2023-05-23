@@ -9,6 +9,13 @@ import { JWT } from "src/config";
 import { UserEntity } from "src/User/user.entity";
 @Injectable()
 export class ClassService {
+    find(arg0: {
+        relations: { user: boolean; }; where: { // console.log(schoolClass);
+            id: any; // console.log(schoolClass);
+        }; // console.log(schoolClass);
+    }) {
+        throw new Error("Method not implemented.");
+    }
     constructor(@InjectRepository(ClassesEntity)
     private readonly classRepository: Repository<ClassesEntity>) { }
     async createClass(createClassDTO: CreateClassDTO)

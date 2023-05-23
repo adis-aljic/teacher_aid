@@ -8,6 +8,7 @@ import { ClassesEntity } from "./classes.entity";
 @Module({
     imports: [TypeOrmModule.forFeature([ClassesEntity])],
     controllers: [ClassesController],
-    providers: [ClassService]
+    providers: [ClassService],
+    exports : [ClassService]
 })
 export class ClassModule { }    

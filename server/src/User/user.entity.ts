@@ -37,10 +37,10 @@ export class UserEntity extends BaseEntity {
         this.password = await hash(this.password, 10)
     }
 
-    @ManyToMany(() => NewsEntity, (news) => news.user)
+    @ManyToMany(() => NewsEntity, (news) => news.user, {cascade:true})
     news: NewsEntity[]
 
-    @ManyToMany(() => ClassesEntity, (classes) => classes.user)
+    @ManyToMany(() => ClassesEntity, (classes) => classes.user , {cascade:true})
     classes: ClassesEntity[]
     // @OneToMany(() => ClassesEntity, (classes) => classes.user)
     // classes: ClassesEntity[]

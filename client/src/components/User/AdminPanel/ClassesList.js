@@ -6,34 +6,53 @@ import styles from './AdminPanel.module.css';
 
 const ClassesList = (props) => {
   const [classes, setClasses] = useState([]);
+ 
 
   // let classesList = JSON.parse(localStorage.getItem('classList'));
-  const refreshListHandler = () => {
-    fetch('http://localhost:4000/api/classes/list')
-      .then((resolve) => resolve.json())
-      .then((data) => {
-        console.log(data);
-        localStorage.setItem('classList', JSON.stringify(data));
-        setClasses(data);
-        console.log('refreshovano');
-      });
-  };
+  const user = JSON.parse(localStorage.getItem("user"))
   useEffect(() => {
-    fetch('http://localhost:4000/api/classes/list')
-      .then((resolve) => resolve.json())
+    fetch('http://localhost:4000/api/classes/myclasses', {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        id: `${user.id}`,
+      }),     headers: {
+        'Content-Type': 'application/json',
+      },
+    })  .then((resolve) => resolve.json())
       .then((data) => {
         console.log(data);
         localStorage.setItem('classList', JSON.stringify(data));
         setClasses(data);
       });
   }, []);
+  const refreshListHandler = () => {
+    
+
+    fetch('http://localhost:4000/api/classes/myclasses', {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        id: `${user.id}`,
+      }),     headers: {
+        'Content-Type': 'application/json',
+      },
+    }) 
+    .then((resolve) => resolve.json())
+    .then((data) => {
+        console.log(data);
+        localStorage.setItem('myClasses', JSON.stringify(data));
+        setClasses(data);
+        console.log('refreshovano');
+      });
+  };
 
   return (
     <>
       <div className={styles.classList}>
         <div>
           <h1>Classes:</h1>
-          {classes
+          {classes.length>0
             ? classes.map((classItem) => (
                 <>
                   <li key={classItem.id}>

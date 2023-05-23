@@ -19,11 +19,14 @@ export class NewsEntity extends BaseEntity {
     text : string
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
-    created_at: Date;
+    createdAt: Date;
 
-    @ManyToOne(() => ClassesEntity, (classes: ClassesEntity) => classes.news)
-    public classes: ClassesEntity;
-    
+    // @ManyToOne(() => ClassesEntity, (classes: ClassesEntity) => classes.news)
+    // public classes: ClassesEntity;
+    @ManyToMany(()=> ClassesEntity, (classes) => classes.news, {cascade:true})
+    @JoinTable()
+    classes : ClassesEntity[]
+    // manu to many class news rel
     @ManyToMany(() => UserEntity, (user) => user.news)
     @JoinTable()
     user: UserEntity[]

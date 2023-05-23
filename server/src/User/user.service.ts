@@ -15,7 +15,8 @@ import { ClassesEntity } from "src/Classes/classes.entity";
 
 @Injectable()
 export class UserService {
-    constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>, private mailerService: MailerService) { }
+    constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
+     private mailerService: MailerService) { }
 
     async sendUserConfirmation(user: any) {
         console.log(user);

@@ -1,15 +1,27 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Button from '../../UI/Button';
 import Card from '../../UI/Card';
 
 const RegistrerClass = () => {
   const [searchSchool, setSearchSchool] = useState('');
   const [filteredSchool, setFilteredSchool] = useState([]);
-  let classesList = JSON.parse(localStorage.getItem('classList'));
   const [enteredClassCode, setEneteredClassCode] = useState('');
   const classCodeRef = useRef();
   const [text, setText] = useState('');
+  const [myClasses, setMyClasses] = useState(JSON.parse(localStorage.getItem("classList")))
+  useEffect(()=>{
+    fetch("http://localhost:4000/api/classes/list")
+    .then(resolve => resolve.json())
+    .then(data => {
+      console.log(data);
+      setMyClasses(data)
+      localStorage.setItem("classList", JSON.stringify(data))
 
+    }
+    
+    )
+  },[])
+  // const myClasses = localStorage.getItem("classList")
   const classCodeHandler = () => {
     setEneteredClassCode(classCodeRef.current.value);
   };
@@ -22,10 +34,14 @@ const RegistrerClass = () => {
       return;
     }
     console.log('submitano');
-    const result = classesList.find(
+    console.log(myClasses);
+    const result = myClasses.find(
       (classItem) => classItem.abbrevation === enteredClassCode
     );
     console.log(result);
+    if(!result) {
+      return console.log("nema id");
+    }
     const user = JSON.parse(localStorage.getItem('user'));
     fetch('http://localhost:4000/api/classes/addclass', {
       method: 'POST',
@@ -51,7 +67,7 @@ const RegistrerClass = () => {
       setText('');
     }
 
-    const found = classesList.filter((schoolClass) =>
+    const found = myClasses.filter((schoolClass) =>
       schoolClass.school.includes(searchSchool)
     );
     setFilteredSchool(found);

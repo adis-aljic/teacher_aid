@@ -27,11 +27,15 @@ export class ClassesEntity {
 
 
 
-    @ManyToMany(() => UserEntity, (user) => user.classes)
+    @ManyToMany(() => UserEntity, (user) => user.classes, )
     @JoinTable()
     user: UserEntity[]
 
-    @OneToMany(() => NewsEntity, (news: NewsEntity) => news.classes)
-    public news: NewsEntity[];
+    @ManyToMany(() => NewsEntity, (news) => news.classes, )
+    @JoinTable()
+    news: NewsEntity[]
+
+    // @OneToMany(() => NewsEntity, (news: NewsEntity) => news.classes)
+    // public news: NewsEntity[];
 
 }

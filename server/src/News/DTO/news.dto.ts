@@ -16,6 +16,6 @@ export class CreateNewsDTO {
    @IsNotEmpty()
    readonly classes : object
 
-   @IsNotEmpty()
-   readonly user : object
+//    @IsNotEmpty()
+//    readonly user : object
 }
