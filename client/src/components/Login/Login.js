@@ -7,6 +7,8 @@ import Button from '../UI/Button';
 import AuthContex from '../../store/Auth-ctx';
 import 'cors';
 import { useNavigate } from 'react-router-dom';
+import {Watch} from "react-loader-spinner"
+
 const Login = (props) => {
   const Navigate = useNavigate();
   const ctx = useContext(AuthContex);
@@ -21,6 +23,7 @@ const Login = (props) => {
   const [forgotPass, setForgotPass] = useState(false);
   const [inputEmailForgetEmail, setInputEmailForgetEmail] = useState('');
   const [recievedNewPass, setRecievedNewPass] = useState(false);
+  const [inProgress, setInProgress] = useState(false)
 
   const inputedEmail = useRef();
   const inputedPassword = useRef();
@@ -131,6 +134,7 @@ const Login = (props) => {
 
   const onLoginSubmitHandler = (e) => {
     e.preventDefault();
+    setInProgress(true)
 
     const email = inputedEmail.current.value;
     const password = inputedPassword.current.value;
@@ -173,13 +177,14 @@ const Login = (props) => {
 
     setEnteredEmail('');
     setEnteredPassword('');
+    setInProgress(false)
   };
 
   const forgottenPassworOnSubmitdHandler = (e) => {
     e.preventDefault();
-    console.log(inputEmailForgetEmail);
-    fetch('http://localhost:4000/api/user/forgetenpassword', {
-      method: 'POST',
+setInProgress(true)
+fetch('http://localhost:4000/api/user/forgetenpassword', {
+  method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
         email: `${inputEmailForgetEmail}`,
@@ -193,14 +198,33 @@ const Login = (props) => {
         console.log(data);
         setRecievedNewPass(true);
       });
-    setForgotPass(false);
+      setForgotPass(false);
     setInputEmailForgetEmail('');
+    setInProgress(false)
   };
   const clearRecievedNewPass = () => {
     setRecievedNewPass(false);
   };
   return (
     <>
+
+    {inProgress &&    
+    <Modal className="none" title="Loading ...">
+
+    <Watch
+  height="240"
+  width="240"
+  radius="48"
+  color="blue"
+  ariaLabel="watch-loading"
+  wrapperStyle={{
+zIndex: 10,
+}}
+wrapperClassName=""
+visible={true}
+/>
+</Modal>
+}
       {recievedNewPass && (
         <Modal
           title="Pasword Recovered"

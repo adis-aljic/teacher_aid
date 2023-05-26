@@ -26,6 +26,5 @@ export class UpdateUserDTO {
 
     readonly classes: ClassesEntity[]
 
-    @IsNotEmpty()
     readonly subject: string
 }

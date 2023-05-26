@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import Button from '../../UI/Button';
-import Card from '../../UI/Card';
 import styles from './AdminPanel.module.css';
 
 const ClassesList = (props) => {
@@ -16,16 +15,18 @@ const ClassesList = (props) => {
       mode: 'cors',
       body: JSON.stringify({
         id: `${user.id}`,
-      }),     headers: {
+      }),     
+      headers: {
         'Content-Type': 'application/json',
       },
-    })  .then((resolve) => resolve.json())
+    })  
+    .then((resolve) => resolve.json())
       .then((data) => {
         console.log(data);
         localStorage.setItem('classList', JSON.stringify(data));
         setClasses(data);
       });
-  }, []);
+  }, [user.id]);
   const refreshListHandler = () => {
     
 

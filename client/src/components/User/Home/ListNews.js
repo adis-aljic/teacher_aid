@@ -27,7 +27,7 @@ const ListNews = props =>{
         } 
             )
             
-},[])
+},[user.id])
     console.log(data);
 return(
     <Card className={classes.card}>
@@ -35,7 +35,7 @@ return(
             {data.length>0
           ? data.map((news) => (
             <>
-            {console.log(news.user[0].classes[0])}
+            {console.log(news)}
                 <li key={news.id} className={classes.listNews}>
                   <h1>
                      {news.title}
@@ -51,8 +51,8 @@ return(
                   <div className={classes.info}>
 
                   <p>Author :{news.user[0].firstName} {news.user[0].lastName}</p>
-                  <p>School : { news.user[0].classes[0].school}</p>
-                  <p>Class : { news.user[0].classes[0].schoolClass} - { news.user[0].classes[0].departmant}</p>
+                  <p>School : { news.school}</p>
+                  <p>Class : { news.schoolClass} - { news.departmant}</p>
                   </div>
 
                 </li>

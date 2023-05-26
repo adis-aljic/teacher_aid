@@ -29,7 +29,7 @@ export class UserEntity extends BaseEntity {
     @Column({ default: false })
     isAuth: boolean
 
-    @Column()
+    @Column({default: null})
     subject: string;
 
     @BeforeInsert()

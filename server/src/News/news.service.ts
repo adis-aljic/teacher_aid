@@ -13,10 +13,10 @@ export class NewsService {
     @InjectRepository(ClassesEntity) private readonly classReposotory : Repository<ClassesEntity>){}
 
     async createNews(createNewsDto:CreateNewsDTO) : Promise<NewsEntity>{
-        const id = createNewsDto.classes["id"]
+        const id = createNewsDto.classId
         console.log(createNewsDto);
         
-        const user = createNewsDto.classes["user"][0] as UserEntity;
+        const user = createNewsDto.user as UserEntity;
         console.log(user);
         
         const result = await this.classReposotory.findOne({
@@ -37,8 +37,11 @@ export class NewsService {
             url : createNewsDto.url,
             text : createNewsDto.text,
             title : createNewsDto.title,
-            // classes : createNewsDto.classes,
-            // user : createNewsDto.user[0] 
+            school : createNewsDto.school,
+            classId : createNewsDto.classId,
+            schoolClass : createNewsDto.schoolClass,
+            departmant : createNewsDto.departmant,
+            city : createNewsDto.city
 
         }
         const news = new NewsEntity()
@@ -46,7 +49,6 @@ export class NewsService {
         // console.log(news);
         // console.log("news basic " , user);
         news.user = [user]
-        news.classes = [resultClass]
         // news = schoolClass
         console.log(news);
         console.log("news after ");
@@ -60,7 +62,6 @@ export class NewsService {
         
         const news =await this.newsRepository.createQueryBuilder("news")
         .leftJoinAndSelect("news.user","user")
-        .leftJoinAndSelect("user.classes", "classes")
         .setFindOptions({
             where : {user : {
                 id : userId

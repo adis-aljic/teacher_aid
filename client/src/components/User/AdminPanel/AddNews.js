@@ -20,21 +20,23 @@ function UploadFile() {
   const user = JSON.parse(localStorage.getItem("user"))
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/classes/myclasses', {
+    fetch('http://localhost:4000/api/classes/myclasses',{
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
         id: `${user.id}`,
-      }),     headers: {
+      }),
+      headers:{
         'Content-Type': 'application/json',
       },
-    })  .then((resolve) => resolve.json())
-      .then((data) => {
+    })  
+    .then((resolve) => resolve.json())
+    .then((data) =>{
         console.log(data);
         localStorage.setItem('classList', JSON.stringify(data));
         setClasses(data);
       });
-  }, []);
+  }, [user.id]);
 
 console.log(classes);
   const textareaRef = useRef()
@@ -97,8 +99,12 @@ const uploadFileHandler = (event) => {
             url : `${url}`,
             text: `${enteredTextarea}`,
             title : `${enteredTitle}`,
-            classes : schoolClass[0],
-            // user : user
+            classId : schoolClass[0].id,
+            school : schoolClass[0].school,
+            schoolClass : schoolClass[0].schoolClass,
+            departmant : schoolClass[0].departmant,
+            city : schoolClass[0].city,
+            user : user
           }),        
       headers: {
         'Content-Type': 'application/json',
@@ -106,8 +112,7 @@ const uploadFileHandler = (event) => {
         
     })
     .then(resolve => resolve.json())
-    .then(data => 
-      {
+    .then(data => {
 
         console.log(data)
         if(data.statusCode === 401){
@@ -131,11 +136,7 @@ const uploadFileHandler = (event) => {
     e.preventDefault()
     setClassCode(e.target.value)
   }
-//   const resetHandler = () =>{
-//     setReset(false)
-//     setClassCode("")
-//     setEnteredTextarea("")
-//   }
+
   return (
     <Card className={styles.card}>
           {isValidCode && uploadFinished  && <p className={styles.suscesfull}>News is suscesfully added!</p>}
@@ -146,7 +147,6 @@ const uploadFileHandler = (event) => {
         <textarea className={styles.textarea} cols={40} rows={11} maxLength={400} required={true} ref={textareaRef} value={enteredTextarea} onChange={textAreaHandler} placeholder='Enter news'></textarea>
         <p>{enteredTextarea.length}/400</p>
           <Button className={styles.picker} type="button" onClick={uploadFileHandler}>Upload aditional file</Button>
-          {/* <Button type="button" onChange={resetHandler} >Reset</Button> */}
           <Button className={styles.inputBtn} type="submit">Confirm</Button> 
           {url ? <p>File suscesfully uploaded. Please click Confirm</p> : ""}
  

@@ -8,6 +8,7 @@ import { AuthGuard } from "src/guards/auth.guard";
 import { UpdateUserDTO } from "./DTO/updateUser.dto";
 
 import { RegisterClass } from "./DTO/registerClass.dto";
+import { CreateStudentDTO } from "./DTO/createStudent.dto";
 
 @Controller()
 export class UserController {
@@ -47,6 +48,11 @@ export class UserController {
         return this.userService.recievedNewPass(email)
     }
 
+    @Post("api/user/newstudent")
+    async addStudent(@Body() createStudentDTO : CreateStudentDTO): Promise <any>{
+
+        return this.userService.addStudent(createStudentDTO)
+    }
 
 
 }

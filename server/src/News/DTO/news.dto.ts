@@ -2,8 +2,6 @@ import { IsNotEmpty, MaxLength, max } from "class-validator"
 
 export class CreateNewsDTO {
     @IsNotEmpty()
-    // readonly classId : number
-    
     readonly  url : string
     
     @IsNotEmpty()
@@ -14,8 +12,21 @@ export class CreateNewsDTO {
    readonly text : string
 
    @IsNotEmpty()
-   readonly classes : object
+   readonly classId : number
 
-//    @IsNotEmpty()
-//    readonly user : object
+   @IsNotEmpty()
+   readonly school : string
+
+   @IsNotEmpty()
+   readonly schoolClass : string
+
+   @IsNotEmpty()
+   readonly departmant : string
+
+   @IsNotEmpty()
+   readonly city : string
+
+    @IsNotEmpty()
+    readonly user : object
+
 }

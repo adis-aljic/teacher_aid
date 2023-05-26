@@ -31,9 +31,9 @@ export class ClassesEntity {
     @JoinTable()
     user: UserEntity[]
 
-    @ManyToMany(() => NewsEntity, (news) => news.classes, )
-    @JoinTable()
-    news: NewsEntity[]
+    // @ManyToMany(() => NewsEntity, (news) => news.classes, )
+    // @JoinTable()
+    // news: NewsEntity[]
 
     // @OneToMany(() => NewsEntity, (news: NewsEntity) => news.classes)
     // public news: NewsEntity[];

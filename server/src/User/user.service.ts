@@ -11,12 +11,14 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { UpdateUserDTO } from "./DTO/updateUser.dto";
 import { RegisterClass } from "./DTO/registerClass.dto";
 import { ClassesEntity } from "src/Classes/classes.entity";
+import { CreateStudentDTO } from "./DTO/createStudent.dto";
 
 
 @Injectable()
 export class UserService {
     constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
-     private mailerService: MailerService) { }
+     private mailerService: MailerService,
+     @InjectRepository(ClassesEntity) private readonly classReposotory : Repository<ClassesEntity>     ) { }
 
     async sendUserConfirmation(user: any) {
         console.log(user);
@@ -141,7 +143,36 @@ export class UserService {
         }
     }
 
-
+        async addStudent(createStudentDTO : CreateStudentDTO): Promise <any>{
+            // console.log(createStudentDTO);
+            
+            const foundClass = await this.classReposotory.findOne(
+                {
+                    relations :["user"],
+                   where: {id:createStudentDTO.classId}
+                }
+                   )
+            const foundUser = await this.userRepository.findOneBy({email:createStudentDTO.email})
+            if(!foundClass) {
+                throw new HttpException("Class doesen't exist", HttpStatus.BAD_REQUEST)
+            }
+            if(foundUser) {
+                throw new HttpException("User  exist", HttpStatus.BAD_REQUEST)
+            }
+            delete createStudentDTO.classId
+            const newStudent = new UserEntity()
+            Object.assign(newStudent, createStudentDTO)
+            newStudent.isAuth = true
+            await this.userRepository.save(newStudent)
+            // console.log(newStudent);
+            console.log(foundClass, " found class");
+            foundClass.user = [...foundClass.user ,  foundUser]
+            console.log(foundClass);
+            // await this.classReposotory.createQueryBuilder().insert().relation(foundUser: UserEntity,)
+            await this.classReposotory.save(foundClass)
+            
+            return newStudent
+        }
 
 }
 

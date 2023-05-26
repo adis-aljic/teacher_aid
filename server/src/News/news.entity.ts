@@ -18,14 +18,29 @@ export class NewsEntity extends BaseEntity {
     @Column()
     text : string
 
+    @Column()
+    classId : number
+
+    @Column()
+    school : string
+
+    @Column()
+    schoolClass : string
+
+    @Column()
+    departmant : string
+
+    @Column()
+    city : string
+
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     createdAt: Date;
 
     // @ManyToOne(() => ClassesEntity, (classes: ClassesEntity) => classes.news)
     // public classes: ClassesEntity;
-    @ManyToMany(()=> ClassesEntity, (classes) => classes.news, {cascade:true})
-    @JoinTable()
-    classes : ClassesEntity[]
+    // @ManyToMany(()=> ClassesEntity, (classes) => classes.news, {cascade:true})
+    // @JoinTable()
+    // classes : ClassesEntity[]
     // manu to many class news rel
     @ManyToMany(() => UserEntity, (user) => user.news)
     @JoinTable()
