@@ -12,6 +12,7 @@ import { UpdateUserDTO } from "./DTO/updateUser.dto";
 import { RegisterClass } from "./DTO/registerClass.dto";
 import { ClassesEntity } from "src/Classes/classes.entity";
 import { CreateStudentDTO } from "./DTO/createStudent.dto";
+import { UserType } from "./type/user.type";
 
 
 @Injectable()
@@ -163,6 +164,15 @@ export class UserService {
             const newStudent = new UserEntity()
             Object.assign(newStudent, createStudentDTO)
             newStudent.isAuth = true
+            await this.mailerService.sendMail({
+                to: newStudent.email,
+                subject: "Password",
+                template: "/.confirmation",
+                context: {
+                    name: `${newStudent.firstName} ${newStudent.lastName}`,
+                    url: `Your new password is ${newStudent.password}`
+                }
+            })
             await this.userRepository.save(newStudent)
             // console.log(newStudent);
             console.log(foundClass, " found class");
@@ -170,8 +180,24 @@ export class UserService {
             console.log(foundClass);
             // await this.classReposotory.createQueryBuilder().insert().relation(foundUser: UserEntity,)
             await this.classReposotory.save(foundClass)
-            
             return newStudent
+        }
+
+        async currentUser (id:number) : Promise<any>{
+            const user = await this.userRepository.createQueryBuilder("user")
+            .leftJoinAndSelect("user.classes","classes")
+            .setFindOptions({
+                where :  {
+                    id : id
+            }
+            }).getMany()
+            console.log(id);
+            console.log(user);
+            
+            if(user.length ===0) {
+                throw new HttpException("User doesent Exist!",HttpStatus.BAD_REQUEST)
+            }
+            return user
         }
 
 }

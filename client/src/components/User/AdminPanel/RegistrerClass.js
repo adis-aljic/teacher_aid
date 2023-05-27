@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
 import Button from '../../UI/Button';
 import Card from '../../UI/Card';
-
+import Loader from '../../UI/Loader';
+import Modal from '../../UI/Modal';
 const RegistrerClass = () => {
   const [searchSchool, setSearchSchool] = useState('');
   const [filteredSchool, setFilteredSchool] = useState([]);
@@ -9,6 +10,8 @@ const RegistrerClass = () => {
   const classCodeRef = useRef();
   const [text, setText] = useState('');
   const [myClasses, setMyClasses] = useState(JSON.parse(localStorage.getItem("classList")))
+  const [inProgress, setInProgress] = useState(false)
+  const [isError, setIsError] = useState(null)
   useEffect(()=>{
     fetch("http://localhost:4000/api/classes/list")
     .then(resolve => resolve.json())
@@ -21,27 +24,33 @@ const RegistrerClass = () => {
     
     )
   },[])
-  // const myClasses = localStorage.getItem("classList")
   const classCodeHandler = () => {
     setEneteredClassCode(classCodeRef.current.value);
   };
-
+  const errorHandler = () =>{
+    setIsError(null)
+  }
   const onSubmitRegistrerClassHandler = (e) => {
     e.preventDefault();
-    console.log(enteredClassCode);
+    setInProgress(true)
     if (!enteredClassCode) {
-      setText('Please enter school class code.');
-      return;
+      setInProgress(false)
+      setIsError({
+        title: "Class code is not entered",
+        message: "Please enter class code"
+      })
+      return
+      
     }
-    console.log('submitano');
-    console.log(myClasses);
-    const result = myClasses.find(
-      (classItem) => classItem.abbrevation === enteredClassCode
-    );
+    const result = myClasses.find((classItem) => classItem.abbrevation === enteredClassCode);
     console.log(result);
     if(!result) {
-      return console.log("nema id");
-    }
+      setInProgress(false)
+      setIsError({
+        title: "School is not found.",
+        message: "Please enter valid school code or check if school is added  "
+      })
+      return    }
     const user = JSON.parse(localStorage.getItem('user'));
     fetch('http://localhost:4000/api/classes/addclass', {
       method: 'POST',
@@ -57,16 +66,31 @@ const RegistrerClass = () => {
       .then((resolve) => resolve.json())
       .then((data) => {
         console.log(data);
+        setIsError({
+          title:"Class is registred",
+          message: `Class ${data.abbrevation} is registred. ${
+            data.map(item => {
+              <>
+              <li>School {item.school}</li>
+              <li>Class {item.schoolClass} - ${item.departmant}</li>
+              <li>City {item.city}</li>
+              <li>Code {item.abbrevation}</li>
+              </>
+            })
+          }`
+        })
       });
+      setInProgress(false)
   };
 
   const searchSchoolHandler = (e) => {
     e.preventDefault();
     setSearchSchool(e.target.value);
-    if (searchSchool.length === 0) {
-      setText('');
+    console.log(searchSchool);
+    if(e.target.value === ""){
+      console.log(e.target.value);
+      setText("")
     }
-
     const found = myClasses.filter((schoolClass) =>
       schoolClass.school.includes(searchSchool)
     );
@@ -82,6 +106,13 @@ const RegistrerClass = () => {
   };
   return (
     <Card>
+         {isError && (
+        <Modal
+          title={isError.title}
+          message={isError.message}
+          onConfirm={errorHandler}
+        />
+      )}
       <h1>Registred class</h1>
       <input
         type="search"
@@ -111,8 +142,11 @@ const RegistrerClass = () => {
           onChange={classCodeHandler}></input>
         <Button type="submit">Register Class</Button>
       </form>
-  
+      {inProgress && <Loader />}
+
     </Card>
   );
 };
 export default RegistrerClass;
+
+/// lista se ne brise kada se obrise input ... error ?

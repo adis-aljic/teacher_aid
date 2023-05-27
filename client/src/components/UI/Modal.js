@@ -6,8 +6,8 @@ import Button from './Button';
 
 import styles from './Modal.module.css';
 
-const ModalBackdrop = (props) => {
-  return <div className={styles.backdrop} onClick={props.onConfirm}></div>;
+export const ModalBackdrop = (props) => {
+  return <div className={`${styles.backdrop} ${props.className}`} onClick={props.onConfirm}></div>;
 };
 
 const ModalOverlay = (props) => {

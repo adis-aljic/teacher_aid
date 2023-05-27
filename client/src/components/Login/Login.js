@@ -7,7 +7,7 @@ import Button from '../UI/Button';
 import AuthContex from '../../store/Auth-ctx';
 import 'cors';
 import { useNavigate } from 'react-router-dom';
-import {Watch} from "react-loader-spinner"
+import Loader from '../UI/Loader';
 
 const Login = (props) => {
   const Navigate = useNavigate();
@@ -71,7 +71,7 @@ const Login = (props) => {
 
   const onRegistredSubmitHandler = (e) => {
     e.preventDefault();
-
+    setInProgress(true)
     const email = inputedRegEmail.current.value;
     const password = inputedRegPassword.current.value;
     const first_name = inputedFirstName.current.value;
@@ -82,9 +82,11 @@ const Login = (props) => {
         title: 'Email is not valid',
         message: 'Please input correct email',
       });
+      setInProgress(false)
       return;
     }
     if (first_name.length < 2 && last_name.length < 2) {
+      setInProgress(false)
       setIsError({
         title: 'Invalid data format',
         message: 'First and Last name must be at least three characters long',
@@ -93,6 +95,7 @@ const Login = (props) => {
     }
 
     if (!validatePassword(password)) {
+      setInProgress(false)
       setIsError({
         title: 'Invalid password format',
         message:
@@ -130,6 +133,7 @@ const Login = (props) => {
       message:
         'You account is suscesfuly created. You will recieved email with confirmation email. After confirmination you will be able to log in.',
     });
+    setInProgress(false)
   };
 
   const onLoginSubmitHandler = (e) => {
@@ -139,6 +143,8 @@ const Login = (props) => {
     const email = inputedEmail.current.value;
     const password = inputedPassword.current.value;
     if (!email.includes('@')) {
+      setInProgress(false)
+
       setIsError({
         title: 'Email is not valid',
         message: 'Please input correct email',
@@ -147,6 +153,8 @@ const Login = (props) => {
     }
 
     if (!validatePassword(password)) {
+      setInProgress(false)
+
       setIsError({
         title: 'Invalid password format',
         message:
@@ -208,23 +216,6 @@ fetch('http://localhost:4000/api/user/forgetenpassword', {
   return (
     <>
 
-    {inProgress &&    
-    <Modal className="none" title="Loading ...">
-
-    <Watch
-  height="240"
-  width="240"
-  radius="48"
-  color="blue"
-  ariaLabel="watch-loading"
-  wrapperStyle={{
-zIndex: 10,
-}}
-wrapperClassName=""
-visible={true}
-/>
-</Modal>
-}
       {recievedNewPass && (
         <Modal
           title="Pasword Recovered"
@@ -328,6 +319,8 @@ visible={true}
             Forgot password ?
           </button>
         </div>
+        {inProgress && <Loader />}
+
       </div>
     </>
   );

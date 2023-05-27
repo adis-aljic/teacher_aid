@@ -1,4 +1,19 @@
+
+
 .listNews{
+    list-style: none;
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 10px;
+    background-color: rgb(166, 182, 182);
+    border: 1px solid black;
+    /* background-position: 0; */
+}
+.listProfile{
     list-style: none;
     padding: 3rem;
     display: flex;
@@ -24,6 +39,18 @@
     display: block;
     height: 80vh;    
     margin: 0;
+    padding: 2rem;
+     overflow-y:scroll;
+     overflow-wrap: normal;
+    width: 60vw;
+    gap:2rem;
+    display: grid;
+    place-items: center;
+}
+.card_profile {
+    display: block;
+    height: 80vh;    
+    /* margin: 0; */
     padding: 2rem;
      overflow-y:scroll;
      overflow-wrap: normal;

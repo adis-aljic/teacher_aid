@@ -80,7 +80,7 @@ export class NewsService {
         //         }
             
         // })
-        console.log(news, " news");
+        // console.log(news, " news");
         
          return news
     }

@@ -4,9 +4,10 @@ import * as filestack from 'filestack-js';
 import Button from '../../UI/Button';
 import Card from '../../UI/Card';
 import { API_KEY } from '../../../firestack';
-
-
+import Modal from '../../UI/Modal';
+import Loader from '../../UI/Loader';
 const client = filestack.init(API_KEY);
+
 
 function UploadFile() {
   const [url, setUrl] = useState("");
@@ -14,12 +15,15 @@ function UploadFile() {
   const [eneteredClassCode, setClassCode] = useState("")
   const [ enteredTitle, setEnteredTitle ] = useState("")
   const [uploadFinished, setUploadFinished] = useState(false)
+  const [inProgress, setInProgress] = useState(false)
   const [message , setMessage ] = useState("")
   const [isValidCode, setValidCode] = useState(true)
+  const [isError, setIsError] = useState(null)
   const [classes, setClasses] = useState(JSON.parse(localStorage.getItem("MyClasses")))
   const user = JSON.parse(localStorage.getItem("user"))
 
   useEffect(() => {
+    setInProgress(true)
     fetch('http://localhost:4000/api/classes/myclasses',{
       method: 'POST',
       mode: 'cors',
@@ -33,12 +37,13 @@ function UploadFile() {
     .then((resolve) => resolve.json())
     .then((data) =>{
         console.log(data);
-        localStorage.setItem('classList', JSON.stringify(data));
+        localStorage.setItem('MyClasses', JSON.stringify(data));
         setClasses(data);
       });
+      setInProgress(false)
+
   }, [user.id]);
 
-console.log(classes);
   const textareaRef = useRef()
   const classCodeRef = useRef()
   const inputTitleRef = useRef()
@@ -68,7 +73,6 @@ const uploadFileHandler = (event) => {
         onUploadDone: (res) => {
             console.log(res);
             const url = res.filesUploaded[0].url
-            console.log(url);
             setUrl(url)
             // setReset(true)
         },
@@ -79,19 +83,33 @@ const uploadFileHandler = (event) => {
 
   const handleFormSubmit = e=>{
     e.preventDefault()
+    setInProgress(true)
+
     if(!eneteredClassCode && !enteredTextarea && !enteredTitle ){
-        return
+      setInProgress(false)
+        return setIsError({
+          title: "All fields are required!",
+          message: "One or more fields are empty"
+        })
     }
     const user = JSON.parse(localStorage.getItem("user"))
     console.log(classes);
     if(!classes) {
-      return console.log("ovo treba henldat los class code");
-    }  const schoolClass = classes.filter(x => x.abbrevation === eneteredClassCode)
+      setInProgress(false)
 
-    console.log(schoolClass, " add news class");
-    if(!schoolClass) {
-      console.log("hendlat");
-      return
+      return setIsError({
+        title: 'Class code is not valid',
+        message: 'Please input correct class code',
+      });
+    } 
+     const schoolClass = classes.filter(x => x.abbrevation === eneteredClassCode)
+
+    if(schoolClass.length === 0) {
+      setInProgress(false)
+      return setIsError({
+        title: 'Class is not found. ',
+        message: 'Please check is class code valid or is class added',
+      });
     }
     fetch("http://localhost:4000/api/news",{
       method:"POST",
@@ -114,7 +132,6 @@ const uploadFileHandler = (event) => {
     .then(resolve => resolve.json())
     .then(data => {
 
-        console.log(data)
         if(data.statusCode === 401){
           setValidCode(false)
           setMessage(data.message)
@@ -131,14 +148,26 @@ const uploadFileHandler = (event) => {
     setEnteredTitle("")
         setUploadFinished(true)
          setTimeout(() => setUploadFinished(false), 1000)
+         setInProgress(false)
+
     }
   const classCodeHandler = e =>{
     e.preventDefault()
     setClassCode(e.target.value)
   }
-
+  const errorHandler = () => {
+    setIsError(null);
+  };
   return (
+
     <Card className={styles.card}>
+         {isError && (
+        <Modal
+          title={isError.title}
+          message={isError.message}
+          onConfirm={errorHandler}
+        />
+      )}
           {isValidCode && uploadFinished  && <p className={styles.suscesfull}>News is suscesfully added!</p>}
           {message && <p className={styles.suscesfull}>{message}</p>}
       <form onSubmit={handleFormSubmit}>
@@ -151,7 +180,8 @@ const uploadFileHandler = (event) => {
           {url ? <p>File suscesfully uploaded. Please click Confirm</p> : ""}
  
       </form>
- 
+      {inProgress && <Loader />}
+
     </Card>
   );
 }

@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import Button from '../../UI/Button';
 import Card from '../../UI/Card';
-
+import Loader from '../../UI/Loader';
+import Modal from '../../UI/Modal';
 const RegistrerClass = () => {
   const [searchSchool, setSearchSchool] = useState('');
   const [filteredSchool, setFilteredSchool] = useState([]);
@@ -9,6 +10,8 @@ const RegistrerClass = () => {
   const [enteredClassCode, setEneteredClassCode] = useState('');
   const classCodeRef = useRef();
   const [text, setText] = useState('');
+  const [inProgress, setInProgress] = useState(false)
+  const [isError, setIsError] = useState(null)
 
   const classCodeHandler = () => {
     setEneteredClassCode(classCodeRef.current.value);
@@ -17,15 +20,28 @@ const RegistrerClass = () => {
 
   const unregisterClassHandler = (e) => {
     e.preventDefault();
+    setInProgress(false)
     if (!enteredClassCode) {
-      setText('Please enter school class code.');
-      return;
+      setInProgress(false)
+      setIsError({
+        title: "Class code is not entered",
+        message: "Please enter class code"
+      })
+      return
+      
     }
+   
     const result = classesList.find(
       (classItem) => classItem.abbrevation === enteredClassCode
     );
-    console.log('result');
-    const user = JSON.parse(localStorage.getItem('user'));
+    if(!result) {
+      setInProgress(false)
+      setIsError({
+        title: "School is not found.",
+        message: "Please enter valid school code or check if school is added  "
+      })
+      return    }
+          const user = JSON.parse(localStorage.getItem('user'));
     fetch('http://localhost:4000/api/classes/unregisterclass', {
       method: 'POST',
       mode: 'cors',
@@ -40,7 +56,22 @@ const RegistrerClass = () => {
       .then((resolve) => resolve.json())
       .then((data) => {
         console.log(data);
+        setIsError({
+          title:"Class is registred",
+          message: `Class ${data.abbrevation} is registred. ${
+            data.map(item => {
+              <>
+              <li>School {item.school}</li>
+              <li>Class {item.schoolClass} - ${item.departmant}</li>
+              <li>City {item.city}</li>
+              <li>Code {item.abbrevation}</li>
+              </>
+            })
+          }`
+        })
+      
       });
+      setInProgress(false)
   };
 
   const searchSchoolHandler = (e) => {
@@ -63,8 +94,17 @@ const RegistrerClass = () => {
       setFilteredSchool([]);
     }
   };
+
+  const errorHandler = () => setIsError(null)
   return (
     <Card>
+              {isError && (
+        <Modal
+          title={isError.title}
+          message={isError.message}
+          onConfirm={errorHandler}
+        />
+      )}
       <h1>Unregistred class</h1>
       <input
         type="search"
@@ -95,6 +135,8 @@ const RegistrerClass = () => {
           onChange={classCodeHandler}></input>
         <Button type="submit">Unregister Class</Button>
       </form>
+      {inProgress && <Loader />}
+
     </Card>
   );
 };

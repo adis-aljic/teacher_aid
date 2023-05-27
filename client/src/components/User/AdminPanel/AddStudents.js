@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
 import Card from '../../UI/Card';
 import Button from '../../UI/Button';
-// import classes from './AdminPanel.module.css';
+import Loader from '../../UI/Loader';
+import Modal from '../../UI/Modal';
 const AddStudent = (props) => {
   const [enteredFirstName, setEnteredFirstName] = useState('');
   const [enteredLastName, setEnteredLastName] = useState('');
@@ -9,7 +10,9 @@ const AddStudent = (props) => {
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredSubject, setEnteredSubject] = useState('');
   const [message, setEnteredMessage] = useState("");
-  const [isValid , setIsValid] = useState(false)
+  // const [isValid , setIsValid] = useState(false)
+  const [inProgress, setInProgress] = useState(false)
+  const [isError, setIsError] = useState(null)
 
   const inputFirstNameRef = useRef();
   const inputLastNameRef = useRef();
@@ -37,11 +40,36 @@ console.log(classes);
 
   const addStudentHandler = (e) => {
     e.preventDefault();
-    const myClass = classes.filter(classes => classes.abbrevation === enteredAbrevation)
-    if(!myClass) {
-      return setEnteredMessage("Something went wrong")
+    setInProgress(true)
+    if(!enteredFirstName || !enteredLastName || !enteredSubject || !enteredEmail) {
+      setInProgress(false)
+      setEnteredFirstName("")
+        setEnteredLastName("")
+        setEnteredSubject("")
+        setEnteredAbrevation("")
+        setEnteredEmail("")
+        setEnteredMessage("All fields must be inputed!")
+        setTimeout(() => {
+          setEnteredMessage("")
+        }, 1000);
+      return 
     }
-    // console.log(myClass);
+    const myClass = classes.filter(classes => classes.abbrevation === enteredAbrevation)
+    console.log(myClass);
+    if(myClass.length === 0) {
+      setInProgress(false)
+      setEnteredFirstName("")
+        setEnteredLastName("")
+        setEnteredSubject("")
+        setEnteredAbrevation("")
+        setEnteredEmail("")
+        setIsError({
+          title: "Class is not found",
+          message : "Please check if you are entered right class code"
+        })
+      return
+      //  setEnteredMessage("Class is not found")
+    }
     fetch('http://localhost:4000/api/user/newstudent', {
       method: 'POST',
       mode: 'cors',
@@ -67,20 +95,38 @@ console.log(classes);
         setEnteredSubject("")
         setEnteredAbrevation("")
         setEnteredEmail("")
-        setEnteredMessage(data.message)
-        setIsValid(true)
-        setTimeout(() => {
-          setIsValid(false)
-          setEnteredMessage("")
-        }, (1000));
-    
+        console.log(data);
+        // setEnteredMessage(data.message)
+        // setIsValid(true)
+        // setTimeout(() => {
+        //   setIsValid(false)
+        //   setEnteredMessage("")
+        // }, (1000));
+        console.log(Response);
+
+        if(data.statusCode > 299){
+          setInProgress(false)
+        return  setIsError({title: "Error",
+        message: `${data.message}`})
+        }
+        setIsError({title: "User is added",
+        message: `Student ${data.firstName} ${data.lastName} is added to class ${enteredAbrevation}`})
       });
+      setInProgress(false)
 
   };
-
+  const errorHandler = () => setIsError(false)
   return (
     <Card className={classes.height}>
-      {isValid ?  message || <p>Student is added.</p> : <p>{message}</p>}
+              {isError && (
+        <Modal
+          title={isError.title}
+          message={isError.message}
+          onConfirm={errorHandler}
+        />
+      )}
+      {/* {isValid ?  message || <p>Student is added.</p> : <p>{message}</p>} */}
+{message ? {message} : ""}
       <form onSubmit={addStudentHandler}>
         <h1>Add new student</h1>
         <input
@@ -123,7 +169,9 @@ console.log(classes);
           onChange={subjectHandler}></input>
         <Button type="submit">Add new student</Button>
       </form>
+      {inProgress && <Loader />}
     </Card>
+
   );
 };
 

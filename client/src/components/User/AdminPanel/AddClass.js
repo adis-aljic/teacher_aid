@@ -2,7 +2,8 @@ import { useState, useRef } from 'react';
 import Card from '../../UI/Card';
 import Button from '../../UI/Button';
 import classes from './AdminPanel.module.css';
-import { Watch } from 'react-loader-spinner';
+import Loader from '../../UI/Loader';
+import Modal from '../../UI/Modal';
 
 const AddClass = (props) => {
   const [enteredSchool, setEnteredSchool] = useState('');
@@ -12,6 +13,7 @@ const AddClass = (props) => {
   const [enteredCity, setEnteredCity] = useState('');
   const [enteredAbbCity, setEnteredAbbCity] = useState('');
   const [inProgress, setInProgress] = useState(false)
+  const [isError ,setIsError] = useState(null)
 
   const inputSchoolRef = useRef();
   const inputClassRef = useRef();
@@ -67,38 +69,35 @@ const AddClass = (props) => {
       .then((resolve) => resolve.json())
       .then((data) => {
         console.log(data);
+        setIsError({
+          title:"Class is added",
+          message: `Class ${data.school}   ${data.schoolClass} - ${data.departmant} 
+           is added. Class code : ${data.abbrevation} `
+        })
         setEnteredSchool('');
         setEnteredCity('');
         setEnteredAbbCity('');
         setEnteredClass('');
         setEnteredDepartmant('');
         setEnteredAbrevation('');
+        
       });
       setInProgress(false)
   };
-
+  const errorHandler = () =>{
+    setIsError(null)
+  }
   return (
     
-    <Card className={classes.height}>
-      
-    {inProgress &&    
-    <Modal className="none" title="Loading ...">
 
-    <Watch
-  height="240"
-  width="240"
-  radius="48"
-  color="blue"
-  ariaLabel="watch-loading"
-  wrapperStyle={{
-zIndex: 10,
-}}
-wrapperClassName=""
-visible={true}
-/>
-</Modal>
-}
-      <form onSubmit={addClassHandler}>
+<Card className={classes.height}>
+{isError && (
+        <Modal
+          title={isError.title}
+          message={isError.message}
+          onConfirm={errorHandler}
+        />
+      )}      <form onSubmit={addClassHandler}>
         <h1>Add new class</h1>
         <input
           type="text"
@@ -153,7 +152,12 @@ visible={true}
           Add new class
         </Button>
       </form>
-    </Card>
+      {inProgress && <Loader />}
+
+  </Card>
+
+  
+
   );
 };
 

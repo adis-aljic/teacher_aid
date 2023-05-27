@@ -18,6 +18,7 @@ import Navigation from './components/User/AdminPanel/Navigation';
 import UnregisterClass from "./components/User/AdminPanel/UnregisterClass"
 import AddNews from './components/User/AdminPanel/AddNews';
 import ListNews from './components/User/Home/ListNews';
+import Profile from './components/User/Home/Profile';
 function App() {
   const ctx = useContext(AuthContex);
   console.log(ctx);
@@ -78,6 +79,7 @@ function App() {
                 <>
                   <div className={classes.home}>
                     <ListNews className={classes.classList}></ListNews>
+                    <Profile className={classes.classList}></Profile>
                   </div>
                 </>
               )

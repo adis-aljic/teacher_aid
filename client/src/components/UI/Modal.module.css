@@ -29,6 +29,11 @@
   .none{
     display: none;
   }
+  
+  .loader{
+    display: none;
+    
+  }
   .content {
     padding: 1rem;
     margin-top: 4rem;
