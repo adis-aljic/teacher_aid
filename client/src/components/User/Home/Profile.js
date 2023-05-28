@@ -5,14 +5,16 @@ import classes from "./ListNews.module.css"
 const Profile = props =>{
     const user = JSON.parse(localStorage.getItem("user"))
     console.log(user);
-    const [data, setData] = useState([])
-    if(data.length ===0){
-        setData(JSON.parse(localStorage.getItem("user_data")))
-    }
+    const [profile, setProfile] = useState(JSON.parse(localStorage.getItem("profile")))
+    const [myClasses, setMyClasses] = useState([])
+
+    // setProfile()
     useEffect(()=>{
             console.log("njeanjnjnaejen");
-        fetch("http://localhost:4000/api/user",{
-            method: 'POST',
+            
+
+                fetch("http://localhost:4000/api/user",{
+                    method: 'POST',
             mode: 'cors',
             body: JSON.stringify({
                 id: `${user.id}`,
@@ -22,34 +24,49 @@ const Profile = props =>{
             },
         })
         .then(resolve => resolve.json())
-        .then(result =>
+        .then(data =>
         {
-            
-            console.log(result)
-            setData(result)
-            localStorage.setItem("user_data",JSON.stringify(result))
+                console.log("dataaaa");
+            setProfile(data[0])
+            localStorage.setItem("profile",JSON.stringify(data[0]))
+            setMyClasses(data[0].classes)
+            console.log(data[0])
         } 
         )
+    
         
-    },[user.id])
+    },[])
     
-    console.log(data);
-return(
+    console.log(profile, " profile");
+
+    // console.log(classesList);
+    return(
     <Card className={classes.card_profile}>
-     
-     <li key={data[0].id} className={classes.listNews}>
-            First Name : {data[0].firstName }
+        <li key={profile.id}  className={classes.listProfile}>
+            First Name : {profile ? profile.firstName : ""}
             <br></br>
-        Last Name : {data[0].lastName }
+        Last Name : {profile ? profile.lastName : ""}
             <br></br>
-        email : {data[0].email }
+        email : {profile ? profile.email : ""}
             <br></br>
-        role : {data[0].role }
+        role : {profile ? profile.role : ""}
             <br></br>
-        subject : {data[0].subject }
+        subject : {profile ? profile.subject : ""}
         </li>
-            <br></br>
-    
+        {console.log(myClasses)}
+            {
+                myClasses.map((item, index)=> {
+           {console.log(item)} 
+           
+                <li key={index}  className={classes.listProfile}>
+              School : { item.school}
+              <br></br>
+              Class : {item.schoolClass} - {item.departmant}
+              <br></br>
+              Class code : {item.abbrevation}
+       </li> 
+    })}
+
  
     </Card>
 )

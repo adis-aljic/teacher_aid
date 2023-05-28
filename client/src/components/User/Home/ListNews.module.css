@@ -56,6 +56,6 @@
      overflow-wrap: normal;
     width: 60vw;
     gap:2rem;
-    display: grid;
-    place-items: center;
-}
+    display: flex;
+justify-content: space-around;
+align-items: center;}
