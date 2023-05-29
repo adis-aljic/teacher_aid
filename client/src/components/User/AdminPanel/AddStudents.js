@@ -19,7 +19,7 @@ const AddStudent = (props) => {
   const inputAbrevationRef = useRef();
   const inputEmailRef = useRef();
   const inputSubjectRef = useRef();
-  const classes = JSON.parse(localStorage.getItem("classList"))
+  const classes = JSON.parse(localStorage.getItem("MyClasses"))
 
 console.log(classes);
   const firstNameHandler = (e) => {
@@ -117,7 +117,7 @@ console.log(classes);
   };
   const errorHandler = () => setIsError(false)
   return (
-    <Card className={classes.height}>
+    <Card >
               {isError && (
         <Modal
           title={isError.title}

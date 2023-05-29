@@ -157,9 +157,7 @@ export class UserService {
             if(!foundClass) {
                 throw new HttpException("Class doesen't exist", HttpStatus.BAD_REQUEST)
             }
-            if(foundUser) {
-                throw new HttpException("User  exist", HttpStatus.BAD_REQUEST)
-            }
+            
             delete createStudentDTO.classId
             const newStudent = new UserEntity()
             Object.assign(newStudent, createStudentDTO)

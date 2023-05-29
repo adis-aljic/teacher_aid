@@ -66,9 +66,10 @@ const Profile = (props) => {
                 <AccordionItem title={` Class Code : ${classItem.abbrevation}`}>
                   {students
                     ? students.map((student) => {
-                        student.classes.forEach((schoolClass) => {
-                          schoolClass.abbrevation === classItem.abbrevation ? (
-                            <li className={classes.listProfile}>
+                      return  student.classes.map((schoolClass) => {
+                       return   schoolClass.abbrevation === classItem.abbrevation ? (
+                            <li className={classes.listProfile} key={student.id}>
+                              {console.log(student.firstName)}
                               Name : {student.firstName};
                             </li>
                           ) : null;
