@@ -4,7 +4,7 @@ import classes from "./ListNews.module.css"
 
 const ListNews = props =>{
     const user = JSON.parse(localStorage.getItem("user"))
-    console.log(user);
+    // console.log(user);
     const [data, setData] = useState([])
     useEffect(()=>{
 
@@ -23,19 +23,19 @@ const ListNews = props =>{
         {
 
             setData(data)
-            console.log(data)
+            // console.log(data)
         } 
             )
             
 },[user.id])
-    console.log(data);
+    // console.log(data);
 return(
     <Card className={classes.card}>
             
             {data.length>0
           ? data.map((news) => (
             <>
-            {console.log(news)}
+            {/* {console.log(news)} */}
                 <li key={news.id} className={classes.listNews}>
                   <h1>
                      {news.title}

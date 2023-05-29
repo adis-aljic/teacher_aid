@@ -55,6 +55,11 @@ export class UserController {
 
         return this.userService.addStudent(createStudentDTO)
     }
+    
+    @Get("api/user/getstudents")
+    async findAllStudents() : Promise<any>{
+        return this.userService.findAllStudents;
+    }
 
 
 }

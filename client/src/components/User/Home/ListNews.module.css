@@ -48,7 +48,7 @@
     place-items: center;
 }
 .card_profile {
-    display: block;
+    /* display: block; */
     height: 80vh;    
     /* margin: 0; */
     padding: 2rem;
@@ -58,4 +58,5 @@
     gap:2rem;
     display: flex;
 justify-content: space-around;
-align-items: center;}
+/* align-items: center; */
+}

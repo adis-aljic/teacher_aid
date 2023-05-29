@@ -191,13 +191,27 @@ export class UserService {
                     id : id
             }
             }).getMany()
-            console.log(id);
-            console.log(user);
+            // console.log(id);
+            // console.log(user);
             
             if(user.length ===0) {
                 throw new HttpException("User doesent Exist!",HttpStatus.BAD_REQUEST)
             }
             return user
+        }
+        async findAllStudents(){
+           const students = await this.userRepository.createQueryBuilder("user")
+            .leftJoinAndSelect("user.classes","classes")
+            .setFindOptions({
+                where : {
+                    role : "student"
+                }
+            })
+            .getMany()
+            console.log(students);
+            console.log("students");
+            return students
+            
         }
 
 }
