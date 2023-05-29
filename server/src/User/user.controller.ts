@@ -58,7 +58,7 @@ export class UserController {
     
     @Get("api/user/getstudents")
     async findAllStudents() : Promise<any>{
-        return this.userService.findAllStudents;
+        return this.userService.findAllStudents();
     }
 
 
