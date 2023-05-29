@@ -70,7 +70,7 @@ const RegistrerClass = () => {
           title:"Class is registred",
           message: `Class ${data.abbrevation} is registred. ${
             data.map(item => {
-              <>
+            return  <>
               <li>School {item.school}</li>
               <li>Class {item.schoolClass} - ${item.departmant}</li>
               <li>City {item.city}</li>

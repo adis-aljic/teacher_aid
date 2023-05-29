@@ -6,7 +6,7 @@ import Modal from '../../UI/Modal';
 const RegistrerClass = () => {
   const [searchSchool, setSearchSchool] = useState('');
   const [filteredSchool, setFilteredSchool] = useState([]);
-  let classesList = JSON.parse(localStorage.getItem('classList'));
+  let classesList = JSON.parse(localStorage.getItem('MyClasses'));
   const [enteredClassCode, setEneteredClassCode] = useState('');
   const classCodeRef = useRef();
   const [text, setText] = useState('');
@@ -60,7 +60,7 @@ const RegistrerClass = () => {
           title:"Class is registred",
           message: `Class ${data.abbrevation} is registred. ${
             data.map(item => {
-              <>
+           return   <>
               <li>School {item.school}</li>
               <li>Class {item.schoolClass} - ${item.departmant}</li>
               <li>City {item.city}</li>

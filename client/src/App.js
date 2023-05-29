@@ -13,7 +13,6 @@ import classes from './App.module.css';
 import ClassesList from './components/User/AdminPanel/ClassesList';
 import RegistrerClass from './components/User/AdminPanel/RegistrerClass';
 import { Routes, Route } from 'react-router-dom';
-import MyClasses from './components/User/Home/MyClasses';
 import Navigation from './components/User/AdminPanel/Navigation';
 import UnregisterClass from "./components/User/AdminPanel/UnregisterClass"
 import AddNews from './components/User/AdminPanel/AddNews';

@@ -41,7 +41,7 @@ const Profile = (props) => {
     // napraviti fetch koji ide u korisnike i vraca sve korisnike sa svim razredima i onda u svaki razre
     // proci koji ima dole i ispisati koji su korisnici tu
     // napravit klikable na korisnika koji ce otoriti prozor(ili spustit) gdje ce biti opcije da se upise note ili ocjena
-  }, []);
+  }, [user.id]);
   console.log(students);
 
   return (
@@ -66,11 +66,35 @@ const Profile = (props) => {
                 <AccordionItem title={` Class Code : ${classItem.abbrevation}`}>
                   {students
                     ? students.map((student) => {
-                      return  student.classes.map((schoolClass) => {
-                       return   schoolClass.abbrevation === classItem.abbrevation ? (
-                            <li className={classes.listProfile} key={student.id}>
-                              {console.log(student.firstName)}
-                              Name : {student.firstName};
+                        return student.classes.map((schoolClass) => {
+                          return schoolClass.abbrevation ===
+                            classItem.abbrevation ? (
+                            <li
+                              className={classes.listProfile}
+                              key={student.id}
+                            >
+                              {console.log(student)}
+                              <div className="studentGrade">
+                                <div className="gradeInput">
+                                  <p>
+                                    {student.firstName} {student.lastName};
+                                  </p>
+                                  <p>{student.email}</p>
+                                  <p>{student.subject}</p>
+                                  <p>{schoolClass.school}</p>
+                                  <p>
+                                    {schoolClass.schoolClass} -{" "}
+                                    {schoolClass.departmant}
+                                  </p>
+                                  <p>Grade : {student.grade || " "}</p>
+
+                                  <button>Add</button>
+                                </div>
+                                <div className="note">
+                                  <h1>notes</h1>
+                                  <p>Lorem ipsun</p>
+                                </div>
+                              </div>
                             </li>
                           ) : null;
                         });

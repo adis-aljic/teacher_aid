@@ -42,7 +42,7 @@ return(
                     </h1>
                   <br>
                   </br>
-                  <a href={news.url} target="_blank" download><img src={news.url}></img></a>
+                  <a href={news.url} target="_blank" rel="noreferrer" download={true}><img alt="preview" src={news.url}></img></a>
                   <br></br>
                   {news.text}
                   <br>
