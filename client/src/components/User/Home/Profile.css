@@ -13,8 +13,8 @@
     border-bottom-right-radius: 5px;
   }
   .accordion .accordion-item .title {
-    background-color: #f6f6f6;
-    color: #444;
+    background-color: #b9b4b4;
+    color: #201b1b;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -28,7 +28,7 @@
   .accordion .accordion-item .title:after {
     content: '\2795';
     font-size: 13px;
-    color: #777;
+    color: #4d3b3b;
     float: right;
     margin-left: 5px;
   }

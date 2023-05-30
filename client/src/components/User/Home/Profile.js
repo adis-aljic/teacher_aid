@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import Card from "../../UI/Card";
 import classes from "./ListNews.module.css";
 import React from "react";
-import { Accordion, AccordionItem } from "react-light-accordion";
+// import { Accordion, AccordionItem } from "react-light-accordion";
 import "./Profile.css";
+import {Accordion, AccordionBody, AccordionHeader, AccordionItem} from "react-headless-accordion";
+
 
 const Profile = (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -47,6 +49,8 @@ const Profile = (props) => {
   return (
     <Card className={classes.card_profile}>
       <li key={profile.id} className={classes.listProfile}>
+      <h2>Profile</h2>
+      <br></br>
         First Name : {profile ? profile.firstName : ""}
         <br></br>
         Last Name : {profile ? profile.lastName : ""}
@@ -59,26 +63,35 @@ const Profile = (props) => {
       </li>
 
       <div>
-        <h1>Classes</h1>
-        <Accordion atomic={true}>
+        <h2>Classes</h2>
+        <Accordion className="accordion" transition={{duration: "500ms", timingFunction: "cubic-bezier(0, 0, 0.2, 1)"}}>
           {profile.classes
             ? profile.classes.map((classItem) => (
-                <AccordionItem title={` Class Code : ${classItem.abbrevation}`}>
+                <AccordionItem >
+                  <AccordionHeader >
+                    <h3 className="title">Class {classItem.abbrevation}</h3>
+                  </AccordionHeader>
+                  <AccordionBody className="accordion-item ">
+
                   {students
                     ? students.map((student) => {
-                        return student.classes.map((schoolClass) => {
-                          return schoolClass.abbrevation ===
+                      return student.classes.map((schoolClass) => {
+                        return schoolClass.abbrevation ===
                             classItem.abbrevation ? (
-                            <li
+                              <AccordionItem >
+                                <AccordionHeader as="div">
+                                  <h4 className="title">{student.firstName} {student.lastName}</h4>
+                                </AccordionHeader>
+                              <AccordionBody className="accordion-item">
+
+                              <li
                               className={classes.listProfile}
                               key={student.id}
                             >
                               {console.log(student)}
+
                               <div className="studentGrade">
                                 <div className="gradeInput">
-                                  <p>
-                                    {student.firstName} {student.lastName};
-                                  </p>
                                   <p>{student.email}</p>
                                   <p>{student.subject}</p>
                                   <p>{schoolClass.school}</p>
@@ -96,14 +109,17 @@ const Profile = (props) => {
                                 </div>
                               </div>
                             </li>
+                              </AccordionBody>
+                        </AccordionItem>
                           ) : null;
                         });
                       })
-                    : null}
+                      : null}
+                      </AccordionBody>
                   ;
-                </AccordionItem>
+                      </AccordionItem>
               ))
-            : ""}
+            : null}
         </Accordion>
       </div>
     </Card>
