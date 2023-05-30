@@ -9,6 +9,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "filestack-js": "^3.26.1",
+    "pdf2json": "^3.0.4",
+    "pdfjs-dist": "^3.7.107",
     "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

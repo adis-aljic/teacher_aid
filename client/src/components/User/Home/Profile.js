@@ -5,6 +5,7 @@ import React from "react";
 // import { Accordion, AccordionItem } from "react-light-accordion";
 import "./Profile.css";
 import {Accordion, AccordionBody, AccordionHeader, AccordionItem} from "react-headless-accordion";
+import Modal from "../../UI/Modal"
 
 
 const Profile = (props) => {
@@ -14,6 +15,8 @@ const Profile = (props) => {
     JSON.parse(localStorage.getItem("profile"))
   );
   const [students, setStudents] = useState([]);
+  const [isAddClicked, setIsAddCliked] = useState(false)
+  const [studentName , setStudentName] = useState({})
 
   useEffect(() => {
     fetch("http://localhost:4000/api/user/getstudents", {
@@ -46,8 +49,33 @@ const Profile = (props) => {
   }, [user.id]);
   console.log(students);
 
+  const addButtonHandler = e =>{
+    e.preventDefault()
+    setIsAddCliked(true)
+    console.log(JSON.parse(e.target.value));
+    setStudentName(JSON.parse(e.target.value))
+  }
+  const closeAddButton = () => setIsAddCliked(false)
+  
   return (
+    
     <Card className={classes.card_profile}>
+      {isAddClicked && (
+        <Modal
+          title={` Student ${studentName.firstName} ${studentName.lastName}`}
+          message={studentName.email}
+          onConfirm={closeAddButton}>
+            <form className="addNewGrade">
+            <input placeholder="enter grade"></input>
+            <button type="submit">Add grade</button>
+            </form>
+            <form >
+            <textarea placeholder="enter note"></textarea>
+            <button type="submit">Add note</button>
+            </form>
+          </Modal>
+      )}
+     
       <li key={profile.id} className={classes.listProfile}>
       <h2>Profile</h2>
       <br></br>
@@ -77,17 +105,16 @@ const Profile = (props) => {
                     ? students.map((student) => {
                       return student.classes.map((schoolClass) => {
                         return schoolClass.abbrevation ===
-                            classItem.abbrevation ? (
-                              <AccordionItem >
+                        classItem.abbrevation ? (
+                          <AccordionItem >
                                 <AccordionHeader as="div">
                                   <h4 className="title">{student.firstName} {student.lastName}</h4>
                                 </AccordionHeader>
                               <AccordionBody className="accordion-item">
-
                               <li
                               className={classes.listProfile}
                               key={student.id}
-                            >
+                              >
                               {console.log(student)}
 
                               <div className="studentGrade">
@@ -96,12 +123,12 @@ const Profile = (props) => {
                                   <p>{student.subject}</p>
                                   <p>{schoolClass.school}</p>
                                   <p>
-                                    {schoolClass.schoolClass} -{" "}
+                                    {schoolClass.schoolClass} -
                                     {schoolClass.departmant}
                                   </p>
                                   <p>Grade : {student.grade || " "}</p>
 
-                                  <button>Add</button>
+                                  <button type="submit" value={JSON.stringify(student)} onClick={addButtonHandler}>Add</button>
                                 </div>
                                 <div className="note">
                                   <h1>notes</h1>
@@ -119,7 +146,7 @@ const Profile = (props) => {
                   ;
                       </AccordionItem>
               ))
-            : null}
+              : null}
         </Accordion>
       </div>
     </Card>

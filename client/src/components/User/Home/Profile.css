@@ -89,3 +89,25 @@
   padding: 1rem;
 
   }
+
+  .addNewGrade{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+  }
+  & input {
+
+    height: 2rem;
+    text-align: center;
+  }&
+   button{
+    height: 2rem;
+    /* height: 2rem; */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 8rem;
+  }

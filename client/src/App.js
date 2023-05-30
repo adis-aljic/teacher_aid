@@ -7,7 +7,6 @@ import AuthContex from './store/Auth-ctx';
 import Modal from './components/UI/Modal';
 import HeaderInformation from './components/User/HeaderInformation';
 import AddClass from './components/User/AdminPanel/AddClass';
-import Card from './components/UI/Card';
 import AddStudent from './components/User/AdminPanel/AddStudents';
 import classes from './App.module.css';
 import ClassesList from './components/User/AdminPanel/ClassesList';
@@ -18,6 +17,7 @@ import UnregisterClass from "./components/User/AdminPanel/UnregisterClass"
 import AddNews from './components/User/AdminPanel/AddNews';
 import ListNews from './components/User/Home/ListNews';
 import Profile from './components/User/Home/Profile';
+import Curriculum from './components/User/Curriculum/Curriculum';
 function App() {
   const ctx = useContext(AuthContex);
   console.log(ctx);
@@ -83,9 +83,14 @@ function App() {
                 </>
               )
             }></Route>
-          {ctx.isLogged && ctx.navigation === 'curicculum' && (
-            <Card>curicculum</Card>
-          )}
+            <Route path='curriculum'
+            element={
+
+              ctx.isLogged && ctx.navigation === 'curicculum' && (
+                <Curriculum></Curriculum>
+                )
+              }>
+                </Route>
         </Routes>
       </main>
       <Footer></Footer>
