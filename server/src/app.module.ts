@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClassModule } from './Classes/classes.module';
 import { NewsModule } from './News/news.module';
 import { join } from 'path';
+import { CurriculumModule } from './Curriculum/curriculum.module';
 
 @Module({
   imports:
@@ -29,7 +30,7 @@ import { join } from 'path';
   
     }),
 
-  }), UserModule, ClassModule, NewsModule],
+  }), UserModule, ClassModule, NewsModule, CurriculumModule],
   controllers: [AppController],
   providers: [AppService],
 })

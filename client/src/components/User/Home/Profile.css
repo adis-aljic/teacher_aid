@@ -111,3 +111,50 @@
     align-items: center;
     width: 8rem;
   }
+
+  .profileCurriculumList{
+    width: max-content;
+    height: fit-content;
+    list-style-type: none;
+  } & h4 {
+    text-align: center;
+  }
+  
+  .CurriculumList{
+    list-style-type: none;
+    padding-left: 10%;
+    text-align: left;
+    line-height: 2rem;
+    border: 1px solid black;
+    
+  }
+  .listCurriculum{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn-mp{
+    padding: 2rem;
+    width: 10rem;
+  }
+
+  .modal-mp{
+    /* overflow-y: scroll; */
+    /* width: 60%; */
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    gap: 2rem;
+    /* justify-content: space-evenly; */
+    /* align-items: center; */
+    padding: 2rem;
+    /* flex-direction: row; */
+  }
+
+  .modal-mp input {
+    width: 6rem;
+  }
+
+ 
