@@ -9,3 +9,25 @@
 .list{
     list-style-type: none;
 }
+/* .pdf {
+display: flex;
+flex-direction: row;
+gap: 3rem;
+justify-content: space-around;
+align-items: center;
+
+} */
+
+.modalMP{
+    display: flex;
+    /* flex-direction: row; */
+    /* flex-wrap: wrap; */
+    /* gap: 2rem; */
+    /* justify-content: space-between; */
+    align-items: center;
+    padding: 2rem;
+    height: 80%;
+  }
+  .nbrClPW{
+    width: 15rem;
+  }

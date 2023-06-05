@@ -12,7 +12,7 @@ export const ModalBackdrop = (props) => {
 
 const ModalOverlay = (props) => {
   return (
-    <Card className={styles.modal}>
+    <Card className={`${styles.modal} ${props.className}`}>
       <header className={styles.header}>
         <h2>{props.title}</h2>
       </header>
