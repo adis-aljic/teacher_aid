@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import Button from "../UI/Button";
 
-export default function PdfViewerComponent(props) {
+const PdfViewerComponent = (props) => {
 const containerRef = useRef(null);
 
 useEffect(() => {
@@ -32,3 +32,4 @@ return (
     </>
 );
 }
+

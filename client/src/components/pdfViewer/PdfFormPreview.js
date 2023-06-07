@@ -27,7 +27,6 @@ const PdfFormPreview = (props) => {
   
       loadPdf();
       
-      // Cleanup function to remove PSPDFKit instance
       return () => PSPDFKit.unload(containerRef.current);
 
     }, [props.pdfUrl, props.formData]);

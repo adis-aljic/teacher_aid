@@ -44,7 +44,7 @@ function App() {
           <Route
             path="/admin"
             element={
-              ctx.isLogged &&
+              ctx.isLogged && ctx.user.role === "teacher" &&
               ctx.navigation === 'add class' && (
                 <div className="mainAdminPanel">
                   <div>
@@ -75,7 +75,7 @@ function App() {
           <Route
             path="home"
             element={
-              ctx.isLogged &&
+              ctx.isLogged &&  ctx.user.role === "teacher" &&
               ctx.navigation === 'home' && (
                 <>
                   <div className={classes.home}>
@@ -88,7 +88,7 @@ function App() {
             <Route path='curriculum'
             element={
 
-              ctx.isLogged && ctx.navigation === 'curicculum' && (
+              ctx.isLogged &&  ctx.user.role === "teacher" && ctx.navigation === 'curicculum' && (
                 <Curriculum></Curriculum>
                 )
               }>

@@ -11,9 +11,7 @@ import Button from "../../UI/Button";
 import Modal from "../../UI/Modal";
 import styles from "./Curriculum.module.css";
 import { PDFDocument, PDFName, StandardFonts } from "pdf-lib";
-import PdfViewerComponent from "../../pdfViewer/PdfViewerComponent";
-import PdfFormPreview from "../../pdfViewer/PdfViewer";
-import PSPDFKit from "pspdfkit";
+import PdfFormPreview from "../../pdfViewer/PdfFormPreview";
 
 // import pdfFile from "..\..\..\src\assets\monthly_plan_10m.pdf"
 const ListCurriculum = (props) => {

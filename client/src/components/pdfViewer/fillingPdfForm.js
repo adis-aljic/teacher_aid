@@ -1,6 +1,6 @@
 import PSPDFKit from "pspdfkit";
 
-export async function load(defaultConfiguration, object) {
+ async function load(defaultConfiguration, object) {
   const instance = await PSPDFKit.load(defaultConfiguration);
     console.log("PSPDFKit for Web successfully loaded!!", instance);
     // You can find an introductions to annotations in our guides:
