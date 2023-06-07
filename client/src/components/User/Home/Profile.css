@@ -141,14 +141,17 @@
     width: 10rem;
   }
 
-.modal-mp{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 3rem;
-
-}
+  .modal-mp{
+    /* overflow-y: scroll; */
+    /* width: 60%; */
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    gap: 2rem;
+    /* justify-content: space-evenly; */
+    /* align-items: center; */
+    padding: 2rem;
+    /* flex-direction: row; */
+  }
 
   .modal-mp input {
     width: 6rem;

@@ -18,10 +18,9 @@ import AddNews from './components/User/AdminPanel/AddNews';
 import ListNews from './components/User/Home/ListNews';
 import Profile from './components/User/Home/Profile';
 import Curriculum from './components/User/Curriculum/Curriculum';
-
-function App() { 
-  
+function App() {
   const ctx = useContext(AuthContex);
+  console.log(ctx);
   return (
     <>
       <Header>
@@ -37,8 +36,7 @@ function App() {
         />
       )}
       <main>
-        <Routes> 
-
+        <Routes>
           <Route path="/login" element={!ctx.isLogged && <Login />}></Route>
           <Route path="/" element={!ctx.isLogged && <Login />}></Route>
           <Route

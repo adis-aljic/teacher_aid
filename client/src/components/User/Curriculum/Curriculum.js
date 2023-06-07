@@ -1,9 +1,11 @@
 import React, { useRef, useState } from 'react';
 import classes from "./Curriculum.module.css"
 import Card from '../../UI/Card';
+import Modal from '../../UI/Modal';
 import ListCurriculum from './ListCurriculum';
 const Curriculum = () => {
   const [inputText, setInputText] = useState('');
+  const [objectData, setObjectData] = useState({});
   const [classCode, setClassCode] = useState("")
   const [addedCurriculum, setAddedCurriculum] = useState(false)
   const textAreaRef = useRef()
@@ -15,7 +17,22 @@ const Curriculum = () => {
   };
   const classCodeHandler = () =>{
     setClassCode(inputClassCodeRef.current.value)
-    }
+  }
+
+  // kad se vrati iz baze rezz
+  //     const rows = inputText.split('\n');
+  // const updatedObjectData = {};
+
+  //  rows.forEach((row) => {
+  //    const dotIndex = row.indexOf('.');
+  //    if (dotIndex !== -1) {
+  //      const propertyName = row.slice(0, dotIndex).trim();
+  //      const propertyValue = row.slice(dotIndex + 1).trim();
+  //      updatedObjectData[propertyName] = propertyValue;
+  //    }
+  //  });
+  //  console.log(updatedObjectData);
+  //  setObjectData(updatedObjectData);
 
   const addCurriculumHandler = e =>{
     e.preventDefault()
@@ -56,14 +73,27 @@ const Curriculum = () => {
 
   }
 
+//   const handleSave = () => {
+//     const rows = inputText.split('\n');
+//     const updatedObjectData = {};
+
+//     rows.forEach((row) => {
+//       const dotIndex = row.indexOf('.');
+//       if (dotIndex !== -1) {
+//         const propertyName = row.slice(0, dotIndex).trim();
+//         const propertyValue = row.slice(dotIndex + 1).trim();
+//         updatedObjectData[propertyName] = propertyValue;
+//       }
+//     });
+    // console.log(updatedObjectData);
+    // setObjectData(updatedObjectData);
+    // setInputText("")
+//   };
 
   return (
 
     <div className={classes.curriculum}>
         <Card>
-          
-          <h2>Add curriculum</h2>
-          <br></br>
     <form onSubmit={addCurriculumHandler}>
 
       <textarea ref={textAreaRef} onChange={textAreaHandler} value={inputText} />
@@ -74,7 +104,16 @@ const Curriculum = () => {
         </Card>
         <Card>
     <ListCurriculum></ListCurriculum>
-
+      {/* {Object.keys(objectData).length > 0 && (
+          <ul className={classes.list}>
+            <h1>{title}</h1>
+          {Object.entries(objectData).map(([key, value]) => (
+              <li key={key}>
+              <strong>{key}.</strong> {value}
+            </li>
+          ))}
+        </ul>
+      )} */}
       </Card>
     </div>
   );
