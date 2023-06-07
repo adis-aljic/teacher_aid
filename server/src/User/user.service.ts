@@ -195,6 +195,8 @@ export class UserService {
             if(user.length ===0) {
                 throw new HttpException("User doesent Exist!",HttpStatus.BAD_REQUEST)
             }
+            console.log(user, "user");
+            
             return user
         }
         async findAllStudents(){

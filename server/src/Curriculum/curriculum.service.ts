@@ -42,7 +42,7 @@ constructor(@InjectRepository(CurriculumEntity) private readonly curriculumRepos
             }
             
         })
-        console.log(curriculum);
+        // console.log(curriculum);
         
         return curriculum
     }

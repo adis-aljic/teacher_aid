@@ -10,7 +10,7 @@ import Modal from "../../UI/Modal"
 
 const Profile = (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
-  // console.log(user);
+  console.log(user);
   const [profile, setProfile] = useState(
     JSON.parse(localStorage.getItem("profile"))
   );
@@ -19,18 +19,21 @@ const Profile = (props) => {
   const [studentName , setStudentName] = useState({})
 
   useEffect(() => {
+    console.log("unutar efekta");
     fetch("http://localhost:4000/api/user/getstudents", {
-      mode: "cors",
+      mode: "no-cors",
       method: "GET",
     })
       .then((resolve) => resolve.json())
       .then((results) => {
         setStudents(results);
+        console.log(results);
+        console.log("unutar fetcha students");
       });
 
     fetch("http://localhost:4000/api/user", {
       method: "POST",
-      mode: "cors",
+      mode: "no-cors",
       body: JSON.stringify({
         id: `${user.id}`,
       }),
@@ -40,13 +43,15 @@ const Profile = (props) => {
     })
       .then((resolve) => resolve.json())
       .then((data) => {
+        console.log(data);
+        console.log("unutr user fetcha");
         setProfile(data[0]);
         localStorage.setItem("profile", JSON.stringify(data[0]));
       });
     // napraviti fetch koji ide u korisnike i vraca sve korisnike sa svim razredima i onda u svaki razre
     // proci koji ima dole i ispisati koji su korisnici tu
     // napravit klikable na korisnika koji ce otoriti prozor(ili spustit) gdje ce biti opcije da se upise note ili ocjena
-  }, [user.id]);
+  }, []);
   console.log(students);
 
   const addButtonHandler = e =>{

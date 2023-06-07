@@ -10,7 +10,7 @@ export class NewsController {
     @Post("api/news")
     async createNews (@Body() createNewsDto : CreateNewsDTO) :Promise <any> {
     // console.log(createNewsDto.classes["id"]);
-    console.log(createNewsDto);
+    // console.log(createNewsDto);
             
         return await this.newsService.createNews(createNewsDto)   
 
