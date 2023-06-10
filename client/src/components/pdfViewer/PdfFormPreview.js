@@ -16,7 +16,7 @@ const PdfFormPreview = (props) => {
     //    await instance.setFormFieldValue(JSON.stringify(props.formData));
            instance.getFormFields()
     // then(() => {
-  
+          
          instance.setFormFieldValues(props.formData);
     //   });
         // Fill the form fields with data from the formData object
@@ -24,10 +24,11 @@ const PdfFormPreview = (props) => {
             // console.log(fieldName, fieldValue);
         // });
       };
+      const unload = PSPDFKit.unload(containerRef.current);
   
       loadPdf();
       
-      return () => PSPDFKit.unload(containerRef.current);
+      return () => unload
 
     }, [props.pdfUrl, props.formData]);
     

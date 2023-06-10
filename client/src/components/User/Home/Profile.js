@@ -19,12 +19,14 @@ const Profile = (props) => {
   const [studentName , setStudentName] = useState({})
 
   useEffect(() => {
+    console.log("sto ne fetchas ????");
     fetch("http://localhost:4000/api/user/getstudents", {
       mode: "cors",
       method: "GET",
     })
       .then((resolve) => resolve.json())
       .then((results) => {
+        console.log(results);
         setStudents(results);
       });
 
@@ -32,7 +34,7 @@ const Profile = (props) => {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
-        id: `${user.id}`,
+        id: `${user.id}`
       }),
       headers: {
         "Content-Type": "application/json",
@@ -41,6 +43,7 @@ const Profile = (props) => {
       .then((resolve) => resolve.json())
       .then((data) => {
         setProfile(data[0]);
+        console.log(data);
         localStorage.setItem("profile", JSON.stringify(data[0]));
       });
     // napraviti fetch koji ide u korisnike i vraca sve korisnike sa svim razredima i onda u svaki razre
@@ -48,6 +51,7 @@ const Profile = (props) => {
     // napravit klikable na korisnika koji ce otoriti prozor(ili spustit) gdje ce biti opcije da se upise note ili ocjena
   }, [user.id]);
   console.log(students);
+  console.log(profile);
 
   const addButtonHandler = e =>{
     e.preventDefault()
@@ -76,7 +80,7 @@ const Profile = (props) => {
           </Modal>
       )}
      
-      <li key={profile.id} className={classes.listProfile}>
+      <li className={classes.listProfile}>
       <h2>Profile</h2>
       <br></br>
         First Name : {profile ? profile.firstName : ""}

@@ -12,8 +12,11 @@ import Modal from "../../UI/Modal";
 import styles from "./Curriculum.module.css";
 import { PDFDocument, PDFName, StandardFonts } from "pdf-lib";
 import PdfFormPreview from "../../pdfViewer/PdfFormPreview";
-
+import pdfForm from "./Monthly_plan_form.pdf"
 // import pdfFile from "..\..\..\src\assets\monthly_plan_10m.pdf"
+import {findSchoolYear, countWeeksInMonths, secondDate, getClassesPerMonths} from "./functionForCalculatingMonthlyCurriculums"
+
+
 const ListCurriculum = (props) => {
   const [curriculum, setCurriculum] = useState(
     JSON.parse(localStorage.getItem("curriculumList"))
@@ -30,8 +33,10 @@ const ListCurriculum = (props) => {
   const [enteredMay, setEnteredMay] = useState("");
   const [enteredJune, setEnteredJune] = useState("");
   const [numberOfClassesPerWeek, setNumberOfClassesPerWeek] = useState(1);
+  const [classCode, setClassCode] = useState("");
   const [pdf, setPdf] = useState(false);
-
+  const [choosenMonth, setChooseMonth] = useState("September");
+    const [formData , setFormData] = useState({})
   const inputSeptRef = useRef();
   const inputOktRef = useRef();
   const inputNovRef = useRef();
@@ -43,6 +48,7 @@ const ListCurriculum = (props) => {
   const inputMayRef = useRef();
   const inputJuneRef = useRef();
   const inputNumberOfClassesPerWeekRef = useRef();
+  const inputClassCodeRef = useRef();
 
   const user = JSON.parse(localStorage.getItem("user"));
   const classes = JSON.parse(localStorage.getItem("MyClasses"));
@@ -59,6 +65,18 @@ const ListCurriculum = (props) => {
   const aprHandler = (e) => setEnteredApr(e.target.value);
   const mayHandler = (e) => setEnteredMay(e.target.value);
   const juneHandler = (e) => setEnteredJune(e.target.value);
+  const classCodeHandler = (e) => setClassCode(e.target.value);
+
+  const septembarRadioHandler = () => setChooseMonth("September");
+  const oktobarRadioHandler = () => setChooseMonth("October");
+  const novembarRadioHandler = () => setChooseMonth("November");
+  const decembarRadioHandler = () => setChooseMonth("December");
+  const januarRadioHandler = () => setChooseMonth("January");
+  const februarRadioHandler = () => setChooseMonth("February");
+  const martRadioHandler = () => setChooseMonth("Mart");
+  const aprilRadioHandler = () => setChooseMonth("April");
+  const mayRadioHandler = () => setChooseMonth("May");
+  const juneRadioHandler = () => setChooseMonth("June");
 
   useEffect(() => {
     fetch(`http://localhost:4000/api/curriculum/list`, {
@@ -78,7 +96,7 @@ const ListCurriculum = (props) => {
         localStorage.setItem("curriculumList", JSON.stringify(data));
       });
   }, []);
-  console.log(curriculum[0]);
+  // console.log(curriculum[0]);
 
   const monthlyPlanHandler = () => {
     setMonthlyPlan(true);
@@ -90,12 +108,63 @@ const ListCurriculum = (props) => {
     e.preventDefault();
     monthlyPlanCloseHandler();
     setPdf(true);
+    // countWeeksInMonths()
+    const year1 = findSchoolYear().year1
+    const year2 = findSchoolYear().year2
+    const schoolCalendar =  countWeeksInMonths(year1,year2)
+    console.log(choosenMonth);
+    console.log(schoolCalendar);
+    const week1 = countWeeksInMonths(year1,year2).find(({month}) => month === choosenMonth).startDates[0];
+    const week2 = countWeeksInMonths(year1,year2).find(({month}) => month === choosenMonth).startDates[1];
+    const week3 = countWeeksInMonths(year1,year2).find(({month}) => month === choosenMonth).startDates[2];
+    const week4 = countWeeksInMonths(year1,year2).find(({month}) => month === choosenMonth).startDates[3];
+    const week5 = countWeeksInMonths(year1,year2).find(({month}) => month === choosenMonth).startDates[4];
+    const date1 =secondDate(week1) ? `${week1} - ${secondDate(week1)}` : undefined;
+    const date2 =secondDate(week2) ? `${week2} - ${secondDate(week2)}`: undefined;
+    const date3 = secondDate(week3) ?`${week3} - ${secondDate(week3)}`: undefined;
+    const date4 = secondDate(week4) ?`${week4} - ${secondDate(week4)}`: undefined;
+    const date5 = secondDate(week5) ?`${week5} - ${secondDate(week5)}`: undefined;
+    // console.log(date1,date2,date3,date4,date5);
+    const currentCurriculum = curriculum.find(({classCode}) => classCode === classCode)
+    const classesPerMonths = getClassesPerMonths(currentCurriculum.curriculum,schoolCalendar,numberOfClassesPerWeek,choosenMonth)
+    console.log(classesPerMonths);
+    const data = {
+      // classCode ,
+      month :choosenMonth ,
+      // numberOfClassesPerWeek,
+      // curriculum : currentCurriculum,
+      school : classes.find((x) => x.abbrevation === classCode).school,
+      subjec : user.subject,
+      teacher : `${user.firstName} ${user.lastName}`,
+      schoolClass : `${classes.find((x) => x.abbrevation === classCode).schoolClass} ${classes.find((x) => x.abbrevation === classCode).departmant}`,
+       year1 : year1.toString(),
+       year2 : year2.toString(),
+      date1,
+      date2,
+      date3,
+      date4,
+      date5,
+      text1 : classesPerMonths.slice(0,numberOfClassesPerWeek).join(" "),
+      textarea_33cfnu : classesPerMonths.slice(numberOfClassesPerWeek,numberOfClassesPerWeek*2).join(" "),
+      text3 : classesPerMonths.slice(numberOfClassesPerWeek*2,numberOfClassesPerWeek*3).join(" "),
+      text4 : classesPerMonths.slice(numberOfClassesPerWeek*3,classesPerMonths*4).join(" "),
+      text5 : classesPerMonths.slice(numberOfClassesPerWeek*4,classesPerMonths*5).join(" "),
+
+
+        
+
+      // schoolyear 1 i 2
+      //
+
+    }
+    setFormData(data)
+    console.log(data);
   };
 
   const pdfHandler = () => {
     setPdf(false);
   };
-  console.log(pdf, monthlyPlan);
+  // console.log(pdf, monthlyPlan);
   return (
     <div className={styles.pdf}>
       {monthlyPlan && !pdf && (
@@ -106,8 +175,12 @@ const ListCurriculum = (props) => {
           onConfirm={monthlyPlanCloseHandler}
         >
           <form onSubmit={onSubmitMonthlyPlanHandler}>
-            <div>
+            <div className={styles.inputs}>
+              {/* <label htmlFor="nbrClassesPW"></label> */}
+              <div className={styles.headerModalInput}>
+
               <input
+              // id="nbrClassesPW"
                 className={styles.nbrClPW}
                 ref={inputNumberOfClassesPerWeekRef}
                 value={numberOfClassesPerWeek}
@@ -115,6 +188,15 @@ const ListCurriculum = (props) => {
                 onChange={numberOfClassesPerWeekHandler}
                 placeholder="Number of classes/week"
               ></input>
+              <input
+                className={styles.nbrClPW}
+                ref={inputClassCodeRef}
+                value={classCode}
+                required={true}
+                onChange={classCodeHandler}
+                placeholder="Class code"
+                ></input>
+                </div>
             </div>
             <div className="modal-mp">
               <div>
@@ -126,11 +208,22 @@ const ListCurriculum = (props) => {
                   placeholder="Septembar"
                 ></input>
                 <input
+                type="radio"
+                name="chooseMonth"
+                checked={true}
+                onChange={septembarRadioHandler}
+                ></input>
+                <input
                   ref={inputOktRef}
                   value={enteredOkt}
                   min={0}
                   onChange={oktHandler}
                   placeholder="October"
+                ></input>
+                 <input
+                type="radio"
+                name="chooseMonth"
+                onChange={oktobarRadioHandler}
                 ></input>
                 <input
                   ref={inputNovRef}
@@ -139,12 +232,25 @@ const ListCurriculum = (props) => {
                   onChange={novHandler}
                   placeholder="November"
                 ></input>
+                 <input
+                type="radio"
+                name="chooseMonth"
+                onChange={novembarRadioHandler}
+                ></input>
+
+</div>
+<div>
                 <input
                   ref={inputDecRef}
                   value={enteredDec}
                   min={0}
                   onChange={decHandler}
                   placeholder="December"
+                  ></input>
+                 <input
+                type="radio"
+                name="chooseMonth"
+                onChange={decembarRadioHandler}
                 ></input>
                 <input
                   ref={inputJanRef}
@@ -153,22 +259,36 @@ const ListCurriculum = (props) => {
                   onChange={janHandler}
                   placeholder="January"
                 ></input>
-              </div>
-
-              <div>
+  <input
+                type="radio"
+                name="chooseMonth"
+                onChange={januarRadioHandler}
+                ></input>
                 <input
                   ref={inputFebRef}
                   value={enteredFeb}
                   min={0}
                   onChange={febHandler}
                   placeholder="February"
+                  ></input>
+                    <input
+                type="radio"
+                name="chooseMonth"
+                onChange={februarRadioHandler}
                 ></input>
+                  </div>
+                  <div>
                 <input
                   ref={inputMartRef}
                   value={enteredMart}
                   min={0}
                   onChange={martHandler}
                   placeholder="Mart"
+                ></input>
+                  <input
+                type="radio"
+                name="chooseMonth"
+                onChange={martRadioHandler}
                 ></input>
                 <input
                   ref={inputAprRef}
@@ -177,13 +297,26 @@ const ListCurriculum = (props) => {
                   onChange={aprHandler}
                   placeholder="April"
                 ></input>
+                  <input
+                type="radio"
+                name="chooseMonth"
+                onChange={aprilRadioHandler}
+                ></input>
                 <input
                   ref={inputMayRef}
                   value={enteredMay}
                   min={0}
                   onChange={mayHandler}
-                  placeholder="Septembar"
+                  placeholder="May"
                 ></input>
+  <input
+                type="radio"
+                name="chooseMonth"
+                onChange={mayRadioHandler}
+                ></input>
+                  </div> 
+                  <div>
+
                 <input
                   ref={inputJuneRef}
                   value={enteredJune}
@@ -191,7 +324,12 @@ const ListCurriculum = (props) => {
                   onChange={juneHandler}
                   placeholder="June"
                 ></input>
-              </div>
+                  <input
+                type="radio"
+                name="chooseMonth"
+                onChange={juneRadioHandler}
+                ></input>
+                </div>
             </div>
             <div>
               <button type="submit">Preview</button>
@@ -201,14 +339,12 @@ const ListCurriculum = (props) => {
       )}
       (
       <Card>
-        {console.log(user)}
+        {/* {console.log(user)} */}
         {pdf ? (
           <PdfFormPreview
             onClick={pdfHandler}
-            pdfUrl={"Monthly plan form.pdf"}
-            formData={{
-              teacher: user.firstName,
-            }}
+            pdfUrl={pdfForm}
+            formData={formData}
           ></PdfFormPreview>
         ) : (
           <Accordion
@@ -256,7 +392,8 @@ const ListCurriculum = (props) => {
                         <br></br>
                         <h4>Curriculum</h4>
                         <br></br>
-                        {console.log(curriculum[0].curriculum)}
+                        {/* {console.log(curriculum[0].curriculum)} */}
+                        
                         {curriculumItem.curriculum
                           .replaceAll("\t", " ")
                           .split("\n")

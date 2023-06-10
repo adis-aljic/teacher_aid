@@ -17,7 +17,10 @@ justify-content: space-around;
 align-items: center;
 
 } */
-
+.headerModalInput{
+  display: flex;
+  flex-direction: row;
+}
 .modalMP{
     display: flex;
     /* flex-direction: row; */
@@ -25,9 +28,14 @@ align-items: center;
     /* gap: 2rem; */
     /* justify-content: space-between; */
     align-items: center;
-    padding: 2rem;
+    /* padding: 2rem; */
     height: 80%;
   }
   .nbrClPW{
     width: 15rem;
+  }
+
+   input[type="radio"]{
+    width: 1rem;
+    
   }

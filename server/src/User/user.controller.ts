@@ -33,13 +33,14 @@ export class UserController {
     // async currentUser(@Param("id", ParseIntPipe) id: number): Promise<any> {
     async currentUser(@Body("id", ParseIntPipe) id: number): Promise<any> {
 
-        console.log(id)
+        console.log(id, " id")
         return this.userService.currentUser(id)
     }
 
     @Get("api/user/auth/:id")
     // @UseGuards(AuthGuard)
     async authUser(@Param("id", ParseIntPipe) id: number): Promise<any> {
+    
         return this.userService.authUser(id)
     }
 
