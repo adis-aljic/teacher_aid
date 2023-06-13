@@ -9,6 +9,8 @@ import { ClassModule } from './Classes/classes.module';
 import { NewsModule } from './News/news.module';
 import { join } from 'path';
 import { CurriculumModule } from './Curriculum/curriculum.module';
+import { GradeModule } from './Grade/grade.module';
+import { NoteModule } from './Notes/note.module';
 
 @Module({
   imports:
@@ -30,7 +32,7 @@ import { CurriculumModule } from './Curriculum/curriculum.module';
   
     }),
 
-  }), UserModule, ClassModule, NewsModule, CurriculumModule],
+  }), UserModule, ClassModule, NewsModule, CurriculumModule,GradeModule, NoteModule],
   controllers: [AppController],
   providers: [AppService],
 })

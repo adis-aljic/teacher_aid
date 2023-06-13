@@ -12,9 +12,10 @@
     position: fixed;
     top: 10vh;
     left: 10%;
-    width: 80%;
+    min-width: 40vw;
+    /* height: 60vh; */
     z-index: 100;
-/* /    overflow: hidden; */
+    overflow: hidden;
     padding: 5rem;
 }
 .header{

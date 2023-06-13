@@ -6,7 +6,7 @@ import { CreateUserDTO } from "./DTO/createUser.dto";
 import { sign, verify } from "jsonwebtoken"
 import { JWT } from "src/config";
 import { LoginUserDto } from "./DTO/loginUser.dto";
-import { compare } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { MailerService } from '@nestjs-modules/mailer';
 import { UpdateUserDTO } from "./DTO/updateUser.dto";
 import { RegisterClass } from "./DTO/registerClass.dto";
@@ -22,7 +22,8 @@ export class UserService {
      @InjectRepository(ClassesEntity) private readonly classReposotory : Repository<ClassesEntity>     ) { }
 
     async sendUserConfirmation(user: any) {
-        console.log(user);
+
+        // console.log(user);
 
         const url = `http://localhost:4000/api/user/auth/${user.id}`;
 
@@ -44,7 +45,7 @@ export class UserService {
             where: { email: email }
         })
 
-        console.log(checkIfUserExist.password);
+        // console.log(checkIfUserExist.password);
 
         if (!checkIfUserExist) {
 
@@ -52,9 +53,9 @@ export class UserService {
         }
         else {
 
-            const password = `${checkIfUserExist.firstName}_${checkIfUserExist.lastName}_${checkIfUserExist.id}`
+            // const password = `${checkIfUserExist.firstName}_${checkIfUserExist.lastName}_${checkIfUserExist.id}_A%`
+            const password = "Adis123%"
             console.log(password);
-
             await this.mailerService.sendMail({
                 to: checkIfUserExist.email,
                 subject: "Recovered Password",
@@ -64,8 +65,12 @@ export class UserService {
                     url: `Your new password is ${password}`
                 }
             })
+            checkIfUserExist.password = await hash(password, 10)
+            console.log(checkIfUserExist);
+            
+            await this.userRepository.save(checkIfUserExist)
+            return ({ "status": "recovered password" })
         }
-        return ({ "status": "recovered password" })
     }
 
     async createUser(createUserDTO: CreateUserDTO) {
@@ -109,6 +114,7 @@ export class UserService {
             where: { email: loginUserDto.email }
         })
 
+        console.log(user , "user");
 
 
         if (!user) {
@@ -118,11 +124,14 @@ export class UserService {
         if (!user.isAuth) {
             throw new HttpException("You must confirm your account. Please check your email for confirmation link", HttpStatus.UNAUTHORIZED)
         }
+        console.log(user.password, loginUserDto.password);
+        
         const isPasswordCorrect = await compare(loginUserDto.password, user.password)
         if (!isPasswordCorrect) {
             throw new HttpException("Credentional is not valid", HttpStatus.UNPROCESSABLE_ENTITY)
         }
         delete user.password
+        
         return user
     }
 
@@ -173,9 +182,9 @@ export class UserService {
             })
             await this.userRepository.save(newStudent)
             // console.log(newStudent);
-            console.log(foundClass, " found class");
+            // console.log(foundClass, " found class");
             foundClass.user = [...foundClass.user ,  foundUser]
-            console.log(foundClass);
+            // console.log(foundClass);
             // await this.classReposotory.createQueryBuilder().insert().relation(foundUser: UserEntity,)
             await this.classReposotory.save(foundClass)
             return newStudent
@@ -195,21 +204,23 @@ export class UserService {
             if(user.length ===0) {
                 throw new HttpException("User doesent Exist!",HttpStatus.BAD_REQUEST)
             }
-            console.log(user);
+            // console.log(user);
             
             return user
         }
         async findAllStudents(){
            const students = await this.userRepository.createQueryBuilder("user")
             .leftJoinAndSelect("user.classes","classes")
+            .leftJoinAndSelect("user.grades", "grades")
+            .leftJoinAndSelect("user.notes", "notes")
             .setFindOptions({
                 where : {
                     role : "student"
                 }
             })
             .getMany()
-            console.log(students);
-            console.log("students");
+            // console.log(students);
+            // console.log("students");
             return students
             
         }

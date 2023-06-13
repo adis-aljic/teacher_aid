@@ -6,6 +6,8 @@ import { hash } from "bcrypt"
 import { ClassesEntity } from "src/Classes/classes.entity";
 import { NewsEntity } from "src/News/news.entity";
 import { CurriculumEntity } from "src/Curriculum/curriculum.entity";
+import { GradeEntity } from "src/Grade/grade.entity";
+import { NoteEntity } from "src/Notes/note.entity";
 
 @Entity("user")
 export class UserEntity extends BaseEntity {
@@ -48,4 +50,11 @@ export class UserEntity extends BaseEntity {
 
     @OneToMany(() => CurriculumEntity, (curriculum) => curriculum.user, {cascade:true})
     curriculum: CurriculumEntity[]
+
+    @OneToMany(() => GradeEntity, (grades) => grades.user, {cascade:true})
+    grades: GradeEntity[]
+    
+    @OneToMany(() => NoteEntity, (note) => note.user, {cascade:true})
+    notes: NoteEntity[]
+
 }

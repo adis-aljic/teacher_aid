@@ -60,3 +60,7 @@
 justify-content: space-around;
 /* align-items: center; */
 }
+
+.cardAddGrades{
+    height: 80vh;
+}

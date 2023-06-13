@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Card from "../../UI/Card";
 import classes from "./ListNews.module.css";
 import React from "react";
@@ -17,18 +17,33 @@ const Profile = (props) => {
   const [students, setStudents] = useState([]);
   const [isAddClicked, setIsAddCliked] = useState(false)
   const [studentName , setStudentName] = useState({})
+  const [enteredGrade , setEnteredGrade] = useState(null)
+  const [enteredDeleteGrade , setEnteredDeleteGrade] = useState(null)
+  const [enteredNote, setEnteredNote ] = useState("")
+const [message , setMessage] = useState("")
+const [enteredNoteNbr , setEnteredNoteNbr] = useState(null)
 
+  const enteredGradeRef = useRef()
+  const enteredDeleteGradeRef = useRef()
+  const enteredNoteRef = useRef()
+  const enteredNoteNbrRef = useRef()
+
+  const enteredGradeHandler = e => setEnteredGrade(e.target.value)
+  const enteredDeleteGradeHandler = e => setEnteredDeleteGrade(e.target.value)
+  const enteredNoteHandler = e => setEnteredNote(e.target.value)
+  const enteredNoteNbrHandler = e => setEnteredNoteNbr(e.target.value)
   useEffect(() => {
-    console.log("sto ne fetchas ????");
     fetch("http://localhost:4000/api/user/getstudents", {
       mode: "cors",
       method: "GET",
     })
       .then((resolve) => resolve.json())
       .then((results) => {
+        console.log("students");
         console.log(results);
         setStudents(results);
       });
+
 
     fetch("http://localhost:4000/api/user", {
       method: "POST",
@@ -60,22 +75,126 @@ const Profile = (props) => {
     setStudentName(JSON.parse(e.target.value))
   }
   const closeAddButton = () => setIsAddCliked(false)
+
+  const addGradeHandler = e =>{
+    e.preventDefault()
+    console.log(studentName.id);
+    console.log(enteredGrade, user.id);
+    fetch("http://localhost:4000/api/grade/add",{
+      method: "POST",
+      mode : "cors",
+      body : JSON.stringify({
+        studentId : `${studentName.id}`,
+        grade : `${enteredGrade}`,
+        teacherId : user.id
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(resolve => resolve.json())
+    .then(data => console.log(data))
+  }
+  const deleteGradeHandler = e =>{
+    e.preventDefault()
+    console.log(user.id, studentName.id);
+    fetch("http://localhost:4000/api/grade/delete",{
+      method: "POST",
+      mode : "cors",
+      body : JSON.stringify({
+        studentId : `${studentName.id}`,
+        grade : enteredDeleteGrade
+       
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(resolve => resolve.json())
+    .then(data => {
+
+      
+      setMessage(data.message)
+      setTimeout(() => {
+        setMessage("")
+      }, 1000);
+    }
+    )
+  }
+  const addNoteHandler = e =>{
+    e.preventDefault()
+    console.log(enteredNote , user.id);
+    fetch("http://localhost:4000/api/note/add",{
+      method: "POST",
+      mode : "cors",
+      body : JSON.stringify({
+        studentId : `${studentName.id}`,
+        note : `${enteredNote}`,
+        teacherId : user.id
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(resolve => resolve.json())
+    .then(data => console.log(data))
+  }
+  const deleteNoteHandler = e =>{
+    e.preventDefault()
+    console.log(enteredNoteNbr);
+    fetch("http://localhost:4000/api/note/delete",{
+      method: "POST",
+      mode : "cors",
+      body : JSON.stringify({
+        noteId : `${enteredNoteNbr}`,
+       
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(resolve => resolve.json())
+    .then(data => {
+
+      
+      setMessage(data.message)
+      setTimeout(() => {
+        setMessage("")
+      }, 1000);
+    }
+    )
+  }
+  
+
   
   return (
     
     <Card className={classes.card_profile}>
       {isAddClicked && (
-        <Modal
+        <Modal className={classes.cardAddGrades}
           title={` Student ${studentName.firstName} ${studentName.lastName}`}
-          message={studentName.email}
+          message= {`Email : ${studentName.email} `}
           onConfirm={closeAddButton}>
-            <form className="addNewGrade">
-            <input placeholder="enter grade"></input>
+            <form className="addNewGrade" onSubmit={addGradeHandler}>
+              {/* <input  type="text" disabled={true} value={studentName.id}></input> */}
+              
+            <input type="number" value={enteredGrade} onChange={enteredGradeHandler} ref={enteredGradeRef} min={1} max={5} placeholder="enter grade"></input>
             <button type="submit">Add grade</button>
             </form>
-            <form >
-            <textarea placeholder="enter note"></textarea>
+            <form onSubmit={deleteGradeHandler}>
+              {message && <p>{message}</p>}
+              <input type="number" placeholder="grade" onChange={enteredDeleteGradeHandler} ref={enteredDeleteGradeRef} value={enteredDeleteGrade}></input>
+              <button className="deleteLastGradeBtn" type="submit">Delete last grade</button>
+            </form>
+            <form onSubmit={addNoteHandler}   >
+            <textarea placeholder="enter note" maxLength={50} value={enteredNote} onChange={enteredNoteHandler} ref={enteredNoteRef}></textarea>
+            <p>{enteredNote.length}/50</p>
+
             <button type="submit">Add note</button>
+            </form>
+            <form onSubmit={deleteNoteHandler}>
+              <input type="number" placeholder="Enter note number" value={enteredNoteNbr} onChange={enteredNoteNbrHandler} ref={enteredNoteNbrRef}></input>
+              <button className="deleteLastGradeBtn" type="submit">Delete last note</button>
             </form>
           </Modal>
       )}
@@ -119,7 +238,7 @@ const Profile = (props) => {
                               className={classes.listProfile}
                               key={student.id}
                               >
-                              {console.log(student)}
+                              {console.log(student.grades)}
 
                               <div className="studentGrade">
                                 <div className="gradeInput">
@@ -130,13 +249,21 @@ const Profile = (props) => {
                                     {schoolClass.schoolClass} -
                                     {schoolClass.departmant}
                                   </p>
-                                  <p>Grade : {student.grade || " "}</p>
+                                  <p>Grade : {student.grades.length > 0 ? student.grades.map((grade) => grade.grade).join(", ") : " "}</p>
 
                                   <button type="submit" value={JSON.stringify(student)} onClick={addButtonHandler}>Add</button>
                                 </div>
                                 <div className="note">
                                   <h1>notes</h1>
-                                  <p>Lorem ipsun</p>
+                                  {console.log(student)}
+                                  {
+                                student.notes &&  student.notes.length > 0 ? student.notes.map((note)=>{
+                                    return( <li key={note.id}>
+                                       {note.id}. {note.note}
+
+                                  </li>)
+                                  }) : null
+                                }
                                 </div>
                               </div>
                             </li>

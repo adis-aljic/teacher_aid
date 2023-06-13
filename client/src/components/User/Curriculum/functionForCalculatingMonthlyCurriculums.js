@@ -122,7 +122,8 @@ const a = countWeeksInMonths(findSchoolYear().year1,findSchoolYear().year2)
 // console.log(curriculum.curriculum.split("\n"));
 // console.log(a);
 const getClassesPerMonths = (curriculumString, schoolCalendar, numberOfclasses ,month) =>{
-  const curriculum = curriculumString.split("\n")
+  const curriculum = curriculumString.split("\n").map(x => x = x + " \n")
+  
  
 //  console.log(a);
   // console.log(curriculum);

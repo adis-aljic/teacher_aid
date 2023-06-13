@@ -90,8 +90,8 @@ export class ClassService {
             },
             where: { id: classId }
         })
-        console.log(newClass);
-        console.log("newClass prvi");
+        // console.log(newClass);
+        // console.log("newClass prvi");
         newClass.user = newClass.user.filter((user) => {
             console.log(user);
 
@@ -101,7 +101,7 @@ export class ClassService {
         await this.classRepository.save(newClass)
 
         // await this.classRepository.save(classes)
-        console.log(newClass);
+        // console.log(newClass);
 
         return newClass
 

@@ -18,6 +18,7 @@ import AddNews from './components/User/AdminPanel/AddNews';
 import ListNews from './components/User/Home/ListNews';
 import Profile from './components/User/Home/Profile';
 import Curriculum from './components/User/Curriculum/Curriculum';
+import Student from './components/User/Student/Student';
 
 function App() { 
   
@@ -93,6 +94,10 @@ function App() {
                 )
               }>
                 </Route>
+                <Route path='student' 
+                element={
+                  ctx.isLogged && ctx.user.role === "student" && <Student></Student>
+                }></Route>
         </Routes>
       </main>
       <Footer></Footer>

@@ -14,21 +14,21 @@ export class NewsService {
 
     async createNews(createNewsDto:CreateNewsDTO) : Promise<NewsEntity>{
         const id = createNewsDto.classId
-        console.log(createNewsDto);
+        // console.log(createNewsDto);
         
         const user = createNewsDto.user as UserEntity;
-        console.log(user);
+        // console.log(user);
         
         const result = await this.classReposotory.findOne({
             relations: {user: true},
             where : {id:id}
         })
         
-        console.log(result);
+        // console.log(result);
         const resultClass = await this.classReposotory.findOneBy({
             id : id
         })
-        console.log(resultClass, "result class");
+        // console.log(resultClass, "result class");
         
         if(result.user.length === 0) {
             throw new HttpException("User is not assinged to this class." , HttpStatus.UNAUTHORIZED)
@@ -50,14 +50,14 @@ export class NewsService {
         // console.log("news basic " , user);
         news.user = [user]
         // news = schoolClass
-        console.log(news);
-        console.log("news after ");
+        // console.log(news);
+        // console.log("news after ");
         
       return  await this.newsRepository.save(news)
     }
 
     async listNews (userId:number)  {
-        console.log(userId);
+        // console.log(userId);
         // console.log(classesId);
         
         const news =await this.newsRepository.createQueryBuilder("news")

@@ -15,8 +15,8 @@ export class CurriculumController {
     }
     @Post("api/curriculum/list")
     async listCurriculum(@Body("id", ParseIntPipe) id : number) : Promise <any>{
-             console.log(id);
-            console.log("id");
+            //  console.log(id);
+            // console.log("id");
             // return "hello"
         return await this.curriculumService.listCurriculum(id)
     }
