@@ -56,6 +56,11 @@ export class UserController {
 
         return this.userService.addStudent(createStudentDTO)
     }
+    @Post("api/user/findAndAddStudent")
+    async addExistingStudent(@Body() body : any): Promise <any>{
+        const {email , classId} = body
+        return this.userService.addExistingStudent(email, classId)
+    }
     
     @Get("api/user/getstudents")
     async findAllStudents() : Promise<any>{

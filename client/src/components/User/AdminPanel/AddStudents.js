@@ -7,18 +7,19 @@ const AddStudent = (props) => {
   const [enteredFirstName, setEnteredFirstName] = useState('');
   const [enteredLastName, setEnteredLastName] = useState('');
   const [enteredAbrevation, setEnteredAbrevation] = useState('');
+  const [enteredAbrevation1, setEnteredAbrevation1] = useState('');
   const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredSubject, setEnteredSubject] = useState('');
   const [message, setEnteredMessage] = useState("");
-  // const [isValid , setIsValid] = useState(false)
+  const [enteredExistEmail , setEnteredExistEmail] = useState("")
   const [inProgress, setInProgress] = useState(false)
   const [isError, setIsError] = useState(null)
 
   const inputFirstNameRef = useRef();
+  const existEmailRef = useRef();
   const inputLastNameRef = useRef();
   const inputAbrevationRef = useRef();
+  const inputAbrevationRef1 = useRef();
   const inputEmailRef = useRef();
-  const inputSubjectRef = useRef();
   const classes = JSON.parse(localStorage.getItem("MyClasses"))
 
 console.log(classes);
@@ -31,21 +32,71 @@ console.log(classes);
   const abrevationHandler = (e) => {
     setEnteredAbrevation(inputAbrevationRef.current.value);
   };
+  const abrevationHandler1 = (e) => {
+    setEnteredAbrevation1(inputAbrevationRef1.current.value);
+  };
   const emailHandler = (e) => {
     setEnteredEmail(inputEmailRef.current.value);
   };
-  const subjectHandler = (e) => {
-    setEnteredSubject(inputSubjectRef.current.value);
+  const existEmailHandler = (e) => {
+    setEnteredExistEmail(existEmailRef.current.value);
   };
+  const existingStudentHandler = e=>{
+    e.preventDefault()
+    console.log(enteredAbrevation);
+    console.log(enteredExistEmail);
+    if(!enteredExistEmail || !enteredAbrevation1){
+      setEnteredMessage("All fields must be inputed!")
+        setTimeout(() => {
+          setEnteredMessage("")
+        }, 1000);
+        console.log("proslo");
+      return
+    }
+    console.log("stat");
+    const myClass = classes.filter(classes => classes.abbrevation === enteredAbrevation1)
+    console.log(myClass);
+    if(myClass.length === 0) {
+      setEnteredExistEmail("")
+        setEnteredAbrevation1("")
+        setIsError({
+          title: "Class is not found",
+          message : "Please check if you are entered right class code"
+        })
+
+        return
+      }
+    fetch("http://localhost:4000/user/findAndAddStudent",{
+      method : "POST",
+      mode : "cors",
+      body : JSON.stringify({
+        email : enteredExistEmail,
+        classId : myClass[0].id
+      }),
+      headers : {"Content-Type" : "application/json"}
+    })
+    .then(resolve => resolve.json())
+    .then(data => {
+      console.log(data);
+      if(data.statusCode > 299){
+        setInProgress(false)
+      return  setIsError({title: "Error",
+      message: `${data.message}`})
+      }
+      setIsError({title: "User is added",
+      message: `Student ${data.firstName} ${data.lastName} is added to class ${enteredAbrevation}`})
+    })
+    setEnteredExistEmail("")
+    setEnteredAbrevation1("")
+  }
 
   const addStudentHandler = (e) => {
     e.preventDefault();
     setInProgress(true)
-    if(!enteredFirstName || !enteredLastName || !enteredSubject || !enteredEmail) {
+    if(!enteredFirstName || !enteredLastName || !enteredEmail) {
       setInProgress(false)
       setEnteredFirstName("")
         setEnteredLastName("")
-        setEnteredSubject("")
         setEnteredAbrevation("")
         setEnteredEmail("")
         setEnteredMessage("All fields must be inputed!")
@@ -60,7 +111,6 @@ console.log(classes);
       setInProgress(false)
       setEnteredFirstName("")
         setEnteredLastName("")
-        setEnteredSubject("")
         setEnteredAbrevation("")
         setEnteredEmail("")
         setIsError({
@@ -78,7 +128,6 @@ console.log(classes);
         password: `${enteredEmail.slice(0,enteredEmail.indexOf("@"))}_${Math.trunc(Math.random()*10000+1000)}`,
         firstName: `${enteredFirstName}`,
         lastName: `${enteredLastName}`,
-        subject : `${enteredSubject}`,
         role : "student",
         classId : myClass[0].id
       }),
@@ -92,7 +141,6 @@ console.log(classes);
         console.log(data);
         setEnteredFirstName("")
         setEnteredLastName("")
-        setEnteredSubject("")
         setEnteredAbrevation("")
         setEnteredEmail("")
         console.log(data);
@@ -126,7 +174,8 @@ console.log(classes);
         />
       )}
       {/* {isValid ?  message || <p>Student is added.</p> : <p>{message}</p>} */}
-{message ? {message} : ""}
+      {console.log(message)}
+{message ? message : ""}
       <form onSubmit={addStudentHandler}>
         <h1>Add new student</h1>
         <input
@@ -160,15 +209,28 @@ console.log(classes);
           value={enteredAbrevation}
           ref={inputAbrevationRef}
           onChange={abrevationHandler}></input>
-        <input
-          type="text"
-          name="subject"
-          placeholder="Enter subject"
-          value={enteredSubject}
-          ref={inputSubjectRef}
-          onChange={subjectHandler}></input>
+    
         <Button type="submit">Add new student</Button>
       </form>
+      <br></br>
+       <p>-- or --</p>
+      <br></br>
+       <h2> Add existing student by email </h2>
+       <form onSubmit={existingStudentHandler}>
+        <input
+        ref={existEmailRef}
+        value={enteredExistEmail}
+        onChange={existEmailHandler}
+        placeholder='Email'
+        ></input>
+        <input
+        ref={inputAbrevationRef1}
+        value={enteredAbrevation1}
+        onChange={abrevationHandler1}
+        placeholder='Class Code'
+        ></input>
+        <Button type="submit">Add student</Button>
+       </form>
       {inProgress && <Loader />}
     </Card>
 

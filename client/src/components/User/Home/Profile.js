@@ -10,7 +10,7 @@ import Modal from "../../UI/Modal"
 
 const Profile = (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
-  // console.log(user);
+  console.log(user);
   const [profile, setProfile] = useState(
     JSON.parse(localStorage.getItem("profile"))
   );
@@ -216,7 +216,8 @@ const [enteredNoteNbr , setEnteredNoteNbr] = useState(null)
       <div>
         <h2>Classes</h2>
         <Accordion className="accordion" transition={{duration: "500ms", timingFunction: "cubic-bezier(0, 0, 0.2, 1)"}}>
-          {profile.classes
+          {console.log(profile)}
+          {profile
             ? profile.classes.map((classItem) => (
                 <AccordionItem >
                   <AccordionHeader >

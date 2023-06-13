@@ -55,7 +55,7 @@ export class UserService {
 
             // const password = `${checkIfUserExist.firstName}_${checkIfUserExist.lastName}_${checkIfUserExist.id}_A%`
             const password = "Adis123%"
-            console.log(password);
+            console.log(password, " password");
             await this.mailerService.sendMail({
                 to: checkIfUserExist.email,
                 subject: "Recovered Password",
@@ -98,7 +98,6 @@ export class UserService {
             firstName: user.firstName,
             lastName: user.lastName,
             role: user.role,
-            subject: user.subject
         }, JWT)
     }
     userResponse(user: UserEntity): any {
@@ -114,7 +113,7 @@ export class UserService {
             where: { email: loginUserDto.email }
         })
 
-        console.log(user , "user");
+        // console.log(user , "user");
 
 
         if (!user) {
@@ -127,6 +126,8 @@ export class UserService {
         console.log(user.password, loginUserDto.password);
         
         const isPasswordCorrect = await compare(loginUserDto.password, user.password)
+        console.log(isPasswordCorrect);
+        
         if (!isPasswordCorrect) {
             throw new HttpException("Credentional is not valid", HttpStatus.UNPROCESSABLE_ENTITY)
         }
@@ -153,6 +154,31 @@ export class UserService {
         }
     }
 
+        async addExistingStudent (email :string , classId : number) {
+            const foundClass = await this.classReposotory.findOne(
+                {
+                    relations :["user"],
+                   where: {id: classId}
+                }
+                   )
+            const foundUser = await this.userRepository.findOneBy({email:email})
+            if(!foundClass) {
+                throw new HttpException("Class doesn't exist", HttpStatus.BAD_REQUEST)
+            }
+            await this.mailerService.sendMail({
+                to: email,
+                subject: "New Class",
+                template: "/.confirmation",
+                context: {
+                    name: `${foundUser.firstName} ${foundUser.lastName}`,
+                    url: `You are added to new class ${foundClass.schoolClass} ${foundClass.departmant} in school ${foundClass.school}`
+                }
+            })
+            foundClass.user = [...foundClass.user ,  foundUser]
+            await this.classReposotory.save(foundClass)
+        }
+
+
         async addStudent(createStudentDTO : CreateStudentDTO): Promise <any>{
             // console.log(createStudentDTO);
             
@@ -164,7 +190,7 @@ export class UserService {
                    )
             const foundUser = await this.userRepository.findOneBy({email:createStudentDTO.email})
             if(!foundClass) {
-                throw new HttpException("Class doesen't exist", HttpStatus.BAD_REQUEST)
+                throw new HttpException("Class doesn't exist", HttpStatus.BAD_REQUEST)
             }
             
             delete createStudentDTO.classId
@@ -193,6 +219,8 @@ export class UserService {
         async currentUser (id:number) : Promise<any>{
             const user = await this.userRepository.createQueryBuilder("user")
             .leftJoinAndSelect("user.classes","classes")
+            .leftJoinAndSelect("user.grades", "grades")
+            .leftJoinAndSelect("user.notes", "notes")
             .setFindOptions({
                 where :  {
                     id : id
@@ -219,7 +247,7 @@ export class UserService {
                 }
             })
             .getMany()
-            // console.log(students);
+            console.log(students);
             // console.log("students");
             return students
             

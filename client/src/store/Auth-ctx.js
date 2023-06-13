@@ -21,6 +21,7 @@ const AuthContex = React.createContext({
   RegisterClassNavHandler: () => {},
   UnregisterClassNavHandler: () => {},
   AddNewsNavHandler: () => {},
+  navigationStudentHandler : () =>{},
   adminPanelNav: '',
 });
 
@@ -28,7 +29,7 @@ export const AuthContexProvider = (props) => {
   const [isError, setIsError] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
   const [isRegistred, setIsRegistred] = useState(null);
-  const [navigation, setNavigation] = useState('home');
+  const [navigation, setNavigation] = useState(null);
   // const [navAddClass, setNavAddClass] = useState(false);
   // const [navAddStudent, setNavAddStudent] = useState(false);
   // const [navRegisterClass, setNavRegisterClass] = useState(false);
@@ -56,6 +57,7 @@ export const AuthContexProvider = (props) => {
       setIsLogged(true);
       localStorage.setItem('Logged_in', props.token);
       localStorage.setItem('user', JSON.stringify(props));
+      props.role === "student" ? setNavigation("student") : setNavigation("home")
     }
   };
   const registredHandler = (props) => {
@@ -70,7 +72,15 @@ export const AuthContexProvider = (props) => {
     localStorage.removeItem('user');
     localStorage.removeItem('Logged_in');
     localStorage.removeItem('classList');
+    localStorage.removeItem('profile');
+    localStorage.removeItem('curriculumList');
+    localStorage.removeItem('MyClasses');
     setIsLogged(false);
+  };
+
+
+  const navigationStudentHandler = () => {
+    setNavigation('student');
   };
   const navigationAddClassHandler = () => {
     setNavigation('add class');
@@ -122,6 +132,7 @@ export const AuthContexProvider = (props) => {
         AddNewsNavHandler,
         RegisterClassNavHandler,
         UnregisterClassNavHandler,
+        navigationStudentHandler,
         // navAddClass,
         // navAddNews,
         // navAddStudent,

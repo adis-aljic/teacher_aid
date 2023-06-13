@@ -18,6 +18,11 @@ const HeaderInformation = (props) => {
           <p>Subject : {props.user.subject}</p>
         </div>
         <div className={classes.navigation}>
+          {props.user.role === "student" && (
+            <Link to="/student">
+              <Button onClick={ctx.navigationStudentHandler}>Home</Button>
+            </Link>
+          )}
           {props.user.role === 'teacher' && (
                         <Link to="/home">
 

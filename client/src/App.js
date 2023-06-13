@@ -23,6 +23,7 @@ import Student from './components/User/Student/Student';
 function App() { 
   
   const ctx = useContext(AuthContex);
+  console.log(ctx);
   return (
     <>
       <Header>
@@ -76,8 +77,8 @@ function App() {
           <Route
             path="home"
             element={
-              ctx.isLogged &&  ctx.user.role === "teacher" &&
-              ctx.navigation === 'home' && (
+              ctx.isLogged  &&
+              ctx.navigation === 'home' &&  ctx.user.role === "teacher"  && (
                 <>
                   <div className={classes.home}>
                     <ListNews className={classes.classList}></ListNews>
@@ -94,10 +95,15 @@ function App() {
                 )
               }>
                 </Route>
-                <Route path='student' 
-                element={
-                  ctx.isLogged && ctx.user.role === "student" && <Student></Student>
-                }></Route>
+            <Route path='student'
+            element={
+
+              ctx.isLogged &&  ctx.user.role === "student" && ctx.navigation === 'student' && 
+                <Student></Student>
+                
+              }>
+                </Route>
+            
         </Routes>
       </main>
       <Footer></Footer>

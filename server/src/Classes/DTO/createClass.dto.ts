@@ -16,6 +16,10 @@ export class CreateClassDTO {
 
     @IsNotEmpty()
     readonly departmant: string
+    
+    @IsNotEmpty()
+    readonly subject: string
+
 
     @IsNotEmpty()
     readonly abbrevation: string

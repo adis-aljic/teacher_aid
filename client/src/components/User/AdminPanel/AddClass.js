@@ -14,6 +14,7 @@ const AddClass = (props) => {
   const [enteredAbbCity, setEnteredAbbCity] = useState('');
   const [inProgress, setInProgress] = useState(false)
   const [isError ,setIsError] = useState(null)
+  const [enteredSubject, setEnteredSubject] = useState('');
 
   const inputSchoolRef = useRef();
   const inputClassRef = useRef();
@@ -21,6 +22,11 @@ const AddClass = (props) => {
   const inputCityRef = useRef();
   const inputCityAbbRef = useRef();
   const inputAbbRef = useRef();
+  const inputSubjectRef = useRef();
+
+  const subjectHandler = (e) => {
+    setEnteredSubject(inputSubjectRef.current.value);
+  };
 
   const schoolHandler = (e) => {
     setEnteredSchool(inputSchoolRef.current.value);
@@ -61,6 +67,8 @@ const AddClass = (props) => {
         schoolClass: `${schoolClass}`,
         departmant: `${departmant}`,
         abbrevation: `${abb}`,
+        subject : `${enteredSubject}`,
+
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -80,7 +88,8 @@ const AddClass = (props) => {
         setEnteredClass('');
         setEnteredDepartmant('');
         setEnteredAbrevation('');
-        
+        setEnteredSubject("")
+
       });
       setInProgress(false)
   };
@@ -148,6 +157,13 @@ const AddClass = (props) => {
           value={enteredAbrevation}
           onChange={changeAbbHandler}
           ref={inputAbbRef}></input>
+              <input
+          type="text"
+          name="subject"
+          placeholder="Enter subject"
+          value={enteredSubject}
+          ref={inputSubjectRef}
+          onChange={subjectHandler}></input>
         <Button className={classes.buttonAddClass} type="submit">
           Add new class
         </Button>
