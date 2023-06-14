@@ -63,3 +63,14 @@ justify-content: space-between;
     padding: 1rem;
     border: 1px solid wheat;
 }
+.listFilteredSchool{
+    height: 10rem;
+    width: 40%;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+.filteredSchool{
+    list-style-type: none;
+    border-bottom: dashed 1px black;
+    padding: 0.5rem;
+}

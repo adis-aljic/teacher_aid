@@ -33,6 +33,8 @@ export class ClassService {
         // return ["Aaa", "gg"]
     }
 
+
+
     async addClassToUser(token: string, id: number): Promise<ClassesEntity> {
         const decode = verify(token, JWT) as any
 
@@ -58,11 +60,11 @@ export class ClassService {
             console.log("error");
 
         }
-
-        return {
-            "statusCode": 200,
-            "message": "Class is susscesfully registered"
-        } as any
+        return classes
+        // return {
+        //     "statusCode": 200,
+        //     "message": "Class is susscesfully registered"
+        // } as any
         // const user = decode(token, JWT)
     }
 

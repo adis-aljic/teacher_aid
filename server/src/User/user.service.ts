@@ -55,7 +55,7 @@ export class UserService {
 
             // const password = `${checkIfUserExist.firstName}_${checkIfUserExist.lastName}_${checkIfUserExist.id}_A%`
             const password = "Adis123%"
-            console.log(password, " password");
+            // console.log(password, " password");
             await this.mailerService.sendMail({
                 to: checkIfUserExist.email,
                 subject: "Recovered Password",
@@ -66,7 +66,7 @@ export class UserService {
                 }
             })
             checkIfUserExist.password = await hash(password, 10)
-            console.log(checkIfUserExist);
+            // console.log(checkIfUserExist);
             
             await this.userRepository.save(checkIfUserExist)
             return ({ "status": "recovered password" })
@@ -109,7 +109,7 @@ export class UserService {
 
     async loginUser(loginUserDto: LoginUserDto): Promise<UserEntity> {
         const user = await this.userRepository.findOne({
-            select: ["id", "email", "firstName", "lastName", "password", "role", "subject", "isAuth"],
+            select: ["id", "email", "firstName", "lastName", "password", "role", "isAuth"],
             where: { email: loginUserDto.email }
         })
 
@@ -126,7 +126,7 @@ export class UserService {
         console.log(user.password, loginUserDto.password);
         
         const isPasswordCorrect = await compare(loginUserDto.password, user.password)
-        console.log(isPasswordCorrect);
+        // console.log(isPasswordCorrect);
         
         if (!isPasswordCorrect) {
             throw new HttpException("Credentional is not valid", HttpStatus.UNPROCESSABLE_ENTITY)
@@ -189,6 +189,10 @@ export class UserService {
                 }
                    )
             const foundUser = await this.userRepository.findOneBy({email:createStudentDTO.email})
+            if(foundUser){
+
+                throw new HttpException("User already exist", HttpStatus.BAD_REQUEST)
+            }
             if(!foundClass) {
                 throw new HttpException("Class doesn't exist", HttpStatus.BAD_REQUEST)
             }
@@ -207,13 +211,27 @@ export class UserService {
                 }
             })
             await this.userRepository.save(newStudent)
-            // console.log(newStudent);
-            // console.log(foundClass, " found class");
-            foundClass.user = [...foundClass.user ,  foundUser]
+            console.log(newStudent);
+            foundClass.user = [...foundClass.user ,  newStudent]
+            console.log(foundClass, " found class");
             // console.log(foundClass);
             // await this.classReposotory.createQueryBuilder().insert().relation(foundUser: UserEntity,)
             await this.classReposotory.save(foundClass)
             return newStudent
+        }
+
+        async findTeachers() : Promise <any> {
+            const teachers = await this.userRepository.createQueryBuilder("user")
+            .leftJoinAndSelect("user.classes", "classes")
+            .setFindOptions({
+              where : {
+                role : "teacher"
+              }
+            })
+            .getMany()
+            console.log("Aaa");
+            
+            return teachers
         }
 
         async currentUser (id:number) : Promise<any>{
@@ -247,7 +265,7 @@ export class UserService {
                 }
             })
             .getMany()
-            console.log(students);
+            // console.log(students);
             // console.log("students");
             return students
             

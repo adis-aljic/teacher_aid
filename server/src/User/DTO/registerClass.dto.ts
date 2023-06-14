@@ -21,6 +21,6 @@ export class RegisterClass {
 
     @IsNotEmpty()
     readonly abbrevation: string
-
+    
 
 }

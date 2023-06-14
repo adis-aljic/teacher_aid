@@ -28,6 +28,12 @@ export class UserController {
 
     }
 
+    @Get("api/user/teachers")
+    async findTeachers (){
+        console.log("aa");
+        
+        return await this.userService.findTeachers()
+    }
     @Post("api/user")
     // @UseGuards(AuthGuard)
     // async currentUser(@Param("id", ParseIntPipe) id: number): Promise<any> {

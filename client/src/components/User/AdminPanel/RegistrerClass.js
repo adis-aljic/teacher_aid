@@ -3,6 +3,7 @@ import Button from '../../UI/Button';
 import Card from '../../UI/Card';
 import Loader from '../../UI/Loader';
 import Modal from '../../UI/Modal';
+import styles from "./AdminPanel.module.css"
 const RegistrerClass = () => {
   const [searchSchool, setSearchSchool] = useState('');
   const [filteredSchool, setFilteredSchool] = useState([]);
@@ -68,19 +69,12 @@ const RegistrerClass = () => {
         console.log(data);
         setIsError({
           title:"Class is registred",
-          message: `Class ${data.abbrevation} is registred. ${
-            data.map(item => {
-            return  <>
-              <li>School {item.school}</li>
-              <li>Class {item.schoolClass} - ${item.departmant}</li>
-              <li>City {item.city}</li>
-              <li>Code {item.abbrevation}</li>
-              </>
-            })
-          }`
+          message: `Class ${data.abbrevation} is registred.`
+            
         })
       });
       setInProgress(false)
+      setEneteredClassCode("")
   };
 
   const searchSchoolHandler = (e) => {
@@ -119,19 +113,22 @@ const RegistrerClass = () => {
         value={searchSchool}
         onChange={searchSchoolHandler}
         placeholder="Search ..."></input>
+        <ul className={styles.listFilteredSchool}>
       {filteredSchool.length > 0 ? (
         filteredSchool.map((x) => (
-          <>
-            <p key={x.id}>
+            <li key={x.id} className={styles.filteredSchool}>
               {x.school}
-              {x.class}
+              <br></br>
+              {x.schoolClass} - {x.departmant}
+              <br></br>
               {x.abbrevation}
-            </p>
-          </>
+            </li>
         ))
-      ) : (
-        <p>{text} </p>
-      )}
+        ) 
+        : (
+          <p>{text} </p>
+          )}
+          </ul>
       <form onSubmit={onSubmitRegistrerClassHandler}>
         <input
           type="text"

@@ -1,0 +1,14 @@
+.title {
+    width: 18rem ;
+    height: 5rem;
+}
+
+.body {
+        width: 18rem;
+        height: 5rem;
+        overflow-y: scroll;
+}
+.body li {
+    list-style: none;
+    line-height: 2.5em;
+}

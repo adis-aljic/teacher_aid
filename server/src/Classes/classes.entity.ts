@@ -25,6 +25,9 @@ export class ClassesEntity {
     @Column()
     abbrevation: string
 
+    // @Column()
+    // subject: string
+
 
 
     @ManyToMany(() => UserEntity, (user) => user.classes, )

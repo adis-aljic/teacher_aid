@@ -32,8 +32,6 @@ export class UserEntity extends BaseEntity {
     @Column({ default: false })
     isAuth: boolean
 
-    @Column({default: null})
-    subject: string;
 
     @BeforeInsert()
     async hashPassword() {

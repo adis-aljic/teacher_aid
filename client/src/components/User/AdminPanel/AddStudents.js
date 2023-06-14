@@ -66,7 +66,7 @@ console.log(classes);
 
         return
       }
-    fetch("http://localhost:4000/user/findAndAddStudent",{
+    fetch("http://localhost:4000/api/user/findAndAddStudent",{
       method : "POST",
       mode : "cors",
       body : JSON.stringify({
@@ -150,16 +150,17 @@ console.log(classes);
         //   setIsValid(false)
         //   setEnteredMessage("")
         // }, (1000));
-        console.log(Response);
 
         if(data.statusCode > 299){
           setInProgress(false)
         return  setIsError({title: "Error",
         message: `${data.message}`})
         }
+
         setIsError({title: "User is added",
         message: `Student ${data.firstName} ${data.lastName} is added to class ${enteredAbrevation}`})
       });
+
       setInProgress(false)
 
   };
