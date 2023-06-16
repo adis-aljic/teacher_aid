@@ -22,6 +22,7 @@ const AuthContex = React.createContext({
   UnregisterClassNavHandler: () => {},
   AddNewsNavHandler: () => {},
   navigationStudentHandler : () =>{},
+  navigationMessageHandler : () =>{},
   adminPanelNav: '',
 });
 
@@ -82,6 +83,9 @@ export const AuthContexProvider = (props) => {
   const navigationStudentHandler = () => {
     setNavigation('student');
   };
+  const navigationMessageHandler = () => {
+    setNavigation('message');
+  };
   const navigationAddClassHandler = () => {
     setNavigation('add class');
   };
@@ -139,6 +143,7 @@ export const AuthContexProvider = (props) => {
         // navRegisterClass,
         // navUnregisterClass,
         adminPanelNav,
+        navigationMessageHandler
       }}>
       {props.children}
     </AuthContex.Provider>

@@ -13,6 +13,7 @@ import { RegisterClass } from "./DTO/registerClass.dto";
 import { ClassesEntity } from "src/Classes/classes.entity";
 import { CreateStudentDTO } from "./DTO/createStudent.dto";
 import { UserType } from "./type/user.type";
+import { SendMessageDTO } from "./DTO/sendMessage.dto";
 
 
 @Injectable()
@@ -269,6 +270,25 @@ export class UserService {
             // console.log("students");
             return students
             
+        }
+
+        async sendMessage(sendMessageDTO : SendMessageDTO){
+            
+            await this.mailerService.sendMail({
+                to: sendMessageDTO.teacherEmail,
+                subject: `Student: ${sendMessageDTO.studentName} : ${sendMessageDTO.title}`,
+                template: './confirmation',
+                context: {
+                  teacherFullName : sendMessageDTO.teacherFullName,
+                  school : sendMessageDTO.school,
+                  schoolClass : sendMessageDTO.schoolClass,
+                  classCode : sendMessageDTO.classCode,
+                  student : sendMessageDTO.studentName,
+                  email : sendMessageDTO.studentEmail,
+                  title : sendMessageDTO.title,
+                  message : sendMessageDTO.message
+                },
+            });
         }
 
 }

@@ -5,10 +5,19 @@
 
 .body {
         width: 18rem;
-        height: 5rem;
+        /* height: 5rem; */
         overflow-y: scroll;
 }
 .body li {
     list-style: none;
-    line-height: 2.5em;
+    line-height: 2em;
+}
+
+.card{
+    height: 70vh;
+}
+
+.card li {
+/* height: 60vh; */
+border: 1px solid black;
 }

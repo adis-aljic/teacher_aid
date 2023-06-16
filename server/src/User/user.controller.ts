@@ -9,6 +9,7 @@ import { UpdateUserDTO } from "./DTO/updateUser.dto";
 
 import { RegisterClass } from "./DTO/registerClass.dto";
 import { CreateStudentDTO } from "./DTO/createStudent.dto";
+import { SendMessageDTO } from "./DTO/sendMessage.dto";
 
 @Controller()
 export class UserController {
@@ -73,6 +74,12 @@ export class UserController {
         return this.userService.findAllStudents();
     }
 
+    @Post("api/user/message")
+    async sendMessage(@Body() sendMessageDTO : SendMessageDTO ){
+        console.log(sendMessageDTO);
+        return this.userService.sendMessage(sendMessageDTO)
+        
+    }
 
 }
 

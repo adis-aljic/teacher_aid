@@ -23,6 +23,11 @@ const HeaderInformation = (props) => {
               <Button onClick={ctx.navigationStudentHandler}>Home</Button>
             </Link>
           )}
+          {props.user.role === "student" && (
+            <Link to="/message">
+              <Button onClick={ctx.navigationMessageHandler}>Send Message</Button>
+            </Link>
+          )}
           {props.user.role === 'teacher' && (
                         <Link to="/home">
 

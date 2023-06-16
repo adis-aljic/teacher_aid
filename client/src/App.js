@@ -19,6 +19,7 @@ import ListNews from './components/User/Home/ListNews';
 import Profile from './components/User/Home/Profile';
 import Curriculum from './components/User/Curriculum/Curriculum';
 import Student from './components/User/Student/Student';
+import Message from './components/User/Student/Message';
 
 function App() { 
   
@@ -101,6 +102,14 @@ function App() {
               ctx.isLogged &&  ctx.user.role === "student" && ctx.navigation === 'student' && 
                 <Student></Student>
                 
+              }>
+                </Route>
+            <Route path='message'
+            element={
+
+              ctx.isLogged &&  ctx.user.role === "student" && ctx.navigation === 'message' && 
+              <Message></Message>
+              
               }>
                 </Route>
             
