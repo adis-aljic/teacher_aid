@@ -76,6 +76,7 @@ export const AuthContexProvider = (props) => {
     localStorage.removeItem('profile');
     localStorage.removeItem('curriculumList');
     localStorage.removeItem('MyClasses');
+    localStorage.removeItem('teacherData');
     setIsLogged(false);
   };
 

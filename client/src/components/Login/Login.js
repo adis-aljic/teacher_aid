@@ -56,18 +56,14 @@ const Login = (props) => {
     setEnteredSubject(inputedSubject.current.value);
   };
 
-  const forgotPasswordHandler = () => {
-    setForgotPass(true);
-  };
-  const clearForgetenPasswordHandler = () => {
-    setForgotPass(false);
-  };
-  const forgetPassEmailHandler = (e) => {
-    setInputEmailForgetEmail(inputedForgetPassEmailRef.current.value);
-  };
-  const errorHandler = () => {
-    setIsError(null);
-  };
+  const forgotPasswordHandler = () => setForgotPass(true);
+  
+  const clearForgetenPasswordHandler = () =>     setForgotPass(false);
+  
+  const forgetPassEmailHandler = (e) =>     setInputEmailForgetEmail(inputedForgetPassEmailRef.current.value);
+  
+  const errorHandler = () =>     setIsError(null);
+  
 
   const onRegistredSubmitHandler = (e) => {
     e.preventDefault();

@@ -1,14 +1,16 @@
 .card {
     background-color: antiquewhite;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-    border-radius: 15px;
+    box-shadow: 15px 0px 13px -7px rgba(166,161,191,0.46);
+-webkit-box-shadow: 15px 0px 13px -7px rgba(166,161,191,0.46);
+-moz-box-shadow: 15px 0px 13px -7px rgba(166,161,191,0.46);
+        border-radius: 15px;
     height: 60vh;
     width: 40vw;
-    /* padding: 2rem; */
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
-   
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+   margin-trim: in-flow;
+   justify-content: center;
+   flex-direction: column;
 }
 

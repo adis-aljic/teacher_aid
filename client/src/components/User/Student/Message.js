@@ -12,10 +12,10 @@ const Message = props =>{
     const enteredMessageRef = useRef()
     const titleRef = useRef()
     const messageHandler = e =>{
-        setEnteredMessage(e.target.value)
+        setEnteredMessage(enteredMessageRef.current.value)
     }
     const titleHandler = e =>{
-        setTitle(e.target.value)
+        setTitle(titleRef.current.value)
     }
    
     const contactFormSubmit = e =>{
@@ -72,7 +72,8 @@ const Message = props =>{
     }
        </select>
     <input name="title" value={enteredTitle} type="text" class="feedback-input" placeholder="title" onChange={titleHandler} ref={titleRef} />
-        <textarea name="text" value={enteredMessage} ref={enteredMessageRef} onChange={messageHandler} class="feedback-input" placeholder="Enter message"></textarea>
+        <textarea name="text" value={enteredMessage} maxLength={200} ref={enteredMessageRef} onChange={messageHandler} class="feedback-input" placeholder="Enter message"></textarea>
+        <p>{enteredMessage.length} / 200</p>
         <Button>Send Message</Button>
       </form>
         </Card>

@@ -15,7 +15,6 @@ const HeaderInformation = (props) => {
           <p>
             Welcome {props.user.firstName} {props.user.lastName}
           </p>
-          <p>Subject : {props.user.subject}</p>
         </div>
         <div className={classes.navigation}>
           {props.user.role === "student" && (
