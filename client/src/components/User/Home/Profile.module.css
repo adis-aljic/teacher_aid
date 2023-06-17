@@ -1,0 +1,463 @@
+.accordion {
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    width: 24vw;
+    margin-left: 1rem;
+    padding-left: 1rem;
+    /* overflow-y: scroll; */
+    height: 70vh;
+    
+    /* display: flex; */
+    /* justify-content: space-around; */
+  }
+  .accordion .accordion-item:first-child .title {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  .accordion .accordion-item:last-child .title {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  .accordion .accordion-item .title {
+    background-color: #b9b4b4;
+    color: #201b1b;
+    cursor: pointer;
+    padding: 18px;
+    /* width: 100%; */
+    text-align: left;
+    border: none;
+    outline: none;
+    -webkit-transition: 0.4s;
+    -o-transition: 0.4s;
+    transition: 0.4s;
+    padding: 1rem;
+    
+}
+.accordion .accordion-item .title:after {
+    content: '\2795';
+    font-size: 13px;
+    color: #4d3b3b;
+    float: right;
+    /* margin-left: 5px; */
+}
+.accordion .accordion-item .panel {
+    max-height: 0;
+    -webkit-transition: max-height 0.15s ease-out;
+    -o-transition: max-height 0.15s ease-out;
+    transition: max-height 0.15s ease-out;
+    /* overflow: hidden; */
+    overflow-y: scroll;
+    
+}
+.accordion .accordion-item.active .title {
+    background-color: #eee;
+  }
+  .accordion .accordion-item.active .title:after {
+      content: '\2796';
+    }
+  .accordion .accordion-item.active .panel {
+    background-color: aqua;
+    max-height: 500px;
+    -webkit-transition: max-height 0.25s ease-in;
+    -o-transition: max-height 0.25s ease-in;
+    transition: max-height 0.25s ease-in;
+  }
+
+  .studentGrade{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  .note{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 1px solid wheat;
+    gap: 1rem;
+    /* border: 1px solid black; */
+    height: fit-content;
+    /* width: max-content; */
+    width: 20vw;
+    overflow-y: scroll;
+  } 
+  .note h3 {
+    /* border: 1px solid blue; */
+    font-size: 2em;
+  }
+  .note p {
+    height: 15vh;
+    /* border: 1px solid red; */
+    text-align: left;
+    /* height: ; */
+  }
+  .note li{
+    border-bottom: 1px solid wheat;
+  }
+
+  .gradeInput{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    /* border: 1px solid yellow; */
+    width: 10vw;
+    padding: 1rem;
+    /* text-align: left; */
+
+  }
+  
+  .gradeInput button{
+  padding: 1rem;
+  /* height: 1rem; */
+
+  }
+ 
+  button{
+    padding: 1rem;
+  }
+  .addNewGrade{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+  }
+  &input {
+
+    height: 2rem;
+    text-align: center;
+  }
+  &  button{
+    height: 2rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+  }
+ 
+  .profileCurriculumList{
+    width: max-content;
+    height: fit-content;
+    list-style-type: none;
+  } 
+  .profileCurriculumList h4 {
+    text-align: center;
+  }
+  
+  .CurriculumList{
+    list-style-type: none;
+    padding-left: 10%;
+    text-align: left;
+    line-height: 2rem;
+    border: 1px solid black;
+    
+  }
+  .listCurriculum{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn-mp{
+    padding: 2rem;
+    width: 10rem;
+  }
+
+.modal-mp{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3rem;
+
+}
+.deleteLastGradeBtn{
+  padding: 2rem;
+  width: 10rem;
+}
+  .modal-mp input {
+    width: 6rem;
+  }
+
+ 
+  .listProfile {
+      display: flex;
+      /* justify-content: space-a   round; */
+      flex-direction: column;
+      list-style: none;
+      /* height: 50%; */
+    padding: 3rem;
+    /* width: 50rem; */
+    /* align-items: flex-start; */
+    width: 25vw;
+    color: aliceblue;
+    border-radius: 10px;
+    background-color: rgb(9, 19, 112);
+    /* background-color:  initial; */
+    border: 1px solid black;
+    /* background-position: 0; */
+}
+
+.listProfile li {
+    display: block;
+    /* width: 20rem; */
+    padding: rem;
+    line-height: 3rem;
+    font-size: 1.5em;
+    /* line-break: loose; */
+
+    
+}
+.listProfile h2{
+    text-align: center;
+
+}
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+.cardHomeProfile{
+    width: 60vw;
+    display: flex;
+    justify-content: space-around;
+}
+
+.card_profile {
+    display: block;
+    height: 75vh;    
+    /* margin: 0; */
+    padding: 1rem;
+     /* overflow-y:scroll; */
+     /* overflow-wrap: normal; */
+    width: 90vw;
+    gap:2rem;
+    display: flex;
+/* justify-content: space-around; */
+/* align-items: center; */
+}
+
+.listClasses{
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
+    width: 25vw;
+    /* height: 100vh; */
+    background-color: rgb(9, 19, 112);
+    list-style: none;
+    color: wheat;
+    line-height: 1.6em;
+}
+.listClasses h1 {
+    color: wheat;
+    /* background-color: blue; */
+    text-align: center;
+    border-bottom: 2px solid whitesmoke;
+    width: 90%;
+
+}
+
+.listClasses hr {
+background-color: whitesmoke;
+/* margin: 0; */
+/* width: 100%; */
+margin-right: 2rem;
+}
+
+@media only screen and (max-width: 780px) {
+    
+.listClasses{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    width: 90vw;
+    /* height: 100vh; */
+    background-color: rgb(9, 19, 112);
+    list-style: none;
+    color: wheat;
+    /* line-height: 1.6em; */
+}
+.accordion {
+    width: 80vw;
+    
+    
+}
+.acc{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.accordion-item .note{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+    align-items: center;
+}
+.listClasses h1 {
+    color: wheat;
+    /* background-color: blue; */
+    text-align: center;
+    border-bottom: 2px solid whitesmoke;
+    /* width: 90%; */
+
+}
+
+.listClasses hr {
+background-color: whitesmoke;
+/* margin: 0; */
+/* width: 100%; */
+/* margin-right: 2rem; */
+}
+
+    .card_profile {
+        /* display: block; */
+        /* height: 75vh;     */
+        /* margin: 0; */
+        overflow-y: scroll;
+        padding: 1rem;
+         /* overflow-y:scroll; */
+         /* overflow-wrap: normal; */
+        width: 100vw;
+        gap:2rem;
+        display: flex;
+        flex-direction: column;
+    /* justify-content: space-around; */
+    /* align-items: center; */
+    }
+    
+    .cardHomeProfile{
+        width: 90vw;
+        display: flex;
+        justify-content: space-around;
+    }
+ 
+    
+  .listProfile {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    list-style: none;
+    /* height: 50%; */
+  /* padding: 3rem; */
+  /* width: 50rem; */
+  /* align-items: flex-start; */
+  width: 100vw;
+  color: aliceblue;
+  border-radius: 10px;
+  background-color: rgb(9, 19, 112);
+  /* background-color:  initial; */
+  border: 1px solid black;
+  /* background-position: 0; */
+}
+.listProfile h2{
+    text-align: left;
+}
+
+
+.studentGrade{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* gap: 2rem; */
+    width: 40vw;
+
+}
+.studentGrade p {
+    text-align: center;
+    width: 40vw;
+}
+.note{
+    border-bottom: 1px solid wheat;
+    border-left: none;
+}
+hr{
+    display: none;
+}
+.gradeInput{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: flex-start; */
+    /* border: 1px solid yellow; */
+    /* width: 10vw; */
+    /* padding: 1rem; */
+    /* text-align: left; */
+
+  }
+
+  .cardAddGrades{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: scroll;
+    gap: 1rem;
+    /* background-color: yellow; */
+  }
+  form button{
+    padding: 1.5rem;
+  }
+  form input {
+    width: 100%;
+  }
+   form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    border-bottom: 3px solid blue;
+  }
+
+}
+.deleteGrade{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+.deleteNote{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem
+}
+
+
+.cardAddGrades{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: scroll;
+    gap: 1rem;
+    /* background-color: yellow; */
+    height: 80vh;
+  }
+  form button{
+    padding: 1.5rem;
+  }
+  form input {
+    width: 100%;
+  }
+   form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    border-bottom: 3px solid blue;
+  }
+
+
+.deleteGrade{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}

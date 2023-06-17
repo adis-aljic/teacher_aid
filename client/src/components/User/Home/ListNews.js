@@ -28,14 +28,12 @@ const ListNews = props =>{
             )
             
 },[user.id])
-    // console.log(data);
 return(
     <Card className={classes.card}>
             
             {data.length>0
           ? data.map((news) => (
             <>
-            {/* {console.log(news)} */}
                 <li key={news.id} className={classes.listNews}>
                   <h1>
                      {news.title}
@@ -60,7 +58,7 @@ return(
                 <br></br>
               </>
             ))
-          : ''}            
+          : <h1>No news ...</h1> }            
     </Card>
 )
 }
