@@ -84,6 +84,7 @@ export class UserService {
 
         const newUser = new UserEntity() as any
         Object.assign(newUser, createUserDTO)
+        newUser.isAuth = true;
 
         await this.userRepository.save(newUser)
         await this.userRepository.findOne({ where: { email: newUser.email } })
