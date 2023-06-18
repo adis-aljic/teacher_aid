@@ -7,7 +7,6 @@ const ClassesList = (props) => {
   const [classes, setClasses] = useState([]);
  const [inProgress, setInProgress] = useState(false)
 
-  // let classesList = JSON.parse(localStorage.getItem('classList'));
   const user = JSON.parse(localStorage.getItem("user"))
   useEffect(() => {
     fetch('http://localhost:4000/api/classes/myclasses', {
@@ -22,9 +21,7 @@ const ClassesList = (props) => {
     })  
     .then((resolve) => resolve.json())
       .then((data) => {
-        console.log(data);
         localStorage.setItem('MyClasses', JSON.stringify(data));
-        setClasses(data);
       });
     }, [user.id]
     );
@@ -43,7 +40,6 @@ const ClassesList = (props) => {
     }) 
     .then((resolve) => resolve.json())
     .then((data) => {
-      console.log(data);
         localStorage.setItem('MyClasses', JSON.stringify(data));
         setClasses(data);
       });

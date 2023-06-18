@@ -24,7 +24,7 @@ import Message from './components/User/Student/Message';
 function App() { 
   
   const ctx = useContext(AuthContex);
-  console.log(ctx);
+  
   return (
     <>
       <Header>
@@ -49,7 +49,7 @@ function App() {
             element={
               ctx.isLogged && ctx.user.role === "teacher" &&
               ctx.navigation === 'add class' && (
-                <div className="mainAdminPanel">
+                <div className={classes.mainAdminPanel}>
                   <div>
                     <Navigation></Navigation>
                   </div>

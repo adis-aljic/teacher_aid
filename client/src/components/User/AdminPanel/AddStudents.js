@@ -3,6 +3,7 @@ import Card from '../../UI/Card';
 import Button from '../../UI/Button';
 import Loader from '../../UI/Loader';
 import Modal from '../../UI/Modal';
+import styles from "./AddStudents.module.css"
 const AddStudent = (props) => {
   const [enteredFirstName, setEnteredFirstName] = useState('');
   const [enteredLastName, setEnteredLastName] = useState('');
@@ -22,7 +23,6 @@ const AddStudent = (props) => {
   const inputEmailRef = useRef();
   const classes = JSON.parse(localStorage.getItem("MyClasses"))
 
-console.log(classes);
   const firstNameHandler = (e) => {
     setEnteredFirstName(inputFirstNameRef.current.value);
   };
@@ -43,17 +43,13 @@ console.log(classes);
   };
   const existingStudentHandler = e=>{
     e.preventDefault()
-    console.log(enteredAbrevation);
-    console.log(enteredExistEmail);
     if(!enteredExistEmail || !enteredAbrevation1){
       setEnteredMessage("All fields must be inputed!")
         setTimeout(() => {
           setEnteredMessage("")
         }, 1000);
-        console.log("proslo");
       return
     }
-    console.log("stat");
     const myClass = classes.filter(classes => classes.abbrevation === enteredAbrevation1)
     console.log(myClass);
     if(myClass.length === 0) {
@@ -77,7 +73,6 @@ console.log(classes);
     })
     .then(resolve => resolve.json())
     .then(data => {
-      console.log(data);
       if(data.statusCode > 299){
         setInProgress(false)
       return  setIsError({title: "Error",
@@ -105,7 +100,7 @@ console.log(classes);
         }, 1000);
       return 
     }
-    const myClass = classes.filter(classes => classes.abbrevation === enteredAbrevation)
+    const myClass = classes.filter(classes => classes.abbrevation === enteredAbrevation.toUpperCase())
     console.log(myClass);
     if(myClass.length === 0) {
       setInProgress(false)
@@ -118,7 +113,6 @@ console.log(classes);
           message : "Please check if you are entered right class code"
         })
       return
-      //  setEnteredMessage("Class is not found")
     }
     fetch('http://localhost:4000/api/user/newstudent', {
       method: 'POST',
@@ -138,19 +132,11 @@ console.log(classes);
       .then((resolve) => resolve.json())
       .then((data) => {
 
-        console.log(data);
         setEnteredFirstName("")
         setEnteredLastName("")
         setEnteredAbrevation("")
         setEnteredEmail("")
-        console.log(data);
-        // setEnteredMessage(data.message)
-        // setIsValid(true)
-        // setTimeout(() => {
-        //   setIsValid(false)
-        //   setEnteredMessage("")
-        // }, (1000));
-
+     
         if(data.statusCode > 299){
           setInProgress(false)
         return  setIsError({title: "Error",
@@ -166,7 +152,7 @@ console.log(classes);
   };
   const errorHandler = () => setIsError(false)
   return (
-    <Card >
+    <Card className={styles.addStudents}>
               {isError && (
         <Modal
           title={isError.title}
@@ -174,8 +160,6 @@ console.log(classes);
           onConfirm={errorHandler}
         />
       )}
-      {/* {isValid ?  message || <p>Student is added.</p> : <p>{message}</p>} */}
-      {console.log(message)}
 {message ? message : ""}
       <form onSubmit={addStudentHandler}>
         <h1>Add new student</h1>

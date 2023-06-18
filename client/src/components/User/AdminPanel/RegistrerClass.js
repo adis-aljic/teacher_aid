@@ -4,6 +4,7 @@ import Card from '../../UI/Card';
 import Loader from '../../UI/Loader';
 import Modal from '../../UI/Modal';
 import styles from "./AdminPanel.module.css"
+
 const RegistrerClass = () => {
   const [searchSchool, setSearchSchool] = useState('');
   const [filteredSchool, setFilteredSchool] = useState([]);
@@ -17,7 +18,6 @@ const RegistrerClass = () => {
     fetch("http://localhost:4000/api/classes/list")
     .then(resolve => resolve.json())
     .then(data => {
-      console.log(data);
       setMyClasses(data)
       localStorage.setItem("classList", JSON.stringify(data))
 
@@ -43,8 +43,7 @@ const RegistrerClass = () => {
       return
       
     }
-    const result = myClasses.find((classItem) => classItem.abbrevation === enteredClassCode);
-    console.log(result);
+    const result = myClasses.find((classItem) => classItem.abbrevation === enteredClassCode.toUpperCase());
     if(!result) {
       setInProgress(false)
       setIsError({
@@ -79,10 +78,8 @@ const RegistrerClass = () => {
 
   const searchSchoolHandler = (e) => {
     e.preventDefault();
-    setSearchSchool(e.target.value);
-    console.log(searchSchool);
+    setSearchSchool(e.target.value.toUpperCase());
     if(e.target.value === ""){
-      console.log(e.target.value);
       setText("")
     }
     const found = myClasses.filter((schoolClass) =>
@@ -99,7 +96,7 @@ const RegistrerClass = () => {
     }
   };
   return (
-    <Card>
+    <Card >
          {isError && (
         <Modal
           title={isError.title}
@@ -107,6 +104,8 @@ const RegistrerClass = () => {
           onConfirm={errorHandler}
         />
       )}
+    <div className={styles.regClass}>
+
       <h1>Registred class</h1>
       <input
         type="search"
@@ -141,9 +140,9 @@ const RegistrerClass = () => {
       </form>
       {inProgress && <Loader />}
 
+          </div>
     </Card>
   );
 };
 export default RegistrerClass;
 
-/// lista se ne brise kada se obrise input ... error ?

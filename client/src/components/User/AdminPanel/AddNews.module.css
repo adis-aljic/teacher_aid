@@ -36,3 +36,28 @@ textarea{
 & p{
 text-align: right;
 }
+
+@media only screen and (max-width: 780px) {
+.card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 90vw;
+    height: 80vh;
+}
+.card form{
+    width: 80vw;
+}
+textarea{
+    resize: none;
+    padding: 1rem;
+    font-size: 1.8em;
+    font-family: 'Roboto', sans-serif;
+    width: inherit;
+    width: 70vw;
+}
+& p{
+    text-align: right ; 
+    }   
+}

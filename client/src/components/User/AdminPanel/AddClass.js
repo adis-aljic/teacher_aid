@@ -61,13 +61,13 @@ const AddClass = (props) => {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
-        school: `${school}`,
-        city: `${city}`,
-        cityAbb: `${cityAbb}`,
-        schoolClass: `${schoolClass}`,
+        school: `${school.toUpperCase()}`,
+        city: `${city.toUpperCase()}`,
+        cityAbb: `${cityAbb.toUpperCase()}`,
+        schoolClass: `${schoolClass.toUpperCase()}`,
         departmant: `${departmant}`,
         abbrevation: `${abb}`,
-        subject : `${enteredSubject}`,
+        subject : `${enteredSubject.toUpperCase()}`,
 
       }),
       headers: {

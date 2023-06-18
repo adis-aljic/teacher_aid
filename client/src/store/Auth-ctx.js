@@ -47,7 +47,6 @@ export const AuthContexProvider = (props) => {
   }, [Auth]);
 
   const loginHandler = (props) => {
-    console.log(props);
     if (!props.isAuth) {
       setIsError({
         title: 'Unauthorized access',
@@ -63,7 +62,6 @@ export const AuthContexProvider = (props) => {
   };
   const registredHandler = (props) => {
     setIsRegistred(props);
-    console.log(isRegistred);
   };
   const errorHandler = () => {
     setIsError(null);

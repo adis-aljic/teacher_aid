@@ -3,6 +3,7 @@ import Button from '../../UI/Button';
 import Card from '../../UI/Card';
 import Loader from '../../UI/Loader';
 import Modal from '../../UI/Modal';
+import styles from "./AdminPanel.module.css"
 const RegistrerClass = () => {
   const [searchSchool, setSearchSchool] = useState('');
   const [filteredSchool, setFilteredSchool] = useState([]);
@@ -32,7 +33,7 @@ const RegistrerClass = () => {
     }
    
     const result = classesList.find(
-      (classItem) => classItem.abbrevation === enteredClassCode
+      (classItem) => classItem.abbrevation === enteredClassCode.toUpperCase()
     );
     if(!result) {
       setInProgress(false)
@@ -55,7 +56,6 @@ const RegistrerClass = () => {
     })
       .then((resolve) => resolve.json())
       .then((data) => {
-        console.log(data);
         setIsError({
           title:"Class is registred",
           message: `Class ${data.abbrevation} is registred. ${
@@ -105,6 +105,8 @@ const RegistrerClass = () => {
           onConfirm={errorHandler}
         />
       )}
+          <div className={styles.unregClass}>
+
       <h1>Unregistred class</h1>
       <input
         type="search"
@@ -114,11 +116,11 @@ const RegistrerClass = () => {
       {filteredSchool.length > 0 ? (
         filteredSchool.map((x) => (
           <>
-            <p key={x.id}>
+            <li key={x.id}>
               {x.school}
               {x.class}
               {x.abbrevation}
-            </p>
+            </li>
           </>
         ))
       ) : (
@@ -136,7 +138,7 @@ const RegistrerClass = () => {
         <Button type="submit">Unregister Class</Button>
       </form>
       {inProgress && <Loader />}
-
+</div>
     </Card>
   );
 };

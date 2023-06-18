@@ -36,7 +36,6 @@ function UploadFile() {
     })  
     .then((resolve) => resolve.json())
     .then((data) =>{
-        console.log(data);
         localStorage.setItem('MyClasses', JSON.stringify(data));
         setClasses(data);
       });
@@ -71,10 +70,8 @@ const uploadFileHandler = (event) => {
         // },
         uploadInBackground: false,
         onUploadDone: (res) => {
-            console.log(res);
             const url = res.filesUploaded[0].url
             setUrl(url)
-            // setReset(true)
         },
     };
     client.picker(options).open()
@@ -93,7 +90,6 @@ const uploadFileHandler = (event) => {
         })
     }
     const user = JSON.parse(localStorage.getItem("user"))
-    console.log(classes);
     if(!classes) {
       setInProgress(false)
 
@@ -102,7 +98,7 @@ const uploadFileHandler = (event) => {
         message: 'Please input correct class code',
       });
     } 
-     const schoolClass = classes.filter(x => x.abbrevation === eneteredClassCode)
+     const schoolClass = classes.filter(x => x.abbrevation === eneteredClassCode.toUpperCase())
 
     if(schoolClass.length === 0) {
       setInProgress(false)
@@ -171,6 +167,7 @@ const uploadFileHandler = (event) => {
           {isValidCode && uploadFinished  && <p className={styles.suscesfull}>News is suscesfully added!</p>}
           {message && <p className={styles.suscesfull}>{message}</p>}
       <form onSubmit={handleFormSubmit}>
+        <h2>Add news</h2>
         <input type='text' className={styles.input} ref={classCodeRef} required={true} value={eneteredClassCode} onChange={classCodeHandler} placeholder='Enter Class Code'></input>
         <input type='text' className={styles.input} ref={inputTitleRef} required={true} value={enteredTitle} onChange={titleHandler} placeholder='Enter Title'></input>
         <textarea className={styles.textarea} cols={40} rows={11} maxLength={400} required={true} ref={textareaRef} value={enteredTextarea} onChange={textAreaHandler} placeholder='Enter news'></textarea>
