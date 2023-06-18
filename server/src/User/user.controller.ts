@@ -31,7 +31,7 @@ export class UserController {
 
     @Get("api/user/teachers")
     async findTeachers (){
-        console.log("aa");
+        // console.log("aa");
         
         return await this.userService.findTeachers()
     }
@@ -40,7 +40,7 @@ export class UserController {
     // async currentUser(@Param("id", ParseIntPipe) id: number): Promise<any> {
     async currentUser(@Body("id", ParseIntPipe) id: number): Promise<any> {
 
-        console.log(id, " id")
+        // console.log(id, " id1")
         return this.userService.currentUser(id)
     }
 
@@ -53,7 +53,7 @@ export class UserController {
 
     @Post("api/user/forgetenpassword")
     async recievedNewPass(@Body("email") email: string): Promise<any> {
-        console.log(email, "bu d");
+        // console.log(email, "bu d");
 
         return this.userService.recievedNewPass(email)
     }
@@ -76,7 +76,7 @@ export class UserController {
 
     @Post("api/user/message")
     async sendMessage(@Body() sendMessageDTO : SendMessageDTO ){
-        console.log(sendMessageDTO);
+        // console.log(sendMessageDTO);
         return this.userService.sendMessage(sendMessageDTO)
         
     }

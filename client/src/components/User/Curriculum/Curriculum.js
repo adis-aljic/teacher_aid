@@ -60,7 +60,7 @@ const Curriculum = () => {
   return (
 
     <div className={classes.curriculum}>
-        <Card>
+        <Card className={classes.formCurriculum}>
           
           <h2>Add curriculum</h2>
           <br></br>

@@ -25,6 +25,10 @@
     -o-transition: 0.4s;
     transition: 0.4s;
   }
+  .btnTitle{
+    width: 80%;
+    padding: 1.2rem;
+  }
   .accordion .accordion-item .title:after {
     content: '\2795';
     font-size: 13px;
@@ -69,6 +73,8 @@
     height: inherit;
     /* width: max-content; */
     width: 15vw;
+    /* height: 5vh; */
+    /* background-color: blue; */
   } 
   .note h1 {
     /* border: 1px solid blue; */
@@ -127,17 +133,26 @@
     width: max-content;
     height: fit-content;
     list-style-type: none;
+    
   } 
   .profileCurriculumList h4 {
     text-align: center;
   }
-  
+  .CurriculumList li{
+
+    border: 1px solid black;
+    padding-left: 10%;
+  }
+  .CurriculumList h4{
+    font-size: 2em;
+    text-align: center;
+  }
   .CurriculumList{
     list-style-type: none;
-    padding-left: 10%;
     text-align: left;
     line-height: 2rem;
-    border: 1px solid black;
+    height: 50vh;
+    overflow-y: scroll;
     
   }
   .listCurriculum{
@@ -146,6 +161,7 @@
     gap: 1rem;
     justify-content: center;
     align-items: center;
+    
   }
 
   .btn-mp{
@@ -170,6 +186,41 @@
   }
 
   @media only screen and (max-width: 780px) {
-  
-  
+    .CurriculumList li{
+
+      border: 1px solid black;
+      /* padding-left: 10%; */
+      background-color: yellow;
+      width: 80vw;
+      padding: 0.2rem;
+      overflow-y: scroll;
+      list-style-type: none;
+      font-size: 15px;
+    }
+    .CurriculumList h4{
+      /* font-size: 2em; */
+      text-align: center;
+    }
+    .CurriculumList{
+      text-align: left;
+      /* line-height: 2rem; */
+      height: 50vh;
+      width: 60vw;
+      
+    }
+    .cardCurr{
+      padding: revert;
+    }
+    .cardCurr h4{
+      font-size: large;
+    }
+    .accordion{
+      width: 80%;
+    }
+    .profileCurriculumList {
+      /* width: max-content; */
+      /* height: fit-content; */
+      list-style-type: none;
+      font-size: 12px;
+    } 
   }

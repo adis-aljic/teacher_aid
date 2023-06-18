@@ -21,6 +21,7 @@ const ClassesList = (props) => {
     })  
     .then((resolve) => resolve.json())
       .then((data) => {
+        console.log(data);
         localStorage.setItem('MyClasses', JSON.stringify(data));
       });
     }, [user.id]

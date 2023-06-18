@@ -25,8 +25,8 @@ export class ClassesEntity {
     @Column()
     abbrevation: string
 
-    // @Column()
-    // subject: string
+    @Column()
+    subject: string
 
 
 

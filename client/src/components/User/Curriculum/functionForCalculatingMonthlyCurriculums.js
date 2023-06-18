@@ -60,7 +60,7 @@ function countWeeksInMonths(start_date, end_date) {
   let currentDate = new Date(startDate);
   while (currentDate <= endDate) {
     const month = currentDate.toLocaleString('default', { month: 'long' });
-    const year = currentDate.getFullYear();
+    // const year = currentDate.getFullYear();
     const startOfWeek = currentDate.getDate() + '/' + (currentDate.getMonth() + 1);
 
     // Check if it's the last week of January
@@ -100,25 +100,25 @@ function countWeeksInMonths(start_date, end_date) {
 
 // Example usage
 // const weeksInMonths = countWeeksInMonths(findSchoolYear().year1,findSchoolYear().year2);
-console.log(countWeeksInMonths(findSchoolYear().year1,findSchoolYear().year2))
+// console.log(countWeeksInMonths(findSchoolYear().year1,findSchoolYear().year2))
 
 
-const curriculum = {
+// const curriculum = {
   
-    "id": 4,
-    "classCode": "SS",
-    "curriculum": "1.\tUvod\n2.\tDruga lekcoja\n3.\tTreca lekcija\n4.\tCetvrta lekcija\n5.\tPet lekcija\n6.\tSestra lekcija\n7.\tSedma lekcija\n8.\tOsma lekcija\n9.\tDeveta lekcija\n10.\tDeseta lekcija\n11.\tJedanesta lekcija\n12.\tDvanaesta lekcija\n13.\tTrinaesta lekcija\n14.\tCetrnaesta lekcija\n15.\tPetnaesta lekcija\n16.\tSestnaesta lekcija\n17.\tSedamnaest lekcija\n18.\tOsamnaesta lekcij\n19.\tDevetnaesta lekcija\n20.\tDvadesetsa lekcija\n21.\tDvadesetprva lekcja\n",
-    "user": {
-        "id": 1,
-        "firstName": "Adis",
-        "lastName": "Aljic",
-        "email": "adis@gmail.com",
-        "role": "teacher",
-        "isAuth": true,
-        subject: "Fizika"
-  }
-}
-const a = countWeeksInMonths(findSchoolYear().year1,findSchoolYear().year2)
+//     "id": 4,
+//     "classCode": "SS",
+//     "curriculum": "1.\tUvod\n2.\tDruga lekcoja\n3.\tTreca lekcija\n4.\tCetvrta lekcija\n5.\tPet lekcija\n6.\tSestra lekcija\n7.\tSedma lekcija\n8.\tOsma lekcija\n9.\tDeveta lekcija\n10.\tDeseta lekcija\n11.\tJedanesta lekcija\n12.\tDvanaesta lekcija\n13.\tTrinaesta lekcija\n14.\tCetrnaesta lekcija\n15.\tPetnaesta lekcija\n16.\tSestnaesta lekcija\n17.\tSedamnaest lekcija\n18.\tOsamnaesta lekcij\n19.\tDevetnaesta lekcija\n20.\tDvadesetsa lekcija\n21.\tDvadesetprva lekcja\n",
+//     "user": {
+//         "id": 1,
+//         "firstName": "Adis",
+//         "lastName": "Aljic",
+//         "email": "adis@gmail.com",
+//         "role": "teacher",
+//         "isAuth": true,
+//         subject: "Fizika"
+//   }
+// }
+// const a = countWeeksInMonths(findSchoolYear().year1,findSchoolYear().year2)
 // console.log(curriculum.curriculum.split("\n"));
 // console.log(a);
 const getClassesPerMonths = (curriculumString, schoolCalendar, numberOfclasses ,month) =>{
@@ -146,7 +146,7 @@ console.log(months);
 
 }
 
-console.log(getClassesPerMonths(curriculum.curriculum,a,"January"))
+// console.log(getClassesPerMonths(curriculum.curriculum,a,"January"))
 
 const secondDate = (string) =>{
   if(string){

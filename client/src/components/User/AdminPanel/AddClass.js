@@ -50,6 +50,9 @@ const AddClass = (props) => {
 
   const addClassHandler = (e) => {
     e.preventDefault();
+    if(!enteredSchool || !enteredClass || !enteredAbbCity || !enteredCity || !enteredDepartmant ||!enteredSubject || !enteredAbrevation){
+      return
+    }
     setInProgress(true)
     const school = inputSchoolRef.current.value;
     const city = inputCityRef.current.value;

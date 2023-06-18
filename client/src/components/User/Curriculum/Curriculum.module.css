@@ -55,3 +55,26 @@
   align-items: center;
   gap: 0;
 }
+
+@media only screen and (max-width: 780px) {
+  .curriculum{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    gap: 4rem;
+}
+.formCurriculum {
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
+  flex-direction: column;
+  /* width: 70%; */
+  margin: 1rem;
+  padding: 1rem;
+}
+textarea{
+  width: 20rem;
+  height: 10vh;
+}
+}

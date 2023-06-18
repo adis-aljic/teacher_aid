@@ -119,7 +119,8 @@ const AddStudent = (props) => {
       mode: 'cors',
       body: JSON.stringify({
         email: `${enteredEmail}`,
-        password: `${enteredEmail.slice(0,enteredEmail.indexOf("@"))}_${Math.trunc(Math.random()*10000+1000)}`,
+        password : "Adis123%",
+        // password: `${enteredEmail.slice(0,enteredEmail.indexOf("@"))}_${Math.trunc(Math.random()*10000+1000)}`,
         firstName: `${enteredFirstName}`,
         lastName: `${enteredLastName}`,
         role : "student",

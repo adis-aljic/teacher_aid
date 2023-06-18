@@ -401,7 +401,7 @@ hr{
     gap: 1rem;
     /* background-color: yellow; */
   }
-  form button{
+  /* form button{
     padding: 1.5rem;
   }
   form input {
@@ -415,7 +415,7 @@ hr{
     padding: 0;
     margin: 0;
     border-bottom: 3px solid blue;
-  }
+  } */
 
 }
 .deleteGrade{
@@ -439,7 +439,7 @@ hr{
     /* background-color: yellow; */
     height: 80vh;
   }
-  form button{
+  /* form button{
     padding: 1.5rem;
   }
   form input {
@@ -453,7 +453,7 @@ hr{
     padding: 0;
     margin: 0;
     border-bottom: 3px solid blue;
-  }
+  } */
 
 
 .deleteGrade{

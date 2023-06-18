@@ -213,10 +213,8 @@ const ListCurriculum = (props) => {
         >
           <form onSubmit={onSubmitMonthlyPlanHandler} className="form">
             <div className={styles.inputs}>
-              {/* <label htmlFor="nbrClassesPW"></label> */}
               <div className={styles.headerModalInput}>
                 <input
-                  // id="nbrClassesPW"
                   type="number"
                   min={1}
                   className={styles.nbrClPW}
@@ -439,8 +437,8 @@ const ListCurriculum = (props) => {
           </form>
         </Modal>
       )}
-      (
-      <Card>
+      
+      <Card className="cardCurr">
         {/* {console.log(user)} */}
         {pdf ? (
           <PdfFormPreview
@@ -490,7 +488,7 @@ const ListCurriculum = (props) => {
                             </div>
                           );
                         })}
-                      <div>
+                      <div className="CurriculumList">
                         <br></br>
                         <h4>Curriculum</h4>
                         <br></br>
@@ -500,7 +498,7 @@ const ListCurriculum = (props) => {
                           .replaceAll("\t", " ")
                           .split("\n")
                           .map((item) => {
-                            return <li className="CurriculumList">{item}</li>;
+                            return <li >{item}</li>;
                           })}
                         <Button className="btn-mp" onClick={monthlyPlanHandler}>
                           Get monthly plan
@@ -513,7 +511,7 @@ const ListCurriculum = (props) => {
           </Accordion>
         )}
       </Card>
-      )
+      
     </div>
   );
 };

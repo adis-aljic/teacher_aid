@@ -8,16 +8,16 @@ const Navigation = (props) => {
 
   return (
     <nav>
-    <div class="navbar1">
-      <div class="container1 nav-container1">
-          <input class="checkbox" type="checkbox" name="" id="" />
-          <div class="hamburger-lines1">
-            <span class="line1 line11"></span>
-            <span class="line1 line22"></span>
-            <span class="line1 line33"></span>
+    <div className="navbar1">
+      <div className="container1 nav-container1">
+          <input className="checkbox" type="checkbox" name="" id="" />
+          <div className="hamburger-lines1">
+            <span className="line1 line11"></span>
+            <span className="line1 line22"></span>
+            <span className="line1 line33"></span>
           </div>  
       
-        <div class="menu-items1">
+        <div className="menu-items1">
     <ul className={classes.navigation}>
       <li onClick={ctx.addClassNavHandler}>Add Class</li>
       <li onClick={ctx.addStudentNavHandler}>Add student</li>

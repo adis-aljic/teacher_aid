@@ -37,6 +37,7 @@ const Profile = (props) => {
   const enteredNoteHandler = () => setEnteredNote(enteredNoteRef.current.value);
   const enteredNoteNbrHandler = () =>
     setEnteredNoteNbr(enteredNoteNbrRef.current.value);
+ 
   useEffect(() => {
     fetch("http://localhost:4000/api/user/getstudents", {
       mode: "cors",
@@ -45,7 +46,7 @@ const Profile = (props) => {
       .then((resolve) => resolve.json())
       .then((results) => setStudents(results));
 
-    console.log(user.id);
+
     fetch("http://localhost:4000/api/user", {
       method: "POST",
       mode: "cors",
@@ -58,23 +59,22 @@ const Profile = (props) => {
     })
       .then((resolve) => resolve.json())
       .then((data) => {
+        console.log(data[0]);
         setProfile(data[0]);
         localStorage.setItem("profile", JSON.stringify(data[0]));
       });
   }, [user.id]);
-
+      console.log(profile);
   const addButtonHandler = (e) => {
     e.preventDefault();
     setIsAddCliked(true);
-    console.log(JSON.parse(e.target.value));
     setStudentName(JSON.parse(e.target.value));
   };
   const closeAddButton = () => setIsAddCliked(false);
 
   const addGradeHandler = (e) => {
     e.preventDefault();
-    console.log(studentName.id);
-    console.log(enteredGrade, user.id);
+
     fetch("http://localhost:4000/api/grade/add", {
       method: "POST",
       mode: "cors",
@@ -88,7 +88,13 @@ const Profile = (props) => {
       },
     })
       .then((resolve) => resolve.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        setMessage(data.message);
+        setTimeout(() => {
+          setMessage("");
+        }, 1000);
+      });
+      setEnteredGrade("")
   };
   const deleteGradeHandler = (e) => {
     e.preventDefault();
@@ -110,6 +116,7 @@ const Profile = (props) => {
           setMessage("");
         }, 1000);
       });
+      setEnteredDeleteGrade("")
   };
   const addNoteHandler = (e) => {
     e.preventDefault();
@@ -132,10 +139,10 @@ const Profile = (props) => {
           setMessage("");
         }, 1000);
       });
+      setEnteredNote("")
   };
   const deleteNoteHandler = (e) => {
     e.preventDefault();
-    console.log(enteredNoteNbr);
     fetch("http://localhost:4000/api/note/delete", {
       method: "POST",
       mode: "cors",
@@ -153,6 +160,7 @@ const Profile = (props) => {
           setMessage("");
         }, 1000);
       });
+      setEnteredNoteNbr("")
   };
 
   return (
@@ -164,7 +172,7 @@ const Profile = (props) => {
           message={`Email : ${studentName.email} `}
           onConfirm={closeAddButton}
         >
-          <form className="addNewGrade" onSubmit={addGradeHandler}>
+          <form  className="addNewGrade" onSubmit={addGradeHandler}>
             <input
               type="number"
               value={enteredGrade}
@@ -176,7 +184,7 @@ const Profile = (props) => {
             ></input>
             <button type="submit">Add grade</button>
           </form>
-          <form onSubmit={deleteGradeHandler} className={styles.deleteGrade}>
+          <form  onSubmit={deleteGradeHandler} className={styles.deleteGrade}>
             {message && <p>{message}</p>}
             <input
               type="number"
@@ -189,7 +197,7 @@ const Profile = (props) => {
               Delete grade
             </button>
           </form>
-          <form onSubmit={addNoteHandler}>
+          <form  onSubmit={addNoteHandler}>
             <textarea
               placeholder="Enter note"
               maxLength={50}
@@ -201,7 +209,7 @@ const Profile = (props) => {
 
             <button type="submit">Add note</button>
           </form>
-          <form onSubmit={deleteNoteHandler} className={styles.deleteNote}>
+          <form  onSubmit={deleteNoteHandler} className={styles.deleteNote}>
             <input
               type="number"
               placeholder="Enter note number"
@@ -217,19 +225,16 @@ const Profile = (props) => {
       )}
       <div className={styles.card_profile}>
         <ul className={styles.listProfile}>
-          <li key={profile.id}>
+          <li key={ profile ? profile.id : 1}>
             <h2>Profile</h2>
             <br></br>
             Name : {profile ? `${profile.firstName}  ${profile.lastName}` : ""}
-            {/* <br></br> */}
-            {/* Last Name : {profile ? profile.lastName : ""} */}
+           
             <br></br>
             Email : {profile ? profile.email : ""}
             <br></br>
             role : {profile ? profile.role : ""}
             <br></br>
-            subject :{" "}
-            {profile.classes.length > 0 ? profile.classes[0].subject : ""}
           </li>
         </ul>
 
@@ -245,7 +250,7 @@ const Profile = (props) => {
             {profile
               ? profile.classes.map((classItem) => (
                   <AccordionItem>
-                    <AccordionHeader>
+                    <AccordionHeader className="btnTitle">
                       <h3 className={styles.title}>
                         Class {classItem.abbrevation}
                       </h3>
@@ -276,16 +281,16 @@ const Profile = (props) => {
                                           <p>{student.subject}</p>
                                           <p>{schoolClass.school}</p>
                                           <p>
-                                            {schoolClass.schoolClass} -
+                                          Class :    {schoolClass.schoolClass} -
                                             {schoolClass.departmant}
                                           </p>
                                           <p>
-                                            Grade :{" "}
+                                          Grade : 
                                             {student.grades.length > 0
                                               ? student.grades
                                                   .map((grade) => grade.grade)
                                                   .join(", ")
-                                              : " "}
+                                              : " No grade "}
                                           </p>
 
                                           <button
@@ -306,7 +311,7 @@ const Profile = (props) => {
                                             student.notes.length > 0 ? (
                                               student.notes.map((note) => {
                                                 return (
-                                                  <li key={note.id}>
+                                                  <li key={note.id} style={{listStyleType: "none"}}>
                                                     {note.id}. {note.note}
                                                   </li>
                                                 );

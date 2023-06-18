@@ -8,10 +8,11 @@
 
 textarea{
     resize: none;
-    padding: 1rem;
+    /* padding: 1rem; */
     font-size: 1.8em;
     font-family: 'Roboto', sans-serif;
-    width: inherit;
+    /* width: inherit; */
+    width: 100%;
 
 
 }
@@ -30,11 +31,15 @@ textarea{
 .card{
     height: max-content;
     height: 90vh;
-    width: 50vw;
+    /* width: 50vw; */
     padding-bottom: 5rem;
+    margin: 0;
 }
 & p{
 text-align: right;
+}
+.card h2{
+    text-align: center;
 }
 
 @media only screen and (max-width: 780px) {

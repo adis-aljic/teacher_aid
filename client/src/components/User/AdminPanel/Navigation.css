@@ -124,11 +124,9 @@
     transition: transform 0.5s ease-in-out;
     text-align: center;
     background-color: rgb(13, 13, 141);
-    /* color: wheat; */
 }
 
 .navbar1 .menu-items1 li {
-    /* margin-bottom: 1.2rem; */
     font-size: 1.5rem;
     font-weight: 500;
     background-color: rgb(58, 7, 105);

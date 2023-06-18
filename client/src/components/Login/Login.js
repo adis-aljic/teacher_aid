@@ -104,7 +104,7 @@ const Login = (props) => {
         password: `${password}`,
         firstName: `${first_name}`,
         lastName: `${last_name}`,
-        subject: `${subject}`,
+        // subject: `${subject}`,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -220,7 +220,7 @@ const Login = (props) => {
           title="Forgoten password"
           message="After you enter your new email and new password you will recieved email with password"
           onConfirm={clearForgetenPasswordHandler}
-          className={styles.none}
+          className="none"
         >
           <input
             placeholder="email"

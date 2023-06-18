@@ -124,7 +124,7 @@ export class UserService {
         if (!user.isAuth) {
             throw new HttpException("You must confirm your account. Please check your email for confirmation link", HttpStatus.UNAUTHORIZED)
         }
-        console.log(user.password, loginUserDto.password);
+        // console.log(user.password, loginUserDto.password);
         
         const isPasswordCorrect = await compare(loginUserDto.password, user.password)
         // console.log(isPasswordCorrect);
@@ -212,9 +212,9 @@ export class UserService {
                 }
             })
             await this.userRepository.save(newStudent)
-            console.log(newStudent);
+            // console.log(newStudent);
             foundClass.user = [...foundClass.user ,  newStudent]
-            console.log(foundClass, " found class");
+            // console.log(foundClass, " found class");
             // console.log(foundClass);
             // await this.classReposotory.createQueryBuilder().insert().relation(foundUser: UserEntity,)
             await this.classReposotory.save(foundClass)
@@ -230,7 +230,7 @@ export class UserService {
               }
             })
             .getMany()
-            console.log("Aaa");
+            // console.log("Aaa");
             
             return teachers
         }
@@ -246,7 +246,7 @@ export class UserService {
             }
             }).getMany()
             // console.log(id);
-            // console.log(user);
+            console.log(user);
             
             if(user.length ===0) {
                 throw new HttpException("User doesent Exist!",HttpStatus.BAD_REQUEST)
