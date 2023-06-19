@@ -37,21 +37,18 @@ const Profile = (props) => {
   const enteredNoteHandler = () => setEnteredNote(enteredNoteRef.current.value);
   const enteredNoteNbrHandler = () =>
     setEnteredNoteNbr(enteredNoteNbrRef.current.value);
- 
+
   useEffect(() => {
     // fetch("http://localhost:4000/api/user/getstudents", {
-      fetch("https://teacher-aid.onrender.com/api/user/getstudents", {
-
+    fetch("https://teacher-aid.onrender.com/api/user/getstudents", {
       mode: "cors",
       method: "GET",
     })
       .then((resolve) => resolve.json())
       .then((results) => setStudents(results));
 
-
     // fetch("http://localhost:4000/api/user", {
-      fetch("https://teacher-aid.onrender.com/api/user", {
-
+    fetch("https://teacher-aid.onrender.com/api/user", {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
@@ -68,7 +65,7 @@ const Profile = (props) => {
         localStorage.setItem("profile", JSON.stringify(data[0]));
       });
   }, [user.id]);
-      console.log(profile);
+  console.log(profile);
   const addButtonHandler = (e) => {
     e.preventDefault();
     setIsAddCliked(true);
@@ -80,8 +77,7 @@ const Profile = (props) => {
     e.preventDefault();
 
     // fetch("http://localhost:4000/api/grade/add", {
-      fetch("https://teacher-aid.onrender.com/api/grade/add", {
-
+    fetch("https://teacher-aid.onrender.com/api/grade/add", {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
@@ -100,13 +96,12 @@ const Profile = (props) => {
           setMessage("");
         }, 1000);
       });
-      setEnteredGrade("")
+    setEnteredGrade("");
   };
   const deleteGradeHandler = (e) => {
     e.preventDefault();
     // fetch("http://localhost:4000/api/grade/delete", {
-      fetch("https://teacher-aid.onrender.com/api/grade/delete", {
-
+    fetch("https://teacher-aid.onrender.com/api/grade/delete", {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
@@ -124,13 +119,12 @@ const Profile = (props) => {
           setMessage("");
         }, 1000);
       });
-      setEnteredDeleteGrade("")
+    setEnteredDeleteGrade("");
   };
   const addNoteHandler = (e) => {
     e.preventDefault();
     // fetch("http://localhost:4000/api/note/add", {
-      fetch("https://teacher-aid.onrender.com/api/note/add", {
-
+    fetch("https://teacher-aid.onrender.com/api/note/add", {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
@@ -149,13 +143,12 @@ const Profile = (props) => {
           setMessage("");
         }, 1000);
       });
-      setEnteredNote("")
+    setEnteredNote("");
   };
   const deleteNoteHandler = (e) => {
     e.preventDefault();
     // fetch("http://localhost:4000/api/note/delete", {
-      fetch("https://teacher-aid.onrender.com/api/note/delete", {
-
+    fetch("https://teacher-aid.onrender.com/api/note/delete", {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
@@ -172,7 +165,7 @@ const Profile = (props) => {
           setMessage("");
         }, 1000);
       });
-      setEnteredNoteNbr("")
+    setEnteredNoteNbr("");
   };
 
   return (
@@ -184,7 +177,7 @@ const Profile = (props) => {
           message={`Email : ${studentName.email} `}
           onConfirm={closeAddButton}
         >
-          <form  className="addNewGrade" onSubmit={addGradeHandler}>
+          <form className="addNewGrade" onSubmit={addGradeHandler}>
             <input
               type="number"
               value={enteredGrade}
@@ -196,7 +189,7 @@ const Profile = (props) => {
             ></input>
             <button type="submit">Add grade</button>
           </form>
-          <form  onSubmit={deleteGradeHandler} className={styles.deleteGrade}>
+          <form onSubmit={deleteGradeHandler} className={styles.deleteGrade}>
             {message && <p>{message}</p>}
             <input
               type="number"
@@ -205,11 +198,9 @@ const Profile = (props) => {
               ref={enteredDeleteGradeRef}
               value={enteredDeleteGrade}
             ></input>
-            <button  type="submit">
-              Delete grade
-            </button>
+            <button type="submit">Delete grade</button>
           </form>
-          <form  onSubmit={addNoteHandler}>
+          <form onSubmit={addNoteHandler}>
             <textarea
               placeholder="Enter note"
               maxLength={50}
@@ -221,7 +212,7 @@ const Profile = (props) => {
 
             <button type="submit">Add note</button>
           </form>
-          <form  onSubmit={deleteNoteHandler} className={styles.deleteNote}>
+          <form onSubmit={deleteNoteHandler} className={styles.deleteNote}>
             <input
               type="number"
               placeholder="Enter note number"
@@ -237,11 +228,10 @@ const Profile = (props) => {
       )}
       <div className={styles.card_profile}>
         <ul className={styles.listProfile}>
-          <li key={ profile ? profile.id : 1}>
+          <li key={profile ? profile.id : 1}>
             <h2>Profile</h2>
             <br></br>
             Name : {profile ? `${profile.firstName}  ${profile.lastName}` : ""}
-           
             <br></br>
             Email : {profile ? profile.email : ""}
             <br></br>
@@ -274,7 +264,7 @@ const Profile = (props) => {
                             return student.classes.map((schoolClass) => {
                               return schoolClass.abbrevation ===
                                 classItem.abbrevation ? (
-                                <AccordionItem  className={styles.acc}>
+                                <AccordionItem className={styles.acc}>
                                   <AccordionHeader as="div">
                                     <h4 className={styles.title}>
                                       {student.firstName} {student.lastName}
@@ -283,60 +273,67 @@ const Profile = (props) => {
                                   <AccordionBody
                                     className={styles["accordion-item"]}
                                   >
-                                  {student ?    <li
-                                      className={classes.listProfile}
-                                      key={student.id}
-                                    >
-                                      <div className={styles.studentGrade}>
-                                        <div className={styles.gradeInput}>
-                                          <p>{student.email}</p>
-                                          <p>{student.subject}</p>
-                                          <p>{schoolClass.school}</p>
-                                          <p>
-                                          Class :    {schoolClass.schoolClass} -
-                                            {schoolClass.departmant}
-                                          </p>
-                                          <p>
-                                          Grade : 
-                                            {student.grades.length > 0
-                                              ? student.grades
-                                                  .map((grade) => grade.grade)
-                                                  .join(", ")
-                                              : " No grade "}
-                                          </p>
+                                    {student ? (
+                                      <li
+                                        className={classes.listProfile}
+                                        key={student.id}
+                                      >
+                                        <div className={styles.studentGrade}>
+                                          <div className={styles.gradeInput}>
+                                            <p>{student.email}</p>
+                                            <p>{student.subject}</p>
+                                            <p>{schoolClass.school}</p>
+                                            <p>
+                                              Class : {schoolClass.schoolClass}{" "}
+                                              -{schoolClass.departmant}
+                                            </p>
+                                            <p>
+                                              Grade :
+                                              {student.grades.length > 0
+                                                ? student.grades
+                                                    .map((grade) => grade.grade)
+                                                    .join(", ")
+                                                : " No grade "}
+                                            </p>
 
-                                          <button
-                                            type="submit"
-                                            value={JSON.stringify(student)}
-                                            onClick={addButtonHandler}
-                                          >
-                                            Add
-                                          </button>
-                                        </div>
-                                        <div className={styles.note}>
-                                          <div>
-                                            <h3>notes</h3>
+                                            <button
+                                              type="submit"
+                                              value={JSON.stringify(student)}
+                                              onClick={addButtonHandler}
+                                            >
+                                              Add
+                                            </button>
                                           </div>
+                                          <div className={styles.note}>
+                                            <div>
+                                              <h3>notes</h3>
+                                            </div>
 
-                                          <ul>
-                                            {student.notes &&
-                                            student.notes.length > 0 ? (
-                                              student.notes.map((note) => {
-                                                return (
-                                                  <li key={note.id} style={{listStyleType: "none"}}>
-                                                    {note.id}. {note.note}
-                                                  </li>
-                                                );
-                                              })
-                                            ) : (
-                                              <p>No notes ... </p>
-                                            )}
-                                          </ul>
+                                            <ul>
+                                              {student.notes &&
+                                              student.notes.length > 0 ? (
+                                                student.notes.map((note) => {
+                                                  return (
+                                                    <li
+                                                      key={note.id}
+                                                      style={{
+                                                        listStyleType: "none",
+                                                      }}
+                                                    >
+                                                      {note.id}. {note.note}
+                                                    </li>
+                                                  );
+                                                })
+                                              ) : (
+                                                <p>No notes ... </p>
+                                              )}
+                                            </ul>
+                                          </div>
                                         </div>
-                                      </div>
-                                    </li> :  <p>
-                                       No students "
-                                      </p>}
+                                      </li>
+                                    ) : (
+                                      <p>No students "</p>
+                                    )}
                                   </AccordionBody>
                                 </AccordionItem>
                               ) : null;
