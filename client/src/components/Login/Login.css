@@ -47,7 +47,7 @@ label {
 }
 input {
   width: 60%;
-  height: 20px;
+  height: 15px;
   background: #c2c5cc;
   justify-content: center;
   display: flex;
@@ -87,7 +87,7 @@ button:hover {
 }
 
 #chk:checked ~ .login {
-  transform: translateY(-35rem);
+  transform: translateY(-255rem);
 }
 #chk:checked ~ .login label {
   transform: scale(1);

@@ -15,7 +15,7 @@ import { SendMessageDTO } from "./DTO/sendMessage.dto";
 export class UserController {
     constructor(private readonly userService: UserService) { }
     @UsePipes(new ValidationPipe())
-    @Post("/api/newuser")
+    @Post("/api/user/newuser")
     async createUser(@Body() createUserDTO: CreateUserDTO): Promise<UserType> {
         const user = await this.userService.createUser(createUserDTO)
         return this.userService.userResponse(user)

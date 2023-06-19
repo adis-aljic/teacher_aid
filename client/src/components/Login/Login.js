@@ -96,7 +96,9 @@ const Login = (props) => {
       });
       return;
     }
-    fetch("http://localhost:4000/api/newuser", {
+    // fetch("http://localhost:4000/api/newuser", {
+      fetch("https://teacher-aid.onrender.com/api/user/newuser", {
+
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
@@ -185,7 +187,9 @@ const Login = (props) => {
   const forgottenPassworOnSubmitdHandler = (e) => {
     e.preventDefault();
     setInProgress(true);
-    fetch("http://localhost:4000/api/user/forgetenpassword", {
+    // fetch("http://localhost:4000/api/user/forgetenpassword", {
+      fetch("https://teacher-aid.onrender.com/api/user/forgetenpassword", {
+      
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
