@@ -62,7 +62,9 @@ const AddStudent = (props) => {
 
         return
       }
-    fetch("http://localhost:4000/api/user/findAndAddStudent",{
+    // fetch("http://localhost:4000/api/user/findAndAddStudent",{
+      fetch("https://teacher-aid.onrender.com/api/user/findAndAddStudent", {
+
       method : "POST",
       mode : "cors",
       body : JSON.stringify({
@@ -114,7 +116,9 @@ const AddStudent = (props) => {
         })
       return
     }
-    fetch('http://localhost:4000/api/user/newstudent', {
+    // fetch('http://localhost:4000/api/user/newstudent', {
+      fetch("https://teacher-aid.onrender.com/api/user/newstudent", {
+
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({

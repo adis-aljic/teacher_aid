@@ -15,9 +15,12 @@ const RegistrerClass = () => {
   const [inProgress, setInProgress] = useState(false)
   const [isError, setIsError] = useState(null)
   useEffect(()=>{
-    fetch("http://localhost:4000/api/classes/list")
+    // fetch("http://localhost:4000/api/classes/list") 
+         fetch("https://teacher-aid.onrender.com/api/classes/list")
+
     .then(resolve => resolve.json())
     .then(data => {
+      console.log(data);
       setMyClasses(data)
       localStorage.setItem("classList", JSON.stringify(data))
 
@@ -52,7 +55,9 @@ const RegistrerClass = () => {
       })
       return    }
     const user = JSON.parse(localStorage.getItem('user'));
-    fetch('http://localhost:4000/api/classes/addclass', {
+    // fetch('http://localhost:4000/api/classes/addclass', {
+      fetch("https://teacher-aid.onrender.com/api/classes/addclass", {
+
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({

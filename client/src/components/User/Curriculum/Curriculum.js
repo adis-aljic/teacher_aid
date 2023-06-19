@@ -20,7 +20,9 @@ const Curriculum = () => {
   const addCurriculumHandler = e =>{
     e.preventDefault()
     console.log(typeof inputText);
-    fetch("http://localhost:4000/api/curriculum/addcurriculum",{
+    // fetch("http://localhost:4000/api/curriculum/addcurriculum",{
+      fetch("https://teacher-aid.onrender.com/api/curriculum/addcurriculum", {
+
         method:"POST",
         body: JSON.stringify({
             userId : user.id,

@@ -24,7 +24,9 @@ function UploadFile() {
 
   useEffect(() => {
     setInProgress(true)
-    fetch('http://localhost:4000/api/classes/myclasses',{
+    // fetch('http://localhost:4000/api/classes/myclasses',{
+      fetch("https://teacher-aid.onrender.com/api/classes/myclasses", {
+
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
@@ -107,7 +109,9 @@ const uploadFileHandler = (event) => {
         message: 'Please check is class code valid or is class added',
       });
     }
-    fetch("http://localhost:4000/api/news",{
+    // fetch("http://localhost:4000/api/news",{
+      fetch("https://teacher-aid.onrender.com/api/news", {
+
       method:"POST",
         body : JSON.stringify({
             url : `${url}`,

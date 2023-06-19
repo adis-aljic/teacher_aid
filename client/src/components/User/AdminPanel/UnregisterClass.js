@@ -42,7 +42,9 @@ const RegistrerClass = () => {
       return;
     }
     const user = JSON.parse(localStorage.getItem("user"));
-    fetch("http://localhost:4000/api/classes/unregisterclass", {
+    // fetch("http://localhost:4000/api/classes/unregisterclass", {
+      fetch("https://teacher-aid.onrender.com/api/classes/unregisterclass", {
+
       method: "POST",
       mode: "cors",
       body: JSON.stringify({

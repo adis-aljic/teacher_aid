@@ -39,7 +39,9 @@ const Profile = (props) => {
     setEnteredNoteNbr(enteredNoteNbrRef.current.value);
  
   useEffect(() => {
-    fetch("http://localhost:4000/api/user/getstudents", {
+    // fetch("http://localhost:4000/api/user/getstudents", {
+      fetch("https://teacher-aid.onrender.com/api/user/getstudents", {
+
       mode: "cors",
       method: "GET",
     })
@@ -47,7 +49,9 @@ const Profile = (props) => {
       .then((results) => setStudents(results));
 
 
-    fetch("http://localhost:4000/api/user", {
+    // fetch("http://localhost:4000/api/user", {
+      fetch("https://teacher-aid.onrender.com/api/user", {
+
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
@@ -75,7 +79,9 @@ const Profile = (props) => {
   const addGradeHandler = (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:4000/api/grade/add", {
+    // fetch("http://localhost:4000/api/grade/add", {
+      fetch("https://teacher-aid.onrender.com/api/grade/add", {
+
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
@@ -98,7 +104,9 @@ const Profile = (props) => {
   };
   const deleteGradeHandler = (e) => {
     e.preventDefault();
-    fetch("http://localhost:4000/api/grade/delete", {
+    // fetch("http://localhost:4000/api/grade/delete", {
+      fetch("https://teacher-aid.onrender.com/api/grade/delete", {
+
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
@@ -120,7 +128,9 @@ const Profile = (props) => {
   };
   const addNoteHandler = (e) => {
     e.preventDefault();
-    fetch("http://localhost:4000/api/note/add", {
+    // fetch("http://localhost:4000/api/note/add", {
+      fetch("https://teacher-aid.onrender.com/api/note/add", {
+
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
@@ -143,7 +153,9 @@ const Profile = (props) => {
   };
   const deleteNoteHandler = (e) => {
     e.preventDefault();
-    fetch("http://localhost:4000/api/note/delete", {
+    // fetch("http://localhost:4000/api/note/delete", {
+      fetch("https://teacher-aid.onrender.com/api/note/delete", {
+
       method: "POST",
       mode: "cors",
       body: JSON.stringify({

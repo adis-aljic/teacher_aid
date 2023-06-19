@@ -87,7 +87,7 @@ button:hover {
 }
 
 #chk:checked ~ .login {
-  transform: translateY(-255rem);
+  transform: translateY(-25rem);
 }
 #chk:checked ~ .login label {
   transform: scale(1);

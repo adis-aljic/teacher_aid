@@ -60,7 +60,10 @@ const AddClass = (props) => {
     const schoolClass = inputClassRef.current.value;
     const departmant = inputDepartmantRef.current.value;
     const abb = inputAbbRef.current.value;
-    fetch('http://localhost:4000/api/classes/createclass', {
+    // fetch('http://localhost:4000/api/classes/createclass', {     
+       fetch("https://teacher-aid.onrender.com/api/classes/createclass", {
+
+      
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({

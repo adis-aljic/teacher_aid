@@ -14,7 +14,9 @@ const MyClasses = (props) => {
   // setClasses(JSON.parse(localStorage.getItem('classList')));
   // setUser(JSON.parse(localStorage.getItem('user')));
   useEffect(() => {
-    fetch('http://localhost:4000/api/classes/myclasses', {
+    // fetch('http://localhost:4000/api/classes/myclasses', {
+      fetch("https://teacher-aid.onrender.com/api/classes/myclasses", {
+
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
