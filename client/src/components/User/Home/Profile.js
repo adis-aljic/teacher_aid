@@ -283,7 +283,7 @@ const Profile = (props) => {
                                   <AccordionBody
                                     className={styles["accordion-item"]}
                                   >
-                                    <li
+                                  {student ?    <li
                                       className={classes.listProfile}
                                       key={student.id}
                                     >
@@ -334,7 +334,9 @@ const Profile = (props) => {
                                           </ul>
                                         </div>
                                       </div>
-                                    </li>
+                                    </li> :  <p>
+                                       No students "
+                                      </p>}
                                   </AccordionBody>
                                 </AccordionItem>
                               ) : null;
