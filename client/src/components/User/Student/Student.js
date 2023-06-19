@@ -19,7 +19,9 @@ const Student = (props) => {
   const ctx = useContext(AuthContex);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/user", {
+    fetch("https://teacher-aid.onrender.com/api/user", {
+
+    // fetch("http://localhost:4000/api/user", {
       mode: "cors",
       method: "POST",
       body: JSON.stringify({
@@ -32,7 +34,9 @@ const Student = (props) => {
         setInfo(data[0]);
         localStorage.setItem("profile", JSON.stringify(data[0]));
       });
-    fetch("http://localhost:4000/api/user/teachers", {
+    // fetch("http://localhost:4000/api/user/teachers", {
+      fetch("https://teacher-aid.onrender.com/api/user/teachers", {
+
       mode: "cors",
       method: "GET",
     })
