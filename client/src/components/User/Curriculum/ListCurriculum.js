@@ -12,7 +12,7 @@ import Modal from "../../UI/Modal";
 import styles from "./Curriculum.module.css";
 import { PDFDocument, PDFName, StandardFonts } from "pdf-lib";
 import PdfFormPreview from "../../pdfViewer/PdfFormPreview";
-import pdfForm from "./Monthly_plan_form.pdf";
+// import pdfForm from "./Monthly_plan_form.pdf";
 // import pdfFile from "..\..\..\src\assets\monthly_plan_10m.pdf"
 import {
   findSchoolYear,
@@ -445,7 +445,7 @@ const ListCurriculum = (props) => {
         {pdf ? (
           <PdfFormPreview
             onClick={pdfHandler}
-            pdfUrl={pdfForm}
+            pdfUrl={"https://docdro.id/crXBebZ"}
             formData={formData}
           ></PdfFormPreview>
         ) : (
