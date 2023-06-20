@@ -325,7 +325,7 @@ const Profile = (props) => {
                                                   );
                                                 })
                                               ) : (
-                                                <p>No notes ... </p>
+                                                <li>No notes ... </li>
                                               )}
                                             </ul>
                                           </div>

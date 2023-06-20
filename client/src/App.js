@@ -42,7 +42,7 @@ function App() {
       <main>
         <Routes> 
 
-          {/* <Route path="/login" element={!ctx.isLogged && <Login />}></Route> */}
+          <Route path="/login" element={!ctx.isLogged && <Login />}></Route>
           <Route path="/" element={!ctx.isLogged && <Login />}></Route>
           <Route
             path="/admin"

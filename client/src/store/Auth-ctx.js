@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { useNavigate } from "react-router-dom";
 const AuthContex = React.createContext({
   isLogged: false,
 
@@ -37,7 +37,7 @@ export const AuthContexProvider = (props) => {
   // const [navUnregisterClass, setNavUnregisterClass] = useState(false);
   // const [navAddNews, setNavAddNews] = useState(false);
   const [adminPanelNav, setNav] = useState('');
-
+const Navigate = useNavigate()
   let Auth = localStorage.getItem('Logged_in');
   const user = JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
@@ -76,6 +76,7 @@ export const AuthContexProvider = (props) => {
     localStorage.removeItem('MyClasses');
     localStorage.removeItem('teacherData');
     setIsLogged(false);
+    Navigate("/");
   };
 
 
