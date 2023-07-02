@@ -1,3 +1,6 @@
+Newer version is at : https://github.com/adis-aljic/eschool
+Application is deployed https://e-school-dx1a.onrender.com
+
 I  design and develop this application using ReactJS for the frontend, NestJS for the backend, and PostgreSQL as the database management system (DBMS).
 
 The purpose of this application is to assist teachers in monitoring and managing their classes by providing features such as grade tracking, homework management, student notes, and class administration. Here's an overview of the application's functionality:
